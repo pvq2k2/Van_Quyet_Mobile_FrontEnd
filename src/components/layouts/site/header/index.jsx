@@ -413,9 +413,6 @@ const SiteHeader = () => {
             <li className="group relative select-none rounded-xl p-2 transition-all duration-300 ease-linear hover:bg-blue-100">
               <Link to="#" className="flex flex-col items-center">
                 <IoHomeOutline className="text-3xl group-hover:text-main dark:text-white" />
-                {/* <span class="absolute z-50 -top-5 left-1/2 transform -translate-x-1/2 -translate-y-full whitespace-nowrap bg-black text-white p-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
-                  Trang chủ
-                </span> */}
                 <span className="pt-1 text-xs group-hover:text-main dark:text-white">
                   Trang chủ
                 </span>
@@ -451,9 +448,6 @@ const SiteHeader = () => {
             <li className="group relative select-none rounded-xl p-2 hover:bg-blue-100">
               <Link to="#" className="flex flex-col items-center">
                 <IoCartOutline className="text-3xl group-hover:text-main dark:text-white" />
-                {/* <span class="absolute z-50 -top-5 left-1/2 transform -translate-x-1/2 -translate-y-full whitespace-nowrap bg-black text-white p-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
-                  Giỏ hàng
-                </span> */}
                 <span className="pt-1 text-xs group-hover:text-main dark:text-white">
                   Giỏ hàng
                 </span>
@@ -463,9 +457,6 @@ const SiteHeader = () => {
             <li className="group relative select-none rounded-xl p-2 hover:bg-blue-100">
               <Link to="#" className="flex flex-col items-center">
                 <IoPersonOutline className="text-3xl group-hover:text-main dark:text-white" />
-                {/* <span class="absolute z-50 -top-5 left-1/2 transform -translate-x-1/2 -translate-y-full whitespace-nowrap bg-black text-white p-2 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
-                  Tài khoản
-                </span> */}
                 <span className="pt-1 text-xs group-hover:text-main dark:text-white">
                   Tài khoản
                 </span>
