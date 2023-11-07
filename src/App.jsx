@@ -1,11 +1,9 @@
 import { ToastContainer } from "react-toastify";
 import Router from "./Router";
-import SiteHeader from "./components/layout/site/header";
 
 function App() {
   return (
-    <div className="h-screen bg-[#f4f4f4] dark:bg-black">
-      <SiteHeader />
+    <>
       <Router />
       <ToastContainer
         position="top-right"
@@ -19,7 +17,7 @@ function App() {
         pauseOnHover
         theme="light"
       />
-    </div>
+    </>
   );
 }
 
