@@ -2,45 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slick from "react-slick";
 import Arrow from "./Arrow";
 
-export default function Slider() {
-  const listSlider = [
-    {
-      id: 1,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/09/11112023.png",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-    {
-      id: 2,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/03/1200x375-zfoldzflip-031123.jpg",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-    {
-      id: 3,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/09/11112023.png",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-    {
-      id: 4,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/03/1200x375-zfoldzflip-031123.jpg",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-    {
-      id: 5,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/09/11112023.png",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-    {
-      id: 6,
-      img: "https://cdn.hoanghamobile.com/i/home/Uploads/2023/11/03/1200x375-zfoldzflip-031123.jpg",
-      title: "Siêu Sale Ngày 11/11",
-      subTitle: "Khuyến mại siêu chất",
-    },
-  ];
+export default function Slider({ list }) {
   let slider1, slider2;
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
@@ -78,24 +40,18 @@ export default function Slider() {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
         },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
         },
       },
     ],
@@ -107,14 +63,14 @@ export default function Slider() {
         {...sliderSettings}
         className="group relative my-3 select-none md:my-7"
       >
-        {listSlider.map(({ id, img }) => (
+        {list.map(({ id, img }) => (
           <div key={id} className="slider-item">
             <img className="w-full rounded-md object-fill" src={img} />
           </div>
         ))}
       </Slick>
       <Slick {...thumbnailSettings}>
-        {listSlider.map(({ id, title, subTitle }, index) => (
+        {list.map(({ id, title, subTitle }, index) => (
           <div key={id} className="slider-item h-16">
             <div
               className={`flex flex-col items-center justify-center overflow-hidden rounded-md px-3 shadow-xl transition-all duration-200 ease-in-out ${
