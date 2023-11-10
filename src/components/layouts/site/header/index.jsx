@@ -195,7 +195,7 @@ const SiteHeader = () => {
                 Điện thoại
                 <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
               </Link>
-              <div className="sub-container top-100 invisible absolute left-0 right-0 group-hover:visible">
+              <div className="sub-container top-100 invisible absolute left-0 right-0 z-50 group-hover:visible">
                 <div className="sub mt-5 flex gap-x-20 rounded-md bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
                   <div className="col">
                     <h4>
