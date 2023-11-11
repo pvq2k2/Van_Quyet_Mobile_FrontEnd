@@ -24,9 +24,9 @@ const ToggleTheme = () => {
     <div>
       <div onClick={toggleTheme} className="toggle select-none">
         {theme === "light" ? (
-          <IoSunnyOutline className="bx bx-sun cursor-pointer text-3xl transition-all duration-300 ease-linear dark:text-white dark:hover:text-main" />
+          <IoSunnyOutline className="bx bx-sun cursor-pointer text-3xl transition-all duration-300 ease-linear hover:text-main dark:text-white dark:hover:text-main" />
         ) : (
-          <IoMoonOutline className="bx bx-moon cursor-pointer text-3xl transition-all duration-300 ease-linear hover:text-main dark:text-white" />
+          <IoMoonOutline className="bx bx-moon cursor-pointer text-3xl transition-all duration-300 ease-linear hover:text-main dark:text-white dark:hover:text-main" />
         )}
       </div>
     </div>
