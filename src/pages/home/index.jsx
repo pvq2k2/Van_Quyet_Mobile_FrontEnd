@@ -3,6 +3,7 @@ import Slider from "../../components/home/Slider";
 import ProductList from "../../components/common/ProductList";
 
 const Home = () => {
+  document.title = "Văn Quyết Mobile - Trang chủ";
   const listProduct = [
     {
       id: 1,

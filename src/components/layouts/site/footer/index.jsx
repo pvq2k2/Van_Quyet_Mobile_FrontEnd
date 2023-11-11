@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SiteFooter = () => {
   return (
-    <footer className="container mx-auto px-4 pb-24 md:px-0 md:pb-3">
+    <footer className="mx-auto max-w-screen-xl px-4 pb-24 md:px-0 md:pb-3">
       <div className="wapper rounded-xl bg-main-dark p-5 text-white md:mx-5 xl:mx-0">
         <div className="col-content flex flex-wrap gap-10 text-left xl:justify-center xl:gap-20">
           <div className="link-content">
@@ -11,84 +12,84 @@ const SiteFooter = () => {
             </h4>
             <ul>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Mua hàng trả góp
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Hướng dẫn đặt hàng và thanh toán
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Chính sách bảo hành
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Câu hỏi thường gặp
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Tra cứu đơn hàng
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Chính sách bảo mật
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Chính sách hủy giao dịch, đổi trả
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Chính sách giải quyết khiếu nại
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Điều khoản mua bán hàng hóa
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Phạm vi, điều khoản gói bảo hành mở rộng
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -98,44 +99,44 @@ const SiteFooter = () => {
             </h4>
             <ul>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Bán hàng Online
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Chăm sóc Khách Hàng
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Hỗ Trợ Kỹ thuật
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Hỗ trợ Bảo hành &amp; Sửa chữa
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-[13px] text-[#ddd] duration-300 ease-in-out hover:text-white"
-                  href="#"
+                  to="#"
                 >
                   Liên hệ khối văn phòng
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

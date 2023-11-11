@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slick from "react-slick";
 import Arrow from "./Arrow";
+import { Link } from "react-router-dom";
 
 export default function Slider({ list }) {
   let slider1, slider2;
@@ -64,9 +65,9 @@ export default function Slider({ list }) {
         className="group relative my-3 select-none md:my-7"
       >
         {list.map(({ id, img }) => (
-          <div key={id} className="slider-item">
+          <Link to="#" key={id} className="slider-item">
             <img className="w-full rounded-md object-fill" src={img} />
-          </div>
+          </Link>
         ))}
       </Slick>
       <Slick {...thumbnailSettings}>
