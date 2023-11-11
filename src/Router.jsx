@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 import { SiteLayout } from "./components/layouts";
-import { Home, Login } from "./pages";
+import { Home, Login, NotFound, Register } from "./pages";
 
 const Router = () => {
   return (
@@ -10,7 +10,9 @@ const Router = () => {
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
   );

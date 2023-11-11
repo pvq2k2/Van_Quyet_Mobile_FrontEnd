@@ -72,7 +72,7 @@ const SiteHeader = () => {
           <div className="logo md:w-52 lg:w-56 xl:w-64">
             <Link to="/">
               <img
-                src="https://res.cloudinary.com/dhrm6pmys/image/upload/v1695832739/van-quyet-mobile/root/logo_horizontal_shkp2e.png"
+                src="../../../../../src/assets/images/logo_horizontal.png"
                 alt="logo"
               />
             </Link>
@@ -285,7 +285,7 @@ const SiteHeader = () => {
         <div className="logo w-52">
           <Link to="#">
             <img
-              src="https://res.cloudinary.com/dhrm6pmys/image/upload/v1695832739/van-quyet-mobile/root/logo_horizontal_shkp2e.png"
+              src="../../../../../src/assets/images/logo_horizontal.png"
               alt="logo"
             />
           </Link>
