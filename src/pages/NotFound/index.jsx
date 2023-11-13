@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ToggleTheme from "../../components/common/ToggleTheme";
 const NotFound = () => {
   return (
     <div className="min-h-screen dark:bg-black">
@@ -14,8 +13,6 @@ const NotFound = () => {
               />
             </Link>
           </div>
-
-          <ToggleTheme />
         </div>
 
         <div className="content flex h-full flex-col content-center items-center justify-center text-center md:pt-12 xl:flex-row xl:gap-x-10">

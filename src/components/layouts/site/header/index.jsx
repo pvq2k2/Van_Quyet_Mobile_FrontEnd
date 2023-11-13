@@ -105,7 +105,7 @@ const SiteHeader = () => {
 
               <div
                 id="boxList"
-                className="invisible absolute top-14 z-20 w-60 rounded-lg bg-[hsla(0,0%,100%,0.8)] bg-white p-3 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] duration-300 ease-linear before:absolute  before:-top-2
+                className="invisible absolute top-14 z-20 w-60 rounded-lg bg-[hsla(0,0%,100%,0.8)] bg-white p-3 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] duration-200 ease-linear before:absolute  before:-top-2
                                     before:z-10 before:h-5 before:w-5 before:rotate-45
                                     before:rounded before:bg-white group-hover:visible dark:bg-gray-900 dark:before:bg-gray-900 md:left-[-80px] md:before:left-[85px] xl:left-[-100px] xl:before:left-[105px]"
               >
