@@ -7,12 +7,15 @@ import {
 import { ToggleTheme } from "../../../common";
 import { Link } from "react-router-dom";
 
-const AdminHeader = ({toggleMenu}) => {
+const AdminHeader = ({ toggleMenu }) => {
   return (
-    <nav className="duration-250 sticky left-0 right-0 z-40 flex flex-wrap items-center justify-between bg-[hsla(0,0%,100%,0.8)] px-0 py-2 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] transition-all dark:bg-gray-900 lg:top-[1%] lg:rounded-2xl xl:top-[2%]">
+    <nav className="duration-250 sticky left-0 right-0 z-40 flex flex-wrap items-center justify-between bg-[hsla(0,0%,100%,0.8)] px-0 py-2 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] transition-all dark:bg-[hsla(220.91,39.29%,10.98%,0.8)] lg:top-[1%] lg:rounded-2xl xl:top-[2%]">
       <div className="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
         <div className="flex items-center gap-x-4">
-          <IoListOutline onClick={toggleMenu} className="text-3xl transition-all duration-300 ease-linear hover:text-main dark:text-white dark:hover:text-main lg:hidden" />
+          <IoListOutline
+            onClick={toggleMenu}
+            className="text-3xl transition-all duration-300 ease-linear hover:text-main dark:text-white dark:hover:text-main lg:hidden"
+          />
           <div className="relative flex w-full flex-wrap items-stretch rounded-lg transition-all">
             <span className="absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-br-none rounded-tr-none border border-r-0 border-transparent bg-transparent px-2.5 py-2 text-center text-xl font-normal leading-5 text-slate-500 transition-all">
               <IoSearchOutline className="text-xl" />
