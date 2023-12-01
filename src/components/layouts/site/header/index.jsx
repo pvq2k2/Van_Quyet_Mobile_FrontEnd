@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IoPersonOutline,
   IoSearchOutline,
@@ -21,6 +21,31 @@ const SiteHeader = () => {
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
   };
+  const headerPC = useRef();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        headerPC.current.classList.add(
+          "bg-[hsla(0,0%,100%,0.8)]",
+          "dark:bg-[hsla(220.91,39.29%,10.98%,0.8)]",
+          "shadow-xl",
+        );
+      } else {
+        headerPC.current.classList.remove(
+          "bg-[hsla(0,0%,100%,0.8)]",
+          "dark:bg-[hsla(220.91,39.29%,10.98%,0.8)]",
+          "shadow-xl",
+        );
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       {/* md, lg, xl */}
@@ -67,7 +92,10 @@ const SiteHeader = () => {
         </div>
       </div>
 
-      <div className="sticky top-0 z-50 hidden py-3 backdrop-blur-[30px] backdrop-saturate-[200%] transition-all duration-300 ease-in-out md:block">
+      <div
+        ref={headerPC}
+        className="sticky top-0 z-50 hidden py-3 backdrop-blur-[30px] backdrop-saturate-[200%] transition-all duration-300 ease-in-out md:block"
+      >
         <div className="mx-auto flex max-w-screen-xl items-center justify-between md:px-5">
           <div className="logo md:w-52 lg:w-56 xl:w-64">
             <Link to="/">
@@ -278,7 +306,7 @@ const SiteHeader = () => {
       </nav>
 
       {/* sm */}
-      <div className="top fixed left-0 right-0 z-30 flex items-center justify-around border-b-2 border-gray-200 bg-white py-2 shadow-md backdrop-blur-[30px] backdrop-saturate-[200%] dark:border-gray-900 dark:bg-gray-900 md:hidden">
+      <div className="top fixed left-0 right-0 z-30 flex items-center justify-around border-b-2 border-gray-200 bg-[hsla(0,0%,100%,0.8)] py-2 shadow-md backdrop-blur-[30px] backdrop-saturate-[200%] dark:border-gray-900 dark:bg-[hsla(220.91,39.29%,10.98%,0.8)] md:hidden">
         <div className="menu" onClick={toggleMenu}>
           <IoMenuOutline className="text-3xl transition-all duration-300 ease-in-out hover:text-main dark:text-white" />
         </div>
