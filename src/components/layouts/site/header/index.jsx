@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   IoPersonOutline,
   IoSearchOutline,
@@ -6,16 +6,34 @@ import {
   IoHomeOutline,
   IoMenuOutline,
   IoChevronDownSharp,
+  IoLogInOutline,
+  IoLogOutOutline,
+  IoBagOutline,
 } from "react-icons/io5";
+import { FaRegRegistered } from "react-icons/fa6";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { ToggleTheme } from "../../../common";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../../redux/slice/authSlice";
 
 const SiteHeader = () => {
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const [isSearchVisible, setSearchVisible] = useState(false);
+  const [isUserVisible, setUserVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   const toggleSearch = () => {
     setSearchVisible(!isSearchVisible);
+    setUserVisible(false);
+    setMenuVisible(false);
+  };
+
+  const toggleUser = () => {
+    setSearchVisible(false);
+    setMenuVisible(false);
+    setUserVisible(!isUserVisible);
   };
 
   const toggleMenu = () => {
@@ -46,6 +64,9 @@ const SiteHeader = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <>
       {/* md, lg, xl */}
@@ -125,66 +146,79 @@ const SiteHeader = () => {
           </div>
           <div className="box-icon flex items-center gap-x-8">
             <div id="toggleModalUser" className="user group relative">
-              {/* <img
-                src="https://res.cloudinary.com/dhrm6pmys/image/upload/v1695832738/van-quyet-mobile/root/avatar_ek2qwa.png"
-                className="h-10 w-10 rounded-full border border-current shadow-xl"
-              /> */}
-              <IoPersonOutline className="cursor-pointer text-3xl transition-all duration-300 ease-linear group-hover:text-main dark:text-white" />
+              {Object.getOwnPropertyNames(user).length > 0 ? (
+                <img
+                  src={user?.avatar}
+                  className="h-10 w-10 rounded-full border border-current shadow-xl"
+                />
+              ) : (
+                <IoPersonOutline className="cursor-pointer text-3xl transition-all duration-300 ease-linear group-hover:text-main dark:text-white" />
+              )}
 
               <div
                 id="boxList"
-                className="invisible absolute top-14 z-20 w-60 rounded-lg bg-[hsla(0,0%,100%,0.8)] bg-white p-3 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] duration-200 ease-linear before:absolute  before:-top-2
+                className={`invisible absolute top-14 z-20 w-60 rounded-lg bg-[hsla(0,0%,100%,0.8)] bg-white p-3 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] duration-200 ease-linear before:absolute  before:-top-2
                                     before:z-10 before:h-5 before:w-5 before:rotate-45
-                                    before:rounded before:bg-white group-hover:visible dark:bg-gray-900 dark:before:bg-gray-900 md:left-[-80px] md:before:left-[85px] xl:left-[-100px] xl:before:left-[105px]"
+                                    before:rounded before:bg-white group-hover:visible dark:bg-gray-900 dark:before:bg-gray-900 md:left-[-80px] xl:left-[-100px] ${
+                                      Object.getOwnPropertyNames(user).length >
+                                      0
+                                        ? "md:before:left-[90px] xl:before:left-[111px]"
+                                        : "md:before:left-[85px] xl:before:left-[105px]"
+                                    }`}
               >
-                {/* isUser md:before:left-[90px] xl:before:left-[111px] */}
                 <div className="user_box">
                   <ul>
                     <div>
-                      {/* isUser <div className="w-full items-center pb-3">
-                        <div className="ml-4">
-                          <div className="text-sm text-gray-500 dark:text-gray-300">
-                            Xin chào !
+                      {Object.getOwnPropertyNames(user).length > 0 ? (
+                        <Fragment>
+                          <div className="w-full items-center pb-3">
+                            <div className="ml-4">
+                              <div className="text-sm text-gray-500 dark:text-gray-300">
+                                Xin chào !
+                              </div>
+                              <div>
+                                <span className="user-name text-base font-medium text-gray-900 dark:text-white">
+                                  {user?.userName}
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                          <div>
-                            <span className="user-name text-base font-medium text-gray-900 dark:text-white">
-                              hfgfhdf
-                            </span>
+
+                          <Link
+                            to="#"
+                            className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
+                          >
+                            Trang quản trị
+                          </Link>
+                          <Link
+                            to="#"
+                            className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
+                          >
+                            Đơn hàng của tôi
+                          </Link>
+                          <div
+                            onClick={() => handleLogout()}
+                            className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
+                          >
+                            Đăng xuất
                           </div>
-                        </div>
-                      </div>
-
-                      <Link
-                        to="#"
-                        className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
-                      >
-                        Trang quản trị
-                      </Link>
-                      <Link
-                        to="#"
-                        className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
-                      >
-                        Đơn hàng của tôi
-                      </Link>
-                      <Link
-                        to="#"
-                        className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
-                      >
-                        Đăng xuất
-                      </Link> */}
-
-                      <Link
-                        to="/login"
-                        className="mt-1 inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
-                      >
-                        Đăng nhập
-                      </Link>
-                      <Link
-                        to="/register"
-                        className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
-                      >
-                        Đăng ký
-                      </Link>
+                        </Fragment>
+                      ) : (
+                        <Fragment>
+                          <Link
+                            to="/login"
+                            className="mt-1 inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
+                          >
+                            Đăng nhập
+                          </Link>
+                          <Link
+                            to="/register"
+                            className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
+                          >
+                            Đăng ký
+                          </Link>
+                        </Fragment>
+                      )}
                     </div>
                   </ul>
                 </div>
@@ -311,7 +345,7 @@ const SiteHeader = () => {
           <IoMenuOutline className="text-3xl transition-all duration-300 ease-in-out hover:text-main dark:text-white" />
         </div>
         <div className="logo w-52">
-          <Link to="#">
+          <Link to="/">
             <img
               src="../../../../../src/assets/images/logo_horizontal.png"
               alt="logo"
@@ -386,7 +420,7 @@ const SiteHeader = () => {
 
       <div
         id="search"
-        className={`fixed z-30 h-full w-full bg-white transition-all duration-300 ease-in-out dark:bg-black md:hidden ${
+        className={`fixed z-30 h-full w-full bg-[rgb(244,244,244)] transition-all duration-300 ease-in-out dark:bg-black md:hidden ${
           isSearchVisible ? "translate-y-0" : "translate-y-full"
         }`}
       >
@@ -407,11 +441,113 @@ const SiteHeader = () => {
         </div>
       </div>
 
+      <div
+        id="user"
+        className={`fixed z-30 h-full w-full bg-[rgb(244,244,244)] transition-all duration-300 ease-in-out dark:bg-black md:hidden ${
+          isUserVisible ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <div className="h-full select-none">
+          <div className="flex items-center gap-3 bg-white p-5 dark:bg-gray-900">
+            <div>
+              {Object.getOwnPropertyNames(user).length > 0 ? (
+                <img
+                  src={user?.avatar}
+                  className="h-14 w-14 rounded-full border border-current shadow-xl"
+                />
+              ) : (
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-current shadow-xl dark:border-white">
+                  <IoPersonOutline className="text-3xl transition-all duration-300 ease-linear group-hover:text-main dark:text-white" />
+                </div>
+              )}
+            </div>
+            <div
+              className={`box-name flex ${
+                Object.getOwnPropertyNames(user).length > 0
+                  ? "flex-col-reverse"
+                  : "flex-col"
+              }`}
+            >
+              <h3 className="font-semibold dark:text-white">
+                {Object.getOwnPropertyNames(user).length > 0
+                  ? user?.userName
+                  : "Khách"}
+              </h3>
+              <span className="text-xs dark:text-white">
+                {Object.getOwnPropertyNames(user).length > 0
+                  ? "Xin chào !"
+                  : "Đăng nhập để sử dùng được nhiều tính năng !"}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-3 flex flex-col gap-y-3">
+            {Object.getOwnPropertyNames(user).length > 0 ? (
+              <Fragment>
+                <Link
+                  to="#"
+                  onClick={() => toggleUser()}
+                  className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
+                >
+                  <LuLayoutDashboard className="text-2xl group-hover:text-white dark:text-white" />
+                  <span className="font-semibold text-black group-hover:text-white dark:text-white">
+                    Trang quản trị
+                  </span>
+                </Link>
+                <Link
+                  to="#"
+                  onClick={() => toggleUser()}
+                  className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
+                >
+                  <IoBagOutline className="text-2xl group-hover:text-white dark:text-white" />
+                  <span className="font-semibold text-black group-hover:text-white dark:text-white">
+                    Đơn hàng của tôi
+                  </span>
+                </Link>
+
+                <div
+                  onClick={() => handleLogout()}
+                  className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
+                >
+                  <IoLogOutOutline className="text-2xl group-hover:text-white dark:text-white" />
+                  <span className="font-semibold text-black group-hover:text-white dark:text-white">
+                    Đăng xuất
+                  </span>
+                </div>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Link
+                  to="/login"
+                  onClick={() => toggleUser()}
+                  className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
+                >
+                  <IoLogInOutline className="text-2xl group-hover:text-white dark:text-white" />
+                  <span className="font-semibold text-black group-hover:text-white dark:text-white">
+                    Đăng nhập
+                  </span>
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => toggleUser()}
+                  className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
+                >
+                  <FaRegRegistered className="text-2xl group-hover:text-white dark:text-white" />
+                  <span className="font-semibold text-black group-hover:text-white dark:text-white">
+                    Đăng ký
+                  </span>
+                </Link>
+              </Fragment>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="fixed bottom-0 left-0 right-0 z-50 rounded-xl bg-white shadow-md dark:bg-gray-900 md:hidden">
         <nav className="max-w-screen-xl">
           <ul className="menu flex items-center justify-center gap-x-6 py-3 sm:gap-x-24">
             <li className="group relative select-none rounded-xl p-2 transition-all duration-300 ease-linear hover:bg-blue-100">
-              <Link to="#" className="flex flex-col items-center">
+              <Link to="/" className="flex flex-col items-center">
                 <IoHomeOutline className="text-3xl group-hover:text-main dark:text-white" />
                 <span className="pt-1 text-xs group-hover:text-main dark:text-white">
                   Trang chủ
@@ -454,13 +590,30 @@ const SiteHeader = () => {
               </Link>
             </li>
 
-            <li className="group relative select-none rounded-xl p-2 hover:bg-blue-100">
-              <Link to="#" className="flex flex-col items-center">
-                <IoPersonOutline className="text-3xl group-hover:text-main dark:text-white" />
-                <span className="pt-1 text-xs group-hover:text-main dark:text-white">
+            <li
+              className={`search group relative cursor-pointer select-none rounded-xl p-2 hover:bg-blue-100 ${
+                isUserVisible ? "bg-blue-100" : ""
+              }`}
+              onClick={toggleUser}
+            >
+              <div className="flex flex-col items-center">
+                <IoPersonOutline
+                  className={`text-3xl group-hover:text-main ${
+                    isUserVisible
+                      ? "text-main dark:text-main"
+                      : "dark:text-white"
+                  }`}
+                />
+                <span
+                  className={`pt-1 text-xs group-hover:text-main ${
+                    isUserVisible
+                      ? "text-main dark:text-main"
+                      : "dark:text-white"
+                  }`}
+                >
                   Tài khoản
                 </span>
-              </Link>
+              </div>
             </li>
           </ul>
         </nav>

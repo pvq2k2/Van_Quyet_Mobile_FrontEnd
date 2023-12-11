@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Register } from "../../services/auth";
+import { Login, Register } from "../../services/auth";
 
 const initialState = {
   user: {},
@@ -18,12 +18,32 @@ export const fetchRegister = createAsyncThunk(
   },
 );
 
+export const fetchLogin = createAsyncThunk(
+  "auth/login",
+  async (data, thunkAPI) => {
+    try {
+      const response = await Login(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout() {
+      return { ...initialState };
+    },
+  },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchLogin.fulfilled, (state, { payload }) => {
+        const userData = payload?.data;
+        state.user = userData;
+      })
       .addMatcher(
         (action) => action.type.endsWith("/pending"),
         (state) => {
@@ -43,5 +63,5 @@ const authSlice = createSlice({
       });
   },
 });
-
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

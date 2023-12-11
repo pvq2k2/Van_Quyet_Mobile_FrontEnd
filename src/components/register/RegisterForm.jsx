@@ -31,14 +31,22 @@ const RegisterForm = () => {
   const handleSubmit = async (value) => {
     delete value.rePassword;
     const data = { ...value, gender: parseInt(value.gender) };
-    dispatch(fetchRegister(data))
-      .unwrap()
-      .then((res) => {
-        toast.success(res.message);
-        form.reset();
-        setModal(true);
-      })
-      .catch((error) => toast.error(error));
+    try {
+      const res = dispatch(fetchRegister(data)).unwrap();
+      toast.success(res.message);
+      form.reset();
+      setModal(true);
+    } catch (error) {
+      toast.error(error);
+    }
+    // dispatch(fetchRegister(data))
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success(res.message);
+    //     form.reset();
+    //     setModal(true);
+    //   })
+    //   .catch((error) => toast.error(error));
   };
 
   return (
@@ -109,11 +117,11 @@ const RegisterForm = () => {
       </div>
       <div className="pt-5">
         <button
-          type="submit"
           disabled={loading}
-          className="group relative flex w-full justify-center rounded-md border border-transparent bg-[#4ba3e7] px-4 py-2 text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#0f4670] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="group relative flex w-full cursor-pointer justify-center rounded-md border border-transparent bg-[#4ba3e7] px-4 py-2 text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#0f4670] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
-          Đăng ký
+          {loading ? <ImSpinner3 className="mr-2 animate-spin text-xl" /> : ""}
+          {loading ? "Xin chờ !" : "Đăng ký"}
         </button>
       </div>
       <p className="mt-3 text-center text-sm text-gray-600 dark:text-gray-300">
