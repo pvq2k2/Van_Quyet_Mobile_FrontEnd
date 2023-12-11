@@ -52,18 +52,54 @@ export const registerSchema = yup
 
 export const loginSchema = yup
   .object({
-    userName: yup
+    email: yup
       .string()
-      .required("Vui lòng nhập tên tài khoản !")
+      .required("Vui lòng nhập email !")
+      .email("Vui lòng nhập đúng định dạng email")
       .matches(
-        /^[a-z0-9_]+$/,
-        "Tên tài khoản không được chứa chữ hoa, dấu cách và ký tự đặc biệt !",
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Vui lòng nhập đúng định dạng email",
       )
-      .max(15, "Tên tài khoản không được quá 15 ký tự !")
       .trim(),
     password: yup
       .string()
       .required("Vui lòng nhập mật khẩu !")
+      .matches(
+        /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
+        "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",
+      )
+      .trim(),
+  })
+  .required();
+
+export const forgotPasswordSchema = yup
+  .object({
+    email: yup
+      .string()
+      .required("Vui lòng nhập email !")
+      .email("Vui lòng nhập đúng định dạng email")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Vui lòng nhập đúng định dạng email",
+      )
+      .trim(),
+  })
+  .required();
+
+export const resetPasswordSchema = yup
+  .object({
+    password: yup
+      .string()
+      .required("Vui lòng nhập mật khẩu !")
+      .matches(
+        /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
+        "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",
+      )
+      .trim(),
+
+    rePassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Mật khẩu không khớp")
       .matches(
         /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
         "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",

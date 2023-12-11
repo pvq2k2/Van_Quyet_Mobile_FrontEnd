@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Login, Register } from "../../services/auth";
+import {
+  forgotPassword,
+  login,
+  register,
+  resetPassword,
+  verifyAccount,
+} from "../../services/auth";
 
 const initialState = {
   user: {},
@@ -10,7 +16,7 @@ export const fetchRegister = createAsyncThunk(
   "auth/register",
   async (data, thunkAPI) => {
     try {
-      const response = await Register(data);
+      const response = await register(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -22,7 +28,43 @@ export const fetchLogin = createAsyncThunk(
   "auth/login",
   async (data, thunkAPI) => {
     try {
-      const response = await Login(data);
+      const response = await login(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchForgotPassword = createAsyncThunk(
+  "auth/forgot-password",
+  async (data, thunkAPI) => {
+    try {
+      const response = await forgotPassword(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchResetPassword = createAsyncThunk(
+  "auth/reset-password",
+  async (data, thunkAPI) => {
+    try {
+      const response = await resetPassword(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchVerifyAccount = createAsyncThunk(
+  "auth/verify-account",
+  async (data, thunkAPI) => {
+    try {
+      const response = await verifyAccount(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

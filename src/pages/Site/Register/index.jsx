@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterForm from "../../components/register/RegisterForm";
+import RegisterForm from "../../../components/site/register/RegisterForm";
 
 const Register = () => {
   document.title = "Văn Quyết Mobile - Đăng ký";
