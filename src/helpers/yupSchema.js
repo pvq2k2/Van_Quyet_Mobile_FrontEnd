@@ -49,3 +49,25 @@ export const registerSchema = yup
       .trim(),
   })
   .required();
+
+export const loginSchema = yup
+  .object({
+    userName: yup
+      .string()
+      .required("Vui lòng nhập tên tài khoản !")
+      .matches(
+        /^[a-z0-9_]+$/,
+        "Tên tài khoản không được chứa chữ hoa, dấu cách và ký tự đặc biệt !",
+      )
+      .max(15, "Tên tài khoản không được quá 15 ký tự !")
+      .trim(),
+    password: yup
+      .string()
+      .required("Vui lòng nhập mật khẩu !")
+      .matches(
+        /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
+        "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",
+      )
+      .trim(),
+  })
+  .required();
