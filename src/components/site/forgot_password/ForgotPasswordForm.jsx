@@ -1,38 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ImSpinner3 } from "react-icons/im";
 import { AiOutlineClose, AiOutlineMail } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { registerSchema } from "../../helpers/yupSchema";
-import { fetchRegister } from "../../redux/slice/authSlice";
-import InputField from "../common/InputField";
-import InputRadioField from "../common/InputRadioField";
+import InputField from "../../common/InputField";
+import { forgotPasswordSchema } from "../../../helpers/yupSchema";
+import { fetchForgotPassword } from "../../../redux/slice/authSlice";
 
-const RegisterForm = () => {
+const ForgotPasswordForm = () => {
   const [modal, setModal] = useState(false);
   const loading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const form = useForm({
     mode: "onBlur",
     defaultValues: {
-      userName: "",
-      fullName: "",
       email: "",
-      numberPhone: "",
-      password: "",
-      rePassword: "",
-      gender: "",
     },
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(forgotPasswordSchema),
   });
 
   const handleSubmit = async (value) => {
-    delete value.rePassword;
-    const data = { ...value, gender: parseInt(value.gender) };
     try {
-      const res = dispatch(fetchRegister(data)).unwrap();
+      const res = await dispatch(fetchForgotPassword(value.email)).unwrap();
       toast.success(res.message);
       form.reset();
       setModal(true);
@@ -52,68 +44,7 @@ const RegisterForm = () => {
   return (
     <form className="mt-8" onSubmit={form.handleSubmit(handleSubmit)}>
       <div className="-space-y-px rounded-md">
-        <InputField
-          label={"Tên tài khoản"}
-          type={"text"}
-          name={"userName"}
-          form={form}
-        />
-        <InputField
-          label={"Họ và tên"}
-          type={"text"}
-          name={"fullName"}
-          form={form}
-        />
         <InputField label={"Email"} type={"email"} name={"email"} form={form} />
-        <InputField
-          label={"Số điện thoại"}
-          type={"text"}
-          name={"numberPhone"}
-          form={form}
-        />
-        <InputField
-          label={"Mật khẩu"}
-          type={"password"}
-          name={"password"}
-          form={form}
-        />
-        <InputField
-          label={"Nhập lại mật khẩu"}
-          type={"password"}
-          name={"rePassword"}
-          form={form}
-        />
-
-        <div className="form-group">
-          <label
-            htmlFor="gioi_tinh"
-            className="inline-block py-2 dark:text-gray-300"
-          >
-            Giới tính
-          </label>
-          <div className="flex gap-x-10">
-            <InputRadioField
-              defaultChecked={true}
-              id={"male"}
-              name={"gender"}
-              label={"Nam"}
-              defaultValue={1}
-              form={form}
-            />
-            <InputRadioField
-              id={"female"}
-              name={"gender"}
-              label={"Nữ"}
-              defaultValue={2}
-              form={form}
-            />
-          </div>
-          <div className="error-message ml-1 mt-1 text-sm text-red-500">
-            {form.formState.errors["gender"]
-              ? form.formState.errors["gender"]?.message
-              : ""}
-          </div>
-        </div>
       </div>
       <div className="pt-5">
         <button
@@ -121,11 +52,11 @@ const RegisterForm = () => {
           className="group relative flex w-full cursor-pointer justify-center rounded-md border border-transparent bg-[#4ba3e7] px-4 py-2 text-sm font-medium text-white duration-300 ease-in-out hover:bg-[#0f4670] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           {loading ? <ImSpinner3 className="mr-2 animate-spin text-xl" /> : ""}
-          {loading ? "Xin chờ !" : "Đăng ký"}
+          {loading ? "Xin chờ !" : "Quên mật khẩu"}
         </button>
       </div>
       <p className="mt-3 text-center text-sm text-gray-600 dark:text-gray-300">
-        Bạn đã có tài khoản ?
+        Bạn đã nhớ mật khẩu ?
         <Link
           to="/login"
           className="ml-2 font-medium text-[#4ba3e7] duration-300 ease-in-out hover:text-[#0f4670]"
@@ -160,12 +91,11 @@ const RegisterForm = () => {
                       className="pt-5 text-lg font-medium leading-6 text-gray-900 dark:text-white"
                       id="modal-title"
                     >
-                      Đăng ký thành công !
+                      Gửi yêu cầu thành công !
                     </h3>
                     <div className="mt-4">
                       <p className="text-sm text-gray-500 dark:text-gray-300">
-                        Cảm ơn bạn đã đăng ký vui lòng kiểm tra email để xác
-                        thực tài khoản !
+                        Vui lòng kiểm tra email để đặt lại mật khẩu!
                       </p>
                     </div>
                     <Link to="/login">
@@ -184,4 +114,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ForgotPasswordForm;

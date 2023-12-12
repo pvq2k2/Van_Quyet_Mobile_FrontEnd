@@ -5,9 +5,9 @@ import { ImSpinner3 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginSchema } from "../../helpers/yupSchema";
-import { fetchLogin } from "../../redux/slice/authSlice";
-import InputField from "../common/InputField";
+import { loginSchema } from "../../../helpers/yupSchema";
+import { fetchLogin } from "../../../redux/slice/authSlice";
+import InputField from "../../common/InputField";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const LoginForm = () => {
   const form = useForm({
     mode: "onBlur",
     defaultValues: {
-      userName: "",
+      email: "",
       password: "",
     },
     resolver: yupResolver(loginSchema),
@@ -44,9 +44,9 @@ const LoginForm = () => {
       <form className="mt-8" onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="-space-y-px rounded-md">
           <InputField
-            label={"Tên tài khoản"}
-            type={"text"}
-            name={"userName"}
+            label={"Email"}
+            type={"email"}
+            name={"email"}
             form={form}
           />
           <InputField

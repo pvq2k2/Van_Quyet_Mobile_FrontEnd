@@ -1,7 +1,15 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { AdminLayout, SiteLayout } from "./components/layouts";
-import { Home, Login, NotFound, Register } from "./pages";
+import {
+  ForgotPassword,
+  Home,
+  Login,
+  NotFound,
+  Register,
+  ResetPassword,
+} from "./pages";
+import VerifyAccount from "./pages/Site/VerifyAccount";
 
 const Router = () => {
   return (
@@ -11,6 +19,9 @@ const Router = () => {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/verify-account/:token" element={<VerifyAccount />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Navigate to="/admin/dashboard" />} />
