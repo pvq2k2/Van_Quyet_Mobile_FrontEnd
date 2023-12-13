@@ -21,6 +21,10 @@
     --scrollbar-thumb-hover-dark: #777;
   }
 
+  html.dark {
+    color-scheme: dark;
+  }
+
   .scrollbar::-webkit-scrollbar {
     width: 12px;
     height: 12px;
