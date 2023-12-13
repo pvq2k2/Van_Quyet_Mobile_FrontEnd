@@ -8,8 +8,9 @@ import {
   NotFound,
   Register,
   ResetPassword,
+  VerifyAccount,
 } from "./pages";
-import VerifyAccount from "./pages/Site/VerifyAccount";
+import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
 
 const Router = () => {
   return (
@@ -23,7 +24,14 @@ const Router = () => {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/verify-account/:token" element={<VerifyAccount />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRouterAdmin>
+              <AdminLayout />
+            </PrivateRouterAdmin>
+          }
+        >
           <Route index element={<Navigate to="/admin/dashboard" />} />
           <Route path="dashboard" element={<h1>dashboard</h1>} />
           <Route path="categories" element={<h1>categories</h1>} />

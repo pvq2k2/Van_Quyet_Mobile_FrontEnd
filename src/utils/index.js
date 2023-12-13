@@ -10,6 +10,5 @@ export const cathError = (error) => {
       }
     }
   }
-
-  return { error: error.message || error };
+  return error.message || error;
 };

@@ -157,7 +157,7 @@ function NavItem({ to, icon: Icon, label }) {
   const isActive = location.pathname === to;
 
   return (
-    <li class="mt-0.5 w-full">
+    <li className="mt-0.5 w-full">
       <NavLink
         to={to}
         end
@@ -174,7 +174,7 @@ function NavItem({ to, icon: Icon, label }) {
         >
           <Icon />
         </div>
-        <span class="pointer-events-none ml-1 opacity-100 dark:text-white">
+        <span className="pointer-events-none ml-1 opacity-100 dark:text-white">
           {label}
         </span>
       </NavLink>
