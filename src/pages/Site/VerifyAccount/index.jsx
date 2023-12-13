@@ -5,7 +5,7 @@ import VerifyAccountSkeleton from "../../../components/common/skeleton/VerifyAcc
 import { fetchVerifyAccount } from "../../../redux/slice/authSlice";
 
 const VerifyAccount = () => {
-  document.title = "Văn Quyết Mobile - Xác thực tài khoản";
+  document.title = "Xác thực tài khoản - Văn Quyết Mobile";
   const { token } = useParams();
   const dispatch = useDispatch();
   const [data, setData] = useState({});
