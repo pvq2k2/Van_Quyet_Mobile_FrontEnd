@@ -2,7 +2,7 @@ import React from "react";
 import ResetPasswordForm from "../../../components/site/reset_password/ResetPasswordForm";
 
 const ResetPassword = () => {
-  document.title = "Văn Quyết Mobile - Đặt lại mật khẩu";
+  document.title = "Đặt lại mật khẩu - Văn Quyết Mobile";
   return (
     <section className="my-5 rounded-lg shadow-inner xl:mx-auto">
       <div className="content grid grid-cols-1 overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-900 lg:grid-cols-2 xl:grid-cols-2">

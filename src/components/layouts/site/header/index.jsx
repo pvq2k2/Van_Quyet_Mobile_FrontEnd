@@ -149,7 +149,7 @@ const SiteHeader = () => {
               {Object.getOwnPropertyNames(user).length > 0 ? (
                 <img
                   src={user?.avatar}
-                  className="h-10 w-10 rounded-full border border-current shadow-xl"
+                  className="h-10 w-10 rounded-full shadow-xl"
                 />
               ) : (
                 <IoPersonOutline className="cursor-pointer text-3xl transition-all duration-300 ease-linear group-hover:text-main dark:text-white" />
@@ -185,7 +185,11 @@ const SiteHeader = () => {
                           </div>
 
                           <Link
-                            to="#"
+                            to={
+                              user.role == 2
+                                ? "/admin/dashboard"
+                                : "/user/dashboard"
+                            }
                             className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
                           >
                             Trang quản trị
@@ -453,7 +457,7 @@ const SiteHeader = () => {
               {Object.getOwnPropertyNames(user).length > 0 ? (
                 <img
                   src={user?.avatar}
-                  className="h-14 w-14 rounded-full border border-current shadow-xl"
+                  className="h-14 w-14 rounded-full shadow-xl"
                 />
               ) : (
                 <div className="flex h-14 w-14 items-center justify-center rounded-full border border-current shadow-xl dark:border-white">
@@ -485,7 +489,7 @@ const SiteHeader = () => {
             {Object.getOwnPropertyNames(user).length > 0 ? (
               <Fragment>
                 <Link
-                  to="#"
+                  to={user.role == 2 ? "/admin/dashboard" : "/user/dashboard"}
                   onClick={() => toggleUser()}
                   className="group flex cursor-pointer items-center gap-x-3 bg-white px-5 py-3 transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] dark:bg-gray-900"
                 >
