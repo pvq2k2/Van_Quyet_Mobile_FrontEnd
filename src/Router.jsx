@@ -9,8 +9,9 @@ import {
   Register,
   ResetPassword,
   VerifyAccount,
-} from "./pages";
+} from "./pages/Site";
 import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
+import { CategoriesList } from "./pages/Admin/Categories";
 
 const Router = () => {
   return (
@@ -34,7 +35,7 @@ const Router = () => {
         >
           <Route index element={<Navigate to="/admin/dashboard" />} />
           <Route path="dashboard" element={<h1>dashboard</h1>} />
-          <Route path="categories" element={<h1>categories</h1>} />
+          <Route path="categories" element={<CategoriesList />} />
         </Route>
         <Route path="/*" element={<NotFound />} />
       </Routes>
