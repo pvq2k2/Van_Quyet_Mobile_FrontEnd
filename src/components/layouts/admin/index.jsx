@@ -11,7 +11,7 @@ const AdminLayout = () => {
   return (
     <div className="m-0 bg-gray-50 dark:bg-black lg:flex">
       <AdminSitebar toggleMenu={toggleMenu} isMenu={isMenu} />
-      <main className="relative h-screen w-full rounded-xl transition-all duration-200 lg:mx-6 lg:mt-4">
+      <main className="relative w-full rounded-xl transition-all duration-200 lg:mx-6 lg:mt-4">
         <AdminHeader toggleMenu={toggleMenu} />
         <Outlet />
       </main>
