@@ -15,7 +15,7 @@ const ResetPasswordForm = () => {
   const loading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const form = useForm({
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       password: "",
       rePassword: "",
