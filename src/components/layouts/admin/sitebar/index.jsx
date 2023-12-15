@@ -102,42 +102,49 @@ const AdminSitebar = ({ toggleMenu, isMenu }) => {
           <div className="h-sidenav block max-h-screen w-auto grow basis-full items-center overflow-auto">
             <ul className="mb-0 flex min-h-full flex-col pl-0">
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/dashboard"
                 icon={IoHomeOutline}
                 label="Bảng điều khiển"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/categories"
                 icon={IoLibraryOutline}
                 label="Danh mục"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/slides"
                 icon={IoImagesOutline}
                 label="Ảnh trình chiếu"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/products"
                 icon={IoPhonePortraitOutline}
                 label="Sản phẩm"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/users"
                 icon={IoPersonOutline}
                 label="Người dùng"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/comments"
                 icon={IoChatbubbleOutline}
                 label="Bình luận"
               />
 
               <NavItem
+                handleClick={toggleMenu}
                 to="/admin/carts"
                 icon={IoCartOutline}
                 label="Đơn hàng"
@@ -152,13 +159,14 @@ const AdminSitebar = ({ toggleMenu, isMenu }) => {
 
 export default AdminSitebar;
 
-function NavItem({ to, icon: Icon, label }) {
+function NavItem({ to, icon: Icon, label, handleClick }) {
   const location = useLocation();
   const isActive = location.pathname === to;
 
   return (
     <li className="mt-0.5 w-full">
       <NavLink
+        onClick={handleClick}
         to={to}
         end
         className={`${

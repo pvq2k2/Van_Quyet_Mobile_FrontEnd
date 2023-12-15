@@ -107,3 +107,15 @@ export const resetPasswordSchema = yup
       .trim(),
   })
   .required();
+
+//Admin Schema
+export const categoriesSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng tên danh mục !").trim(),
+    icon: yup
+      .string()
+      .required("Vui lòng chọn icon !")
+      .max(1, "Icon chỉ có 1 ký tự !")
+      .trim(),
+  })
+  .required();

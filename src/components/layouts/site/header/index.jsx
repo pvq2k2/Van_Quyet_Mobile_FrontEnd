@@ -50,7 +50,7 @@ const SiteHeader = () => {
           "shadow-xl",
         );
       } else {
-        headerPC.current.classList.remove(
+        headerPC.current?.classList.remove(
           "bg-[hsla(0,0%,100%,0.8)]",
           "dark:bg-[hsla(220.91,39.29%,10.98%,0.8)]",
           "shadow-xl",
