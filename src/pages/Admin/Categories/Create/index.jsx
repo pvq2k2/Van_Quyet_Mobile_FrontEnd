@@ -1,12 +1,18 @@
-import React, { useMemo, useState } from "react";
-import { IoHomeOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import InputField from "../../../../components/common/InputField";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { ImSpinner3 } from "react-icons/im";
+import { IoHomeOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import InputField from "../../../../components/common/InputField";
 import { categoriesSchema } from "../../../../helpers/yupSchema";
+import { fetchCreateCategories } from "../../../../redux/slice/categoriesSlice";
 
 const CategoriesCreate = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.categories.isLoading);
   const form = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -22,8 +28,15 @@ const CategoriesCreate = () => {
     return string.split(" ");
   }, []);
 
-  const handleSubmit = (value) => {
-    console.log(value);
+  const handleSubmit = async (value) => {
+    try {
+      const res = await dispatch(fetchCreateCategories(value)).unwrap();
+      toast.success(res.message);
+      setCurrentIcon("");
+      form.reset();
+    } catch (error) {
+      toast.error(error);
+    }
   };
   return (
     <div className="px-4 pb-4 xl:px-0">
@@ -104,8 +117,16 @@ const CategoriesCreate = () => {
         </div>
 
         <div className="form-group flex items-center gap-x-6">
-          <button className="rounded-md bg-blue-500 px-5 py-2 text-base tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 sm:w-auto">
-            Thêm mới
+          <button
+            disabled={loading}
+            className="flex items-center rounded-md bg-blue-500 px-5 py-2 text-base tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-blue-600 disabled:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 disabled:dark:bg-blue-500 sm:w-auto"
+          >
+            {loading ? (
+              <ImSpinner3 className="mr-2 animate-spin text-xl" />
+            ) : (
+              ""
+            )}
+            {loading ? "Xin chờ !" : "Thêm mới"}
           </button>
           <Link
             to="/admin/categories"

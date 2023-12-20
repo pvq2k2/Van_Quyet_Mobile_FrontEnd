@@ -11,8 +11,10 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import darkModeReducer from "./slice/darkModeSlice";
+import darkModeSlice from "./slice/darkModeSlice";
 import authSlice from "./slice/authSlice";
+import categoriesSlice from "./slice/categoriesSlice";
+import { injectStore } from "../services/instance";
 
 const persistConfig = {
   key: "root",
@@ -22,8 +24,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  darkMode: darkModeReducer,
+  darkMode: darkModeSlice,
   auth: authSlice,
+  categories: categoriesSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,5 +40,6 @@ export const store = configureStore({
       },
     }),
 });
+injectStore(store);
 
 export const persistor = persistStore(store);

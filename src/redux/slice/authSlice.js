@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   forgotPassword,
   login,
+  reNewToken,
   register,
   resetPassword,
   verifyAccount,
@@ -72,6 +73,18 @@ export const fetchVerifyAccount = createAsyncThunk(
   },
 );
 
+export const fetchReNewToken = createAsyncThunk(
+  "auth/re-new-token",
+  async (data, thunkAPI) => {
+    try {
+      const response = await reNewToken(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -83,6 +96,10 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchLogin.fulfilled, (state, { payload }) => {
+        const userData = payload?.data;
+        state.user = userData;
+      })
+      .addCase(fetchReNewToken.fulfilled, (state, { payload }) => {
         const userData = payload?.data;
         state.user = userData;
       })

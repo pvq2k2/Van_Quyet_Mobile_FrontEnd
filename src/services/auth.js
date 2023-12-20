@@ -63,3 +63,14 @@ export const resetPassword = async (resetPasswordData) => {
     throw cathError(error);
   }
 };
+
+export const reNewToken = async (refreshToken) => {
+  try {
+    const { data } = await instance.post(
+      `/auth/re-new-token?refreshToken=${refreshToken}`,
+    );
+    return data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
