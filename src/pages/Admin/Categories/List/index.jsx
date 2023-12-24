@@ -1,24 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IoAddCircleOutline,
   IoHomeOutline,
+  IoInformationOutline,
   IoPencilOutline,
   IoServerOutline,
-  IoTrashOutline,
 } from "react-icons/io5";
 import Pagination from "../../../../components/common/Pagination";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGetAllCategories } from "../../../../redux/slice/categoriesSlice";
+import { toast } from "react-toastify";
+import { ImSpinner3 } from "react-icons/im";
 
 const CategoriesList = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories.categories);
+  const isLoading = useSelector((state) => state.categories.isLoading);
   const [pagination, setPagination] = useState({
     pageSize: 10,
     pageNumber: 1,
-    totalCount: 100,
-    totalPage: 10,
+    totalPage: 1,
+    totalCount: 10,
+  });
+  const [filters, setFilter] = useState({
+    pageSize: 10,
+    pageNumber: 1,
   });
   const handlePageChange = (newPage) => {
-    setPagination({ ...pagination, pageNumber: newPage });
+    setFilter({
+      ...filters,
+      pageNumber: newPage,
+    });
   };
+  useEffect(() => {
+    dispatch(fetchGetAllCategories(filters))
+      .unwrap()
+      .then((res) => {
+        setPagination(res.pagination);
+      })
+      .catch((error) => toast.error(error));
+  }, [dispatch, filters]);
   return (
     <div className="px-4 pb-4 xl:px-0">
       <section className="my-5 ml-2 md:flex md:items-end md:justify-between lg:my-8">
@@ -65,39 +87,61 @@ const CategoriesList = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-                    <tr>
-                      <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                        <span>1</span>
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                        ten_danh_muc
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-center font-['FontIcon'] text-3xl font-medium text-gray-700 dark:text-gray-200">
-                        R
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-sm">
-                        <div className="flex items-center gap-x-6 md:justify-center">
-                          <a href="URLGetUpdateCategory">
-                            <button className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto">
-                              <IoPencilOutline className="text-xl" />
-                              <span>Sửa</span>
-                            </button>
-                          </a>
-                          <button className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-red-500 px-5 py-2 text-sm tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 sm:w-auto">
-                            <IoTrashOutline className="text-xl" />
-                            <span>Xóa</span>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    {/* <tr>
-                      <td colSpan={4}>
-                        <div className="flex flex-col items-center justify-center py-20">
-                          <IoServerOutline className="text-5xl" />
-                          <h2 className="text-xl">Không có dữ liệu</h2>
-                        </div>
-                      </td>
-                    </tr> */}
+                    {isLoading ? (
+                      <tr>
+                        <td colSpan={4}>
+                          <div className="flex items-center justify-center gap-x-4 py-20">
+                            <ImSpinner3 className="mr-2 animate-spin text-4xl" />
+                            <h2 className="text-xl">Xin chờ</h2>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : categories?.data?.length > 0 ? (
+                      categories.data.map((category) => (
+                        <tr key={category.id}>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <span>{category.id}</span>
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
+                            {category.name}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-center font-['FontIcon'] text-3xl font-medium text-gray-700 dark:text-gray-200">
+                            {category.icon}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-sm">
+                            <div className="flex items-center gap-x-6 md:justify-center">
+                              <Link
+                                to={`${category.slug}`}
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-indigo-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600 sm:w-auto"
+                              >
+                                <IoInformationOutline className="text-xl" />
+                                <span>Chi tiết</span>
+                              </Link>
+                              <Link
+                                to={`update/${category.id}`}
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
+                              >
+                                <IoPencilOutline className="text-xl" />
+                                <span>Sửa</span>
+                              </Link>
+                              {/* <button className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-red-500 px-5 py-2 text-sm tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 sm:w-auto">
+                                <IoTrashOutline className="text-xl" />
+                                <span>Xóa</span>
+                              </button> */}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4}>
+                          <div className="flex flex-col items-center justify-center py-20">
+                            <IoServerOutline className="text-5xl" />
+                            <h2 className="text-xl">Không có dữ liệu</h2>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

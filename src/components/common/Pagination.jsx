@@ -7,17 +7,19 @@ import {
 const Pagination = (props) => {
   const { pagination, onPageChange } = props;
   const handlePageChange = (newPage) => {
-    if (onPageChange) {
-      onPageChange(newPage);
+    if (pagination.pageNumber != newPage) {
+      if (onPageChange) {
+        onPageChange(newPage);
+      }
     }
   };
-  const numberOfPages = useMemo(() => {
+  const numberOfPages = () => {
     const numberOfPage = [];
     for (let i = 1; i <= pagination.totalPage; i++) {
       numberOfPage.push(i);
     }
     return numberOfPage;
-  }, [pagination.pageSize]);
+  };
 
   // Array of buttons what we see on the page
   const [arrOfCurrButtons, setArrOfCurrButtons] = useState([]);
@@ -75,7 +77,7 @@ const Pagination = (props) => {
     }
 
     setArrOfCurrButtons(tempNumberOfPages);
-  }, [pagination.pageNumber]);
+  }, [pagination.pageNumber, pagination.totalPage]);
 
   return (
     <div className="mt-6 flex flex-wrap items-center justify-center gap-7 md:flex-nowrap">
