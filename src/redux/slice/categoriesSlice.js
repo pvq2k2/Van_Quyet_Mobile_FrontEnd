@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createCategories } from "../../services/categories";
+import { createCategories, getAllCategories } from "../../services/categories";
 
 const initialState = {
   categories: {},
@@ -18,16 +18,27 @@ export const fetchCreateCategories = createAsyncThunk(
   },
 );
 
+export const fetchGetAllCategories = createAsyncThunk(
+  "categories/get-all-categories",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getAllCategories(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchLogin.fulfilled, (state, { payload }) => {
-      //   const userData = payload?.data;
-      //   state.user = userData;
-      // })
+      .addCase(fetchGetAllCategories.fulfilled, (state, { payload }) => {
+        state.categories = payload;
+      })
       .addMatcher(
         (action) => action.type.endsWith("/pending"),
         (state) => {
