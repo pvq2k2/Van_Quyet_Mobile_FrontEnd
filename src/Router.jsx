@@ -11,7 +11,11 @@ import {
   VerifyAccount,
 } from "./pages/Site";
 import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
-import { CategoriesCreate, CategoriesList } from "./pages/Admin/Categories";
+import {
+  CategoriesCreate,
+  CategoriesList,
+  CategoriesUpdate,
+} from "./pages/Admin/Categories";
 
 const Router = () => {
   return (
@@ -38,6 +42,7 @@ const Router = () => {
           <Route path="categories">
             <Route index element={<CategoriesList />} />
             <Route path="create" element={<CategoriesCreate />} />
+            <Route path="update/:id" element={<CategoriesUpdate />} />
           </Route>
         </Route>
         <Route path="/*" element={<NotFound />} />

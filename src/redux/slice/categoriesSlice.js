@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createCategories, getAllCategories } from "../../services/categories";
+import {
+  createCategories,
+  getAllCategories,
+  getCategoriesByID,
+  updateCategories,
+} from "../../services/categories";
 
 const initialState = {
   categories: {},
@@ -11,6 +16,30 @@ export const fetchCreateCategories = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await createCategories(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchUpdateCategories = createAsyncThunk(
+  "categories/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateCategories(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchGetCategoriesByID = createAsyncThunk(
+  "categories/get-categories-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getCategoriesByID(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,6 +67,9 @@ const categoriesSlice = createSlice({
     builder
       .addCase(fetchGetAllCategories.fulfilled, (state, { payload }) => {
         state.categories = payload;
+      })
+      .addCase(fetchGetCategoriesByID.fulfilled, (state, { payload }) => {
+        state.categories = payload?.data;
       })
       .addMatcher(
         (action) => action.type.endsWith("/pending"),

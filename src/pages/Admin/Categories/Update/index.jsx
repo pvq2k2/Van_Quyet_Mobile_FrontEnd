@@ -1,18 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputField from "../../../../components/common/InputField";
 import { categoriesSchema } from "../../../../helpers/yupSchema";
-import { fetchCreateCategories } from "../../../../redux/slice/categoriesSlice";
+import {
+  fetchGetCategoriesByID,
+  fetchUpdateCategories,
+} from "../../../../redux/slice/categoriesSlice";
 
-const CategoriesCreate = () => {
+const CategoriesUpdate = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.categories.isLoading);
+  const { id } = useParams();
+  const navigate = useNavigate();
   const form = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -21,19 +26,30 @@ const CategoriesCreate = () => {
     },
     resolver: yupResolver(categoriesSchema),
   });
+  const categories = useSelector((state) => state.categories.categories);
   const [currentIcon, setCurrentIcon] = useState("");
   const arrIcon = useMemo(() => {
     let string =
       "` ! # $ % ^ & * _ - + ( ) { } [ ] \" ' | \\ , . ? / Q q W w E e R r T t Y y U u O o P p A a S s D d F f G g H h J j K k L l Z z X x C c V v B b N n M m 1 2 3 4 5 6 7 8 9 0";
     return string.split(" ");
   }, []);
+  useEffect(() => {
+    (() => {
+      dispatch(fetchGetCategoriesByID(id))
+        .unwrap()
+        .then((res) => setCurrentIcon(res.data.icon))
+        .catch((error) => toast.error(error));
+    })();
+  }, [id, dispatch, form.reset]);
+  useEffect(() => {
+    form.reset(categories);
+  }, [categories]);
 
   const handleSubmit = async (value) => {
     try {
-      const res = await dispatch(fetchCreateCategories(value)).unwrap();
+      const res = await dispatch(fetchUpdateCategories(value)).unwrap();
       toast.success(res.message);
-      setCurrentIcon("");
-      form.reset();
+      navigate("/admin/categories");
     } catch (error) {
       toast.error(error);
     }
@@ -50,11 +66,11 @@ const CategoriesCreate = () => {
               <Link to="/admin/categories">Danh mục</Link>
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400">
-              Thêm mới danh mục
+              Cập nhật danh mục
             </li>
           </ol>
           <h3 className="mb-3 text-2xl font-bold capitalize leading-10 md:mb-0">
-            Thêm mới danh mục
+            Cập nhật danh mục
           </h3>
         </div>
       </section>
@@ -126,7 +142,7 @@ const CategoriesCreate = () => {
             ) : (
               ""
             )}
-            {loading ? "Xin chờ !" : "Thêm mới"}
+            {loading ? "Xin chờ !" : "Cập nhật"}
           </button>
           <Link
             to="/admin/categories"
@@ -140,4 +156,4 @@ const CategoriesCreate = () => {
   );
 };
 
-export default CategoriesCreate;
+export default CategoriesUpdate;

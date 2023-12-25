@@ -25,8 +25,8 @@ instance.interceptors.response.use(
           .unwrap()
           .catch((error) => {
             store.dispatch(logout());
-            toast.error(error);
             window.location.href = "/login";
+            toast.error(error);
             return;
           });
         return;
