@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AdminLayout, SiteLayout } from "./components/layouts";
 import {
   ForgotPassword,
@@ -13,11 +14,15 @@ import {
 import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
 import {
   CategoriesCreate,
+  CategoriesDetail,
   CategoriesList,
   CategoriesUpdate,
 } from "./pages/Admin/Categories";
+import { history } from "./helpers/history";
 
 const Router = () => {
+  history.navigate = useNavigate();
+  history.location = useLocation();
   return (
     <>
       <Routes>
@@ -43,6 +48,9 @@ const Router = () => {
             <Route index element={<CategoriesList />} />
             <Route path="create" element={<CategoriesCreate />} />
             <Route path="update/:id" element={<CategoriesUpdate />} />
+            <Route path=":slug">
+              <Route index element={<CategoriesDetail />} />
+            </Route>
           </Route>
         </Route>
         <Route path="/*" element={<NotFound />} />

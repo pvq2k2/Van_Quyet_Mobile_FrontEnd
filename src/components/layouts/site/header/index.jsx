@@ -44,7 +44,7 @@ const SiteHeader = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        headerPC.current.classList.add(
+        headerPC.current?.classList.add(
           "bg-[hsla(0,0%,100%,0.8)]",
           "dark:bg-[hsla(220.91,39.29%,10.98%,0.8)]",
           "shadow-xl",
@@ -178,7 +178,7 @@ const SiteHeader = () => {
                               </div>
                               <div>
                                 <span className="user-name text-base font-medium text-gray-900 dark:text-white">
-                                  {user?.userName}
+                                  {user?.fullName}
                                 </span>
                               </div>
                             </div>
@@ -474,7 +474,7 @@ const SiteHeader = () => {
             >
               <h3 className="font-semibold dark:text-white">
                 {Object.getOwnPropertyNames(user).length > 0
-                  ? user?.userName
+                  ? user?.fullName
                   : "Khách"}
               </h3>
               <span className="text-xs dark:text-white">

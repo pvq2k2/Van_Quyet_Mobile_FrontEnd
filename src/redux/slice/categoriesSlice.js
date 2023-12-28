@@ -3,11 +3,13 @@ import {
   createCategories,
   getAllCategories,
   getCategoriesByID,
+  getCategoriesBySlug,
   updateCategories,
 } from "../../services/categories";
 
 const initialState = {
   categories: {},
+  category: {},
   isLoading: false,
 };
 
@@ -47,6 +49,18 @@ export const fetchGetCategoriesByID = createAsyncThunk(
   },
 );
 
+export const fetchGetCategoriesBySlug = createAsyncThunk(
+  "categories/get-categories-by-slug",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getCategoriesBySlug(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 export const fetchGetAllCategories = createAsyncThunk(
   "categories/get-all-categories",
   async (data, thunkAPI) => {
@@ -69,18 +83,24 @@ const categoriesSlice = createSlice({
         state.categories = payload;
       })
       .addCase(fetchGetCategoriesByID.fulfilled, (state, { payload }) => {
-        state.categories = payload?.data;
+        state.category = payload?.data;
+      })
+      .addCase(fetchGetCategoriesBySlug.fulfilled, (state, { payload }) => {
+        state.category = payload?.data;
       })
       .addMatcher(
-        (action) => action.type.endsWith("/pending"),
+        (action) =>
+          action.type.startsWith("categories/") &&
+          action.type.endsWith("/pending"),
         (state) => {
           state.isLoading = true;
         },
       )
       .addMatcher(
         (action) =>
-          action.type.endsWith("/rejected") ||
-          action.type.endsWith("/fulfilled"),
+          action.type.startsWith("categories/") &&
+          (action.type.endsWith("/rejected") ||
+            action.type.endsWith("/fulfilled")),
         (state) => {
           state.isLoading = false;
         },

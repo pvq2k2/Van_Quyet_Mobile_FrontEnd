@@ -11,6 +11,7 @@ import { categoriesSchema } from "../../../../helpers/yupSchema";
 import { fetchCreateCategories } from "../../../../redux/slice/categoriesSlice";
 
 const CategoriesCreate = () => {
+  document.title = "Thêm danh mục - Văn Quyết Mobile";
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.categories.isLoading);
   const form = useForm({

@@ -53,6 +53,7 @@ const LoginForm = () => {
             label={"Mật khẩu"}
             type={"password"}
             name={"password"}
+            autoComplete={"current-password"}
             form={form}
           />
         </div>

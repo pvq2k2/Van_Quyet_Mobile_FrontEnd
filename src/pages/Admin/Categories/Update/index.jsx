@@ -14,6 +14,7 @@ import {
 } from "../../../../redux/slice/categoriesSlice";
 
 const CategoriesUpdate = () => {
+  document.title = "Cập nhật danh mục - Văn Quyết Mobile";
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.categories.isLoading);
   const { id } = useParams();
@@ -26,7 +27,7 @@ const CategoriesUpdate = () => {
     },
     resolver: yupResolver(categoriesSchema),
   });
-  const categories = useSelector((state) => state.categories.categories);
+  const category = useSelector((state) => state.categories.category);
   const [currentIcon, setCurrentIcon] = useState("");
   const arrIcon = useMemo(() => {
     let string =
@@ -42,8 +43,8 @@ const CategoriesUpdate = () => {
     })();
   }, [id, dispatch, form.reset]);
   useEffect(() => {
-    form.reset(categories);
-  }, [categories]);
+    form.reset(category);
+  }, [category]);
 
   const handleSubmit = async (value) => {
     try {

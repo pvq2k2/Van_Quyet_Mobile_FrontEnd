@@ -3,7 +3,7 @@ import instance from "./instance";
 
 export const createCategories = async (categoriesData) => {
   try {
-    const { data } = await instance.post(
+    const res = await instance.post(
       "/categories/create-categories",
       categoriesData,
       {
@@ -12,7 +12,7 @@ export const createCategories = async (categoriesData) => {
         },
       },
     );
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -25,7 +25,7 @@ export const getAllCategories = async (
   },
 ) => {
   try {
-    const { data } = await instance.post(
+    let res = await instance.post(
       "/categories/get-all-categories",
       pagination,
       {
@@ -34,7 +34,7 @@ export const getAllCategories = async (
         },
       },
     );
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -42,7 +42,7 @@ export const getAllCategories = async (
 
 export const updateCategories = async (categoriesData) => {
   try {
-    const { data } = await instance.put(
+    const res = await instance.put(
       `/categories/update-categories/${categoriesData.id}`,
       categoriesData,
       {
@@ -51,7 +51,7 @@ export const updateCategories = async (categoriesData) => {
         },
       },
     );
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -59,10 +59,21 @@ export const updateCategories = async (categoriesData) => {
 
 export const getCategoriesByID = async (categoriesID) => {
   try {
-    const { data } = await instance.get(
+    const res = await instance.get(
       `/categories/get-categories-by-id/${categoriesID}`,
     );
-    return data;
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
+export const getCategoriesBySlug = async (slug) => {
+  try {
+    const res = await instance.get(
+      `/categories/get-categories-by-slug/${slug}`,
+    );
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }

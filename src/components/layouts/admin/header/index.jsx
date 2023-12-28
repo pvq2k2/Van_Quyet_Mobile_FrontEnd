@@ -6,8 +6,11 @@ import {
 } from "react-icons/io5";
 import { ToggleTheme } from "../../../common";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../redux/slice/authSlice";
 
 const AdminHeader = ({ toggleMenu }) => {
+  const dispatch = useDispatch();
   return (
     <nav className="duration-250 sticky left-0 right-0 z-40 flex flex-wrap items-center justify-between bg-[hsla(0,0%,100%,0.8)] px-0 py-2 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] transition-all dark:bg-[hsla(220.91,39.29%,10.98%,0.8)] lg:top-[1%] lg:rounded-2xl xl:top-[2%]">
       <div className="flex-wrap-inherit mx-auto flex w-full items-center justify-between px-4 py-1">
@@ -89,12 +92,12 @@ const AdminHeader = ({ toggleMenu }) => {
                       >
                         Về trang chủ
                       </Link>
-                      <Link
-                        to="#"
+                      <div
+                        onClick={() => dispatch(logout())}
                         className="inline-block w-full cursor-pointer rounded-lg p-3 font-semibold text-black transition duration-150 ease-out hover:bg-gradient-to-r hover:from-[#0f4670] hover:to-[#4ba3e7] hover:text-white hover:shadow-xl hover:ease-in dark:text-white"
                       >
                         Đăng xuất
-                      </Link>
+                      </div>
                     </div>
                   </ul>
                 </div>
