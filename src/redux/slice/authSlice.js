@@ -7,6 +7,7 @@ import {
   resetPassword,
   verifyAccount,
 } from "../../services/auth";
+import { history } from "../../helpers/history";
 
 const initialState = {
   user: {},
@@ -90,6 +91,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout() {
+      history.navigate("/login");
       return { ...initialState };
     },
   },
@@ -104,15 +106,17 @@ const authSlice = createSlice({
         state.user = userData;
       })
       .addMatcher(
-        (action) => action.type.endsWith("/pending"),
+        (action) =>
+          action.type.startsWith("auth/") && action.type.endsWith("/pending"),
         (state) => {
           state.isLoading = true;
         },
       )
       .addMatcher(
         (action) =>
-          action.type.endsWith("/rejected") ||
-          action.type.endsWith("/fulfilled"),
+          action.type.startsWith("auth/") &&
+          (action.type.endsWith("/rejected") ||
+            action.type.endsWith("/fulfilled")),
         (state) => {
           state.isLoading = false;
         },

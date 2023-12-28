@@ -3,12 +3,12 @@ import instance from "./instance";
 
 export const register = async (registerData) => {
   try {
-    const { data } = await instance.post("/auth/register", registerData, {
+    const res = await instance.post("/auth/register", registerData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -16,12 +16,12 @@ export const register = async (registerData) => {
 
 export const login = async (loginData) => {
   try {
-    const { data } = await instance.post("/auth/login", loginData, {
+    const res = await instance.post("/auth/login", loginData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -29,10 +29,8 @@ export const login = async (loginData) => {
 
 export const forgotPassword = async (email) => {
   try {
-    const { data } = await instance.post(
-      `/auth/forgot-password?email=${email}`,
-    );
-    return data;
+    const res = await instance.post(`/auth/forgot-password?email=${email}`);
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -40,8 +38,8 @@ export const forgotPassword = async (email) => {
 
 export const verifyAccount = async (token) => {
   try {
-    const { data } = await instance.post(`/auth/verify-email?token=${token}`);
-    return data;
+    const res = await instance.post(`/auth/verify-email?token=${token}`);
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -49,16 +47,12 @@ export const verifyAccount = async (token) => {
 
 export const resetPassword = async (resetPasswordData) => {
   try {
-    const { data } = await instance.post(
-      "/auth/reset-password",
-      resetPasswordData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const res = await instance.post("/auth/reset-password", resetPasswordData, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-    return data;
+    });
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }
@@ -66,10 +60,10 @@ export const resetPassword = async (resetPasswordData) => {
 
 export const reNewToken = async (refreshToken) => {
   try {
-    const { data } = await instance.post(
+    const res = await instance.post(
       `/auth/re-new-token?refreshToken=${refreshToken}`,
     );
-    return data;
+    return res && res.data;
   } catch (error) {
     throw cathError(error);
   }

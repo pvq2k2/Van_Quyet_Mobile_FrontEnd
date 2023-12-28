@@ -1,7 +1,7 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const InputField = ({ label, type, name, form, disabled }) => {
+const InputField = ({ label, type, name, form, disabled, autoComplete }) => {
   const { formState } = form;
   return (
     <div className="form-group pb-4">
@@ -14,6 +14,7 @@ const InputField = ({ label, type, name, form, disabled }) => {
         control={form.control}
         render={({ field }) => (
           <input
+            autoComplete={`${autoComplete ?? "off"}`}
             id={name}
             type={type}
             {...field}

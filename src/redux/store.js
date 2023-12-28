@@ -15,6 +15,7 @@ import darkModeSlice from "./slice/darkModeSlice";
 import authSlice from "./slice/authSlice";
 import categoriesSlice from "./slice/categoriesSlice";
 import { injectStore } from "../services/instance";
+import subCategoriesSlice from "./slice/subCategoriesSlice";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   darkMode: darkModeSlice,
   auth: authSlice,
   categories: categoriesSlice,
+  subCategories: subCategoriesSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
