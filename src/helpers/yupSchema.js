@@ -119,3 +119,38 @@ export const categoriesSchema = yup
       .trim(),
   })
   .required();
+
+export const subCategoriesSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng tên danh mục !").trim(),
+    image: yup
+      .mixed()
+      .test(
+        "file",
+        "Vui lòng chọn hình ảnh !",
+        (value) => value instanceof FileList && value.length > 0,
+      )
+      .test(
+        "fileType",
+        "File này không phải file có định dạng ảnh !",
+        (value) => {
+          return (
+            value &&
+            value[0] &&
+            [
+              "image/jpeg",
+              "image/png",
+              "image/jpg",
+              "image/gif",
+              "image/bmp",
+              "image/webp",
+              "image/svg+xml",
+            ].includes(value[0].type)
+          );
+        },
+      )
+      .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
+        return value && value[0] && value[0].size <= 2000000;
+      }),
+  })
+  .required();

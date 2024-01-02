@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllSubCategories } from "../../services/subCategories";
+import {
+  createSubCategories,
+  getAllSubCategories,
+} from "../../services/subCategories";
 
 const initialState = {
   subCategories: {},
@@ -14,6 +17,18 @@ export const fetchGetAllSubCategories = createAsyncThunk(
         data.pagination,
         data.categoriesID,
       );
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchCreateSubCategories = createAsyncThunk(
+  "sub-categories/create",
+  async (data, thunkAPI) => {
+    try {
+      const response = await createSubCategories(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

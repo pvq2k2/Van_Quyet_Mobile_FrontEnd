@@ -91,7 +91,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout() {
-      history.navigate("/login");
       return { ...initialState };
     },
   },
