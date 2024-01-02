@@ -3,11 +3,7 @@ import instance from "./instance";
 
 export const register = async (registerData) => {
   try {
-    const res = await instance.post("/auth/register", registerData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await instance.post("/auth/register", registerData);
     return res && res.data;
   } catch (error) {
     throw cathError(error);
@@ -16,11 +12,7 @@ export const register = async (registerData) => {
 
 export const login = async (loginData) => {
   try {
-    const res = await instance.post("/auth/login", loginData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await instance.post("/auth/login", loginData);
     return res && res.data;
   } catch (error) {
     throw cathError(error);
@@ -47,11 +39,7 @@ export const verifyAccount = async (token) => {
 
 export const resetPassword = async (resetPasswordData) => {
   try {
-    const res = await instance.post("/auth/reset-password", resetPasswordData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await instance.post("/auth/reset-password", resetPasswordData);
     return res && res.data;
   } catch (error) {
     throw cathError(error);

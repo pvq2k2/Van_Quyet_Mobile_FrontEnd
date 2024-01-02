@@ -10,6 +10,9 @@ export const injectStore = (_store) => {
 
 const instance = axios.create({
   baseURL: "https://localhost:7299/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Add a response interceptor
@@ -18,24 +21,19 @@ instance.interceptors.response.use(
     return response;
   },
   async function (error) {
+    const originalRequest = error.config;
     if (error?.response?.status === 401) {
       const refreshToken = store.getState().auth.user.refreshToken;
       if (refreshToken) {
-        // store
-        //   .dispatch(fetchReNewToken(refreshToken))
-        //   .unwrap()
-        //   .catch((error) => {
-        //     store.dispatch(logout());
-        //     // history.navigate("/login");
-        //     toast.error(error);
-        //   });
         try {
           await store.dispatch(fetchReNewToken(refreshToken)).unwrap();
+          return instance(originalRequest);
         } catch (error) {
           store.dispatch(logout());
+          history.navigate("/login");
           toast.error(error);
         }
-        return;
+        // return;
       }
     }
     return Promise.reject(error);
@@ -49,6 +47,9 @@ instance.interceptors.request.use(
     if (token) {
       config.headers = {
         Authorization: `Bearer ${token}`,
+        "Content-Type": config.headers["Content-Type"]
+          ? config.headers["Content-Type"]
+          : "application/json",
       };
     }
 

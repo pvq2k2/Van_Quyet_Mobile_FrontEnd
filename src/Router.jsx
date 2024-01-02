@@ -19,10 +19,12 @@ import {
   CategoriesUpdate,
 } from "./pages/Admin/Categories";
 import { history } from "./helpers/history";
+import { SubCategoriesCreate } from "./pages/Admin/SubCategories";
 
 const Router = () => {
   history.navigate = useNavigate();
   history.location = useLocation();
+
   return (
     <>
       <Routes>
@@ -50,6 +52,7 @@ const Router = () => {
             <Route path="update/:id" element={<CategoriesUpdate />} />
             <Route path=":slug">
               <Route index element={<CategoriesDetail />} />
+              <Route path="create" element={<SubCategoriesCreate />} />
             </Route>
           </Route>
         </Route>

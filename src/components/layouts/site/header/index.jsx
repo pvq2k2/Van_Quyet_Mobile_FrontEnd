@@ -16,6 +16,7 @@ import { ToggleTheme } from "../../../common";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../../redux/slice/authSlice";
+import { history } from "../../../../helpers/history";
 
 const SiteHeader = () => {
   const user = useSelector((state) => state.auth.user);
@@ -66,6 +67,7 @@ const SiteHeader = () => {
   }, []);
   const handleLogout = () => {
     dispatch(logout());
+    history.navigate("/login");
   };
   return (
     <>

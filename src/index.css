@@ -24,6 +24,9 @@
   html.dark {
     color-scheme: dark;
   }
+  input[type="file"]::-webkit-file-upload-button {
+    display: none;
+  }
 
   .scrollbar::-webkit-scrollbar {
     width: 12px;

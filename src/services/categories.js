@@ -6,11 +6,6 @@ export const createCategories = async (categoriesData) => {
     const res = await instance.post(
       "/categories/create-categories",
       categoriesData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
     );
     return res && res.data;
   } catch (error) {
@@ -25,15 +20,7 @@ export const getAllCategories = async (
   },
 ) => {
   try {
-    let res = await instance.post(
-      "/categories/get-all-categories",
-      pagination,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    let res = await instance.post("/categories/get-all-categories", pagination);
     return res && res.data;
   } catch (error) {
     throw cathError(error);
@@ -45,11 +32,6 @@ export const updateCategories = async (categoriesData) => {
     const res = await instance.put(
       `/categories/update-categories/${categoriesData.id}`,
       categoriesData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
     );
     return res && res.data;
   } catch (error) {
