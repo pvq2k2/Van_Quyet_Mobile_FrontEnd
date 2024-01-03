@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createSubCategories,
   getAllSubCategories,
+  getSubCategoriesByID,
+  updateSubCategories,
 } from "../../services/subCategories";
 
 const initialState = {
@@ -9,6 +11,7 @@ const initialState = {
   subCategory: {},
   isLoading: false,
 };
+
 export const fetchGetAllSubCategories = createAsyncThunk(
   "sub-categories/get-all-sub-categories",
   async (data, thunkAPI) => {
@@ -36,6 +39,30 @@ export const fetchCreateSubCategories = createAsyncThunk(
   },
 );
 
+export const fetchUpdateSubCategories = createAsyncThunk(
+  "sub-categories/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateSubCategories(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchGetSubCategoriesByID = createAsyncThunk(
+  "sub-categories/get-sub-categories-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getSubCategoriesByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const subCategoriesSlice = createSlice({
   name: "sub-categories",
   initialState,
@@ -45,12 +72,9 @@ const subCategoriesSlice = createSlice({
       .addCase(fetchGetAllSubCategories.fulfilled, (state, { payload }) => {
         state.subCategories = payload;
       })
-      // .addCase(fetchGetCategoriesByID.fulfilled, (state, { payload }) => {
-      //   state.categories = payload?.data;
-      // })
-      // .addCase(fetchGetCategoriesBySlug.fulfilled, (state, { payload }) => {
-      //   state.categories = payload?.data;
-      // })
+      .addCase(fetchGetSubCategoriesByID.fulfilled, (state, { payload }) => {
+        state.subCategory = payload?.data;
+      })
       .addMatcher(
         (action) =>
           action.type.startsWith("sub-categories/") &&

@@ -1,7 +1,19 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
 import { AdminLayout, SiteLayout } from "./components/layouts";
+import { history } from "./helpers/history";
+import {
+  CategoriesCreate,
+  CategoriesDetail,
+  CategoriesList,
+  CategoriesUpdate,
+} from "./pages/Admin/Categories";
+import {
+  SubCategoriesCreate,
+  SubCategoriesUpdate,
+} from "./pages/Admin/SubCategories";
 import {
   ForgotPassword,
   Home,
@@ -11,15 +23,6 @@ import {
   ResetPassword,
   VerifyAccount,
 } from "./pages/Site";
-import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
-import {
-  CategoriesCreate,
-  CategoriesDetail,
-  CategoriesList,
-  CategoriesUpdate,
-} from "./pages/Admin/Categories";
-import { history } from "./helpers/history";
-import { SubCategoriesCreate } from "./pages/Admin/SubCategories";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -53,6 +56,7 @@ const Router = () => {
             <Route path=":slug">
               <Route index element={<CategoriesDetail />} />
               <Route path="create" element={<SubCategoriesCreate />} />
+              <Route path="update/:id" element={<SubCategoriesUpdate />} />
             </Route>
           </Route>
         </Route>
