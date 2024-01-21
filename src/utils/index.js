@@ -12,3 +12,7 @@ export const cathError = (error) => {
   }
   return error.message || error;
 };
+
+export const sliceName = (string, length) => {
+  return string.slice(0, length) + "...";
+};

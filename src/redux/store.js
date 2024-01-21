@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -10,12 +10,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
-import darkModeSlice from "./slice/darkModeSlice";
-import authSlice from "./slice/authSlice";
-import categoriesSlice from "./slice/categoriesSlice";
 import { injectStore } from "../services/instance";
-import subCategoriesSlice from "./slice/subCategoriesSlice";
+import rootReducer from "./rootReducer";
 
 const persistConfig = {
   key: "root",
@@ -23,13 +19,6 @@ const persistConfig = {
   storage,
   whitelist: ["auth"],
 };
-
-const rootReducer = combineReducers({
-  darkMode: darkModeSlice,
-  auth: authSlice,
-  categories: categoriesSlice,
-  subCategories: subCategoriesSlice,
-});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
