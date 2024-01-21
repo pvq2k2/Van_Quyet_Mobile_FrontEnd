@@ -23,6 +23,7 @@ import {
   ResetPassword,
   VerifyAccount,
 } from "./pages/Site";
+import { ProductList } from "./pages/Admin/Product";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -59,6 +60,7 @@ const Router = () => {
               <Route path="update/:id" element={<SubCategoriesUpdate />} />
             </Route>
           </Route>
+          <Route path="products" element={<ProductList />} />
         </Route>
         <Route path="/*" element={<NotFound />} />
       </Routes>

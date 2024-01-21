@@ -7,7 +7,6 @@ import {
   resetPassword,
   verifyAccount,
 } from "../../services/auth";
-import { history } from "../../helpers/history";
 
 const initialState = {
   user: {},
