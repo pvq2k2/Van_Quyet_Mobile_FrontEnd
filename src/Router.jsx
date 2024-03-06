@@ -23,7 +23,7 @@ import {
   ResetPassword,
   VerifyAccount,
 } from "./pages/Site";
-import { ProductList } from "./pages/Admin/Product";
+import { ProductCreate, ProductList } from "./pages/Admin/Product";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -50,17 +50,21 @@ const Router = () => {
         >
           <Route index element={<Navigate to="/admin/dashboard" />} />
           <Route path="dashboard" element={<h1>dashboard</h1>} />
-          <Route path="categories">
-            <Route index element={<CategoriesList />} />
-            <Route path="create" element={<CategoriesCreate />} />
-            <Route path="update/:id" element={<CategoriesUpdate />} />
-            <Route path=":slug">
-              <Route index element={<CategoriesDetail />} />
-              <Route path="create" element={<SubCategoriesCreate />} />
-              <Route path="update/:id" element={<SubCategoriesUpdate />} />
+
+          <Route path="products">
+            <Route index element={<ProductList />} />
+            <Route path="create" element={<ProductCreate />} />
+            <Route path="categories">
+              <Route index element={<CategoriesList />} />
+              <Route path="create" element={<CategoriesCreate />} />
+              <Route path="update/:id" element={<CategoriesUpdate />} />
+              <Route path=":slug">
+                <Route index element={<CategoriesDetail />} />
+                <Route path="create" element={<SubCategoriesCreate />} />
+                <Route path="update/:id" element={<SubCategoriesUpdate />} />
+              </Route>
             </Route>
           </Route>
-          <Route path="products" element={<ProductList />} />
         </Route>
         <Route path="/*" element={<NotFound />} />
       </Routes>
