@@ -24,36 +24,23 @@ export const getAllColor = async (
   }
 };
 
-// export const updateCategories = async (categoriesData) => {
-//   try {
-//     const res = await instance.put(
-//       `/categories/update-categories/${categoriesData.id}`,
-//       categoriesData,
-//     );
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
+export const updateColor = async (colorData) => {
+  try {
+    const res = await instance.put(
+      `/color/update-color/${colorData.id}`,
+      colorData,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
 
-// export const getCategoriesByID = async (categoriesID) => {
-//   try {
-//     const res = await instance.get(
-//       `/categories/get-categories-by-id/${categoriesID}`,
-//     );
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
-
-// export const getCategoriesBySlug = async (slug) => {
-//   try {
-//     const res = await instance.get(
-//       `/categories/get-categories-by-slug/${slug}`,
-//     );
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
+export const getColorByID = async (colorID) => {
+  try {
+    const res = await instance.get(`/color/get-color-by-id/${colorID}`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};

@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createColor, getAllColor } from "../../services/color";
+import {
+  createColor,
+  getAllColor,
+  getColorByID,
+  updateColor,
+} from "../../services/color";
 
 const initialState = {
   colors: {},
@@ -19,41 +24,29 @@ export const fetchCreateColor = createAsyncThunk(
   },
 );
 
-// export const fetchUpdateCategories = createAsyncThunk(
-//   "categories/update",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await updateCategories(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchUpdateColor = createAsyncThunk(
+  "color/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateColor(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
-// export const fetchGetCategoriesByID = createAsyncThunk(
-//   "categories/get-categories-by-id",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await getCategoriesByID(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
-
-// export const fetchGetCategoriesBySlug = createAsyncThunk(
-//   "categories/get-categories-by-slug",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await getCategoriesBySlug(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchGetColorByID = createAsyncThunk(
+  "color/get-color-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getColorByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 export const fetchGetAllColor = createAsyncThunk(
   "color/get-all-color",
@@ -76,12 +69,9 @@ const colorSlice = createSlice({
       .addCase(fetchGetAllColor.fulfilled, (state, { payload }) => {
         state.colors = payload;
       })
-      //   .addCase(fetchGetCategoriesByID.fulfilled, (state, { payload }) => {
-      //     state.category = payload?.data;
-      //   })
-      //   .addCase(fetchGetCategoriesBySlug.fulfilled, (state, { payload }) => {
-      //     state.category = payload?.data;
-      //   })
+      .addCase(fetchGetColorByID.fulfilled, (state, { payload }) => {
+        state.color = payload?.data;
+      })
       .addMatcher(
         (action) =>
           action.type.startsWith("color/") && action.type.endsWith("/pending"),
