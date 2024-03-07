@@ -109,7 +109,8 @@ const ColorList = () => {
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
                             <div
-                              className={`mx-auto h-8 w-8 rounded-full border bg-[${color.value}] border-black dark:border-white`}
+                              className={`mx-auto h-8 w-8 rounded-full border border-black dark:border-white`}
+                              style={{ backgroundColor: color.value }}
                             ></div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-sm">

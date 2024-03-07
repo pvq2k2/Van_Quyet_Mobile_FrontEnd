@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllColor } from "../../services/color";
+import { createColor, getAllColor } from "../../services/color";
 
 const initialState = {
   colors: {},
@@ -7,17 +7,17 @@ const initialState = {
   isLoading: false,
 };
 
-// export const fetchCreateCategories = createAsyncThunk(
-//   "categories/create",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await createCategories(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchCreateColor = createAsyncThunk(
+  "color/create",
+  async (data, thunkAPI) => {
+    try {
+      const response = await createColor(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 // export const fetchUpdateCategories = createAsyncThunk(
 //   "categories/update",

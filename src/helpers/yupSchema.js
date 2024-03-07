@@ -154,3 +154,17 @@ export const subCategoriesSchema = yup
       }),
   })
   .required();
+
+export const colorSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng tên màu sắc !").trim(),
+    value: yup
+      .string()
+      .required("Vui lòng chọn màu sắc !")
+      .matches(
+        /^(#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})|rgba?\(\s*(\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*(0(\.\d+)?|1(\.0+)?)\s*)?)?\)|hsla?\(\s*(\d+(\.\d+)?\s*,\s*\d+(\.\d+)?%\s*,\s*\d+(\.\d+)?%\s*(,\s*(0(\.\d+)?|1(\.0+)?)\s*)?)?\))$/,
+        "Giá trị màu phải là hex, rgb và hsl !",
+      )
+      .trim(),
+  })
+  .required();
