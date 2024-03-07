@@ -24,7 +24,7 @@ import {
   VerifyAccount,
 } from "./pages/Site";
 import { ProductCreate, ProductList } from "./pages/Admin/Product";
-import { ColorCreate, ColorList } from "./pages/Admin/Color";
+import { ColorCreate, ColorList, ColorUpdate } from "./pages/Admin/Color";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -68,7 +68,7 @@ const Router = () => {
             <Route path="colors">
               <Route index element={<ColorList />} />
               <Route path="create" element={<ColorCreate />} />
-              {/* <Route path="update/:id" element={<ColorUpdate />} /> */}
+              <Route path="update/:id" element={<ColorUpdate />} />
             </Route>
           </Route>
         </Route>
