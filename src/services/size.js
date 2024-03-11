@@ -24,23 +24,23 @@ export const getAllSize = async (
   }
 };
 
-// export const updateColor = async (colorData) => {
-//   try {
-//     const res = await instance.put(
-//       `/color/update-color/${colorData.id}`,
-//       colorData,
-//     );
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
+export const updateSize = async (sizeData) => {
+  try {
+    const res = await instance.put(
+      `/size/update-size/${sizeData.id}`,
+      sizeData,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
 
-// export const getColorByID = async (colorID) => {
-//   try {
-//     const res = await instance.get(`/color/get-color-by-id/${colorID}`);
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
+export const getSizeByID = async (sizeID) => {
+  try {
+    const res = await instance.get(`/size/get-size-by-id/${sizeID}`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};

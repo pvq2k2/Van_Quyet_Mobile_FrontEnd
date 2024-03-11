@@ -1,3 +1,3 @@
-export { default as ColorList } from "./List";
-export { default as ColorCreate } from "./Create";
-// export { default as ColorUpdate } from "./Update";
+export { default as SizeList } from "./List";
+export { default as SizeCreate } from "./Create";
+export { default as SizeUpdate } from "./Update";

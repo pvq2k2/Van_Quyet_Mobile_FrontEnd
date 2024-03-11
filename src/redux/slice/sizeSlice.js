@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createSize, getAllSize } from "../../services/size";
+import {
+  createSize,
+  getAllSize,
+  getSizeByID,
+  updateSize,
+} from "../../services/size";
 
 const initialState = {
   sizes: {},
@@ -19,29 +24,29 @@ export const fetchCreateSize = createAsyncThunk(
   },
 );
 
-// export const fetchUpdateColor = createAsyncThunk(
-//   "color/update",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await updateColor(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchUpdateSize = createAsyncThunk(
+  "size/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateSize(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
-// export const fetchGetColorByID = createAsyncThunk(
-//   "color/get-color-by-id",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await getColorByID(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchGetSizeByID = createAsyncThunk(
+  "size/get-size-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getSizeByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 export const fetchGetAllSize = createAsyncThunk(
   "size/get-all-size",
@@ -64,9 +69,9 @@ const sizeSlice = createSlice({
       .addCase(fetchGetAllSize.fulfilled, (state, { payload }) => {
         state.sizes = payload;
       })
-      //   .addCase(fetchGetColorByID.fulfilled, (state, { payload }) => {
-      //     state.color = payload?.data;
-      //   })
+      .addCase(fetchGetSizeByID.fulfilled, (state, { payload }) => {
+        state.size = payload?.data;
+      })
       .addMatcher(
         (action) =>
           action.type.startsWith("size/") && action.type.endsWith("/pending"),
