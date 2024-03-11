@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   IoAddCircleOutline,
   IoHomeOutline,
-  IoInformationOutline,
   IoPencilOutline,
   IoServerOutline,
   IoTrashOutline,
@@ -12,7 +11,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
-import { fetchGetAllColor } from "../../../../redux/slice/colorSlice";
 import { fetchGetAllSize } from "../../../../redux/slice/sizeSlice";
 
 const SizeList = () => {
