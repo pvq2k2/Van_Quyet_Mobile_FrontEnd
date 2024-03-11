@@ -6,6 +6,7 @@ import categoriesSlice from "./slice/categoriesSlice";
 import subCategoriesSlice from "./slice/subCategoriesSlice";
 import productSlice from "./slice/productSlice";
 import colorSlice from "./slice/colorSlice";
+import sizeSlice from "./slice/sizeSlice";
 
 const rootReducer = combineReducers({
   darkMode: darkModeSlice,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   subCategories: subCategoriesSlice,
   product: productSlice,
   color: colorSlice,
+  size: sizeSlice,
 });
 
 export default rootReducer;

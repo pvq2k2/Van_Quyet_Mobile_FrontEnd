@@ -13,12 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import { fetchGetAllColor } from "../../../../redux/slice/colorSlice";
+import { fetchGetAllSize } from "../../../../redux/slice/sizeSlice";
 
-const ColorList = () => {
-  document.title = "Danh sách màu sắc - Văn Quyết Mobile";
+const SizeList = () => {
+  document.title = "Danh sách kích cỡ - Văn Quyết Mobile";
   const dispatch = useDispatch();
-  const colors = useSelector((state) => state.color.colors);
-  const isLoading = useSelector((state) => state.color.isLoading);
+  const sizes = useSelector((state) => state.size.sizes);
+  const isLoading = useSelector((state) => state.size.isLoading);
   const [pagination, setPagination] = useState({
     pageSize: 10,
     pageNumber: 1,
@@ -36,7 +37,7 @@ const ColorList = () => {
     });
   };
   useEffect(() => {
-    dispatch(fetchGetAllColor(filters))
+    dispatch(fetchGetAllSize(filters))
       .unwrap()
       .then((res) => {
         setPagination(res.pagination);
@@ -52,17 +53,17 @@ const ColorList = () => {
               <IoHomeOutline className="text-sm leading-normal dark:text-gray-400" />
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400">
-              Màu sắc
+              Kích cỡ
             </li>
           </ol>
           <h3 className="mb-3 text-2xl font-bold capitalize leading-10 md:mb-0">
-            Danh sách màu sắc
+            Danh sách kích cỡ
           </h3>
         </div>
         <Link to="create">
           <button className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-blue-500 px-5 py-2 text-base tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 sm:w-auto">
             <IoAddCircleOutline className="text-2xl" />
-            <span>Thêm màu sắc</span>
+            <span>Thêm kích cỡ</span>
           </button>
         </Link>
       </section>
@@ -78,10 +79,10 @@ const ColorList = () => {
                         ID
                       </th>
                       <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
-                        Tên màu sắc
+                        Tên kích cỡ
                       </th>
                       <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
-                        Màu
+                        Kích cỡ
                       </th>
                       <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400 md:text-center">
                         Hành động
@@ -98,25 +99,26 @@ const ColorList = () => {
                           </div>
                         </td>
                       </tr>
-                    ) : colors && colors?.data?.length > 0 ? (
-                      colors?.data.map((color) => (
-                        <tr key={color.id}>
+                    ) : sizes && sizes?.data?.length > 0 ? (
+                      sizes?.data.map((size) => (
+                        <tr key={size.id}>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                            <span>{color.id}</span>
+                            <span>{size.id}</span>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {color.name}
+                            {size.name}
                           </td>
-                          <td className="whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
+                          <td className="whitespace-nowrap px-4 py-4 text-center font-medium text-gray-700 dark:text-gray-200">
                             <div
-                              className={`mx-auto h-8 w-8 rounded-full border border-black dark:border-white`}
-                              style={{ backgroundColor: color.value }}
-                            ></div>
+                              className={`mx-auto w-fit rounded-full border border-black px-3 py-1 text-center dark:border-white`}
+                            >
+                              <span>{size.value}</span>
+                            </div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-sm">
                             <div className="flex items-center gap-x-6 md:justify-center">
                               <Link
-                                to={`update/${color.id}`}
+                                to={`update/${size.id}`}
                                 className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
                               >
                                 <IoPencilOutline className="text-xl" />
@@ -152,4 +154,4 @@ const ColorList = () => {
   );
 };
 
-export default ColorList;
+export default SizeList;
