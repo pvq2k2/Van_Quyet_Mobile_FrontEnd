@@ -1,14 +1,14 @@
 import { cathError } from "../utils";
 import instance from "./instance";
 
-// export const createColor = async (colorData) => {
-//   try {
-//     const res = await instance.post("/color/create-color", colorData);
-//     return res && res.data;
-//   } catch (error) {
-//     throw cathError(error);
-//   }
-// };
+export const createSize = async (sizeData) => {
+  try {
+    const res = await instance.post("/size/create-size", sizeData);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
 
 export const getAllSize = async (
   pagination = {

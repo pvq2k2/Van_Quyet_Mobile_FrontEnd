@@ -168,3 +168,10 @@ export const colorSchema = yup
       .trim(),
   })
   .required();
+
+export const sizeSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng tên kích cỡ !").trim(),
+    value: yup.string().required("Vui lòng kích cỡ !").trim(),
+  })
+  .required();

@@ -26,6 +26,7 @@ import {
 import { ProductCreate, ProductList } from "./pages/Admin/Product";
 import { ColorCreate, ColorList, ColorUpdate } from "./pages/Admin/Color";
 import SizeList from "./pages/Admin/Size/List";
+import SizeCreate from "./pages/Admin/Size/Create";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -73,8 +74,8 @@ const Router = () => {
             </Route>
             <Route path="sizes">
               <Route index element={<SizeList />} />
-              {/* <Route path="create" element={<ColorCreate />} />
-              <Route path="update/:id" element={<ColorUpdate />} /> */}
+              <Route path="create" element={<SizeCreate />} />
+              {/* <Route path="update/:id" element={<ColorUpdate />} /> */}
             </Route>
           </Route>
         </Route>
