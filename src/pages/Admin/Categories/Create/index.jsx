@@ -48,7 +48,7 @@ const CategoriesCreate = () => {
               <IoHomeOutline className="text-sm leading-normal dark:text-gray-400" />
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 transition duration-150 ease-out before:float-left before:pr-2 before:text-gray-600 before:content-['/'] hover:text-blue-500 hover:underline hover:ease-in dark:text-gray-400 dark:before:text-gray-400 dark:hover:text-blue-500">
-              <Link to="/admin/categories">Danh mục</Link>
+              <Link to="/admin/products/categories">Danh mục</Link>
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400">
               Thêm mới danh mục
@@ -130,7 +130,7 @@ const CategoriesCreate = () => {
             {loading ? "Xin chờ !" : "Thêm mới"}
           </button>
           <Link
-            to="/admin/categories"
+            to="/admin/products/categories"
             className="rounded-md border px-5 py-2 text-base leading-6 text-gray-900 shadow-xl transition duration-150 ease-out hover:border-indigo-500 hover:ease-in dark:text-white dark:hover:text-blue-500"
           >
             Trở lại

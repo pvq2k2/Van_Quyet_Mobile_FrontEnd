@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import { fetchGetAllProduct } from "../../../../redux/slice/productSlice";
 import { sliceName } from "../../../../utils";
+import CustomNumberFormat from "../../../../components/common/CustomNumberFormat";
 
 const ProductList = () => {
   document.title = "Danh sách sản phẩm - Văn Quyết Mobile";
@@ -74,22 +75,22 @@ const ProductList = () => {
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         ID
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Tên sản phẩm
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Giá
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Ảnh
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Trạng thái
                       </th>
-                      <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400 md:text-center">
+                      <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 md:text-center rtl:text-right">
                         Hành động
                       </th>
                     </tr>
@@ -105,7 +106,57 @@ const ProductList = () => {
                         </td>
                       </tr>
                     ) : products && products?.data?.length > 0 ? (
-                      products?.data.map((product) => {})
+                      products?.data?.map((product) => (
+                        <tr key={product.id}>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <span>{product.id}</span>
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
+                            {sliceName(product.name, 15)}
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <CustomNumberFormat number={product.price} />
+                          </td>
+                          <td className="flex items-center justify-center whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
+                            <div className="flex w-40 items-center justify-center">
+                              <img
+                                src={product.image}
+                                alt="image"
+                                className="px-10 dark:rounded-lg dark:bg-gray-300"
+                              />
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <span
+                              className={`${
+                                product.status == 2
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                              } rounded-3xl px-4 py-2 text-white`}
+                            >
+                              {product.status == 2 ? "Hiện" : "Ẩn"}
+                            </span>
+                          </td>
+                          <td className="whitespace-nowrap px-4 py-4 text-sm">
+                            <div className="flex items-center gap-x-6 md:justify-center">
+                              <Link
+                                to={`1`}
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-indigo-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600 sm:w-auto"
+                              >
+                                <IoInformationOutline className="text-xl" />
+                                <span>Chi tiết</span>
+                              </Link>
+                              <Link
+                                to={`update/1`}
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
+                              >
+                                <IoPencilOutline className="text-xl" />
+                                <span>Sửa</span>
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
                     ) : (
                       <tr>
                         <td colSpan={9}>
@@ -116,54 +167,6 @@ const ProductList = () => {
                         </td>
                       </tr>
                     )}
-                    {/* <?php echo $trang_thai == 1 ? " bg-green-500" : " bg-red-500" ?> 
-                        <?php echo $trang_thai == 1 ? "Hoạt động" : "Không hoạt động" ?> */}
-                    {/* <tr key="1">
-                      <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                        <span>1</span>
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                        {sliceName(
-                          "iPhone 15 Pro Max (256GB) - Chính hãng VN/A",
-                          15,
-                        )}
-                      </td>
-                      <td class="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                        <span>10000000đ</span>
-                      </td>
-                      <td className="flex items-center justify-center whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
-                        <div className="flex w-52 items-center justify-center">
-                          <img
-                            src="https://cdn.hoanghamobile.com/i/preview/Uploads/2023/09/13/iphone-15-pro-max-blue-titanium-pure-back-iphone-15-pro-max-blue-titanium-pure-front-2up-screen-usen.png"
-                            alt="image sub cate"
-                            className="px-10 dark:rounded-lg dark:bg-gray-300"
-                          />
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                        <span className="rounded-3xl bg-green-500 px-4 py-2 text-white">
-                          Hoạt động
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-4 text-sm">
-                        <div className="flex items-center gap-x-6 md:justify-center">
-                          <Link
-                            to={`1`}
-                            className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-indigo-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600 sm:w-auto"
-                          >
-                            <IoInformationOutline className="text-xl" />
-                            <span>Chi tiết</span>
-                          </Link>
-                          <Link
-                            to={`update/1`}
-                            className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
-                          >
-                            <IoPencilOutline className="text-xl" />
-                            <span>Sửa</span>
-                          </Link>
-                        </div>
-                      </td>
-                    </tr> */}
                   </tbody>
                 </table>
               </div>

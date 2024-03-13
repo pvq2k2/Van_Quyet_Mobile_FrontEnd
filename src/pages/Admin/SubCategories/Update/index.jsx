@@ -91,7 +91,7 @@ const SubCategoriesUpdate = () => {
     try {
       const res = await dispatch(fetchUpdateSubCategories(data)).unwrap();
       toast.success(res.message);
-      navigate(`/admin/categories/${category?.slug}`);
+      navigate(`/admin/products/categories/${category?.slug}`);
     } catch (error) {
       toast.error(error);
     }
@@ -144,10 +144,10 @@ const SubCategoriesUpdate = () => {
               <IoHomeOutline className="text-sm leading-normal dark:text-gray-400" />
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 transition duration-150 ease-out before:float-left before:pr-2 before:text-gray-600 before:content-['/'] hover:text-blue-500 hover:underline hover:ease-in dark:text-gray-400 dark:before:text-gray-400 dark:hover:text-blue-500">
-              <Link to="/admin/categories">Danh mục</Link>
+              <Link to="/admin/products/categories">Danh mục</Link>
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 transition duration-150 ease-out before:float-left before:pr-2 before:text-gray-600 before:content-['/'] hover:text-blue-500 hover:underline hover:ease-in dark:text-gray-400 dark:before:text-gray-400 dark:hover:text-blue-500">
-              <Link to={`/admin/categories/${category?.slug}`}>
+              <Link to={`/admin/products/categories/${category?.slug}`}>
                 {category?.name}
               </Link>
             </li>
@@ -239,7 +239,7 @@ const SubCategoriesUpdate = () => {
                 "https://res.cloudinary.com/assignmentjs/image/upload/c_thumb,w_200,g_face/v1648723660/img/noimage_mzjwxl.png"
               }
               alt="Preview Image"
-              className="h-40 w-40 rounded-sm object-cover"
+              className="absolute inset-0 h-auto max-h-full w-auto max-w-full rounded-sm object-cover"
             />
           </div>
         </div>
@@ -258,7 +258,7 @@ const SubCategoriesUpdate = () => {
             {loading ? "Xin chờ !" : "Cập nhật"}
           </button>
           <Link
-            to={`/admin/categories/${category?.slug}`}
+            to={`/admin/products/categories/${category?.slug}`}
             className="rounded-md border px-5 py-2 text-base leading-6 text-gray-900 shadow-xl transition duration-150 ease-out hover:border-indigo-500 hover:ease-in dark:text-white dark:hover:text-blue-500"
           >
             Trở lại
