@@ -1,11 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllProduct } from "../../services/product";
+import { createProduct, getAllProduct } from "../../services/product";
 
 const initialState = {
   products: {},
   product: {},
   isLoading: false,
 };
+
+export const fetchCreateProduct = createAsyncThunk(
+  "product/create",
+  async (data, thunkAPI) => {
+    try {
+      const response = await createProduct(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 export const fetchGetAllProduct = createAsyncThunk(
   "product/get-all-product",
@@ -26,7 +38,7 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGetAllProduct.fulfilled, (state, { payload }) => {
-        state.subCategories = payload;
+        state.products = payload;
       })
       .addMatcher(
         (action) =>

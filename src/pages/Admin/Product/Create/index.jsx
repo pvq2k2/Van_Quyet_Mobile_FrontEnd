@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
@@ -7,39 +7,60 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputField from "../../../../components/common/InputField";
-import { subCategoriesSchema } from "../../../../helpers/yupSchema";
-import { fetchGetCategoriesBySlug } from "../../../../redux/slice/categoriesSlice";
-import { fetchCreateSubCategories } from "../../../../redux/slice/subCategoriesSlice";
+import { productSchema } from "../../../../helpers/yupSchema";
+import { fetchGetAllCategories } from "../../../../redux/slice/categoriesSlice";
+import { fetchGetAllSubCategories } from "../../../../redux/slice/subCategoriesSlice";
+import { fetchCreateProduct } from "../../../../redux/slice/productSlice";
+import InputNumberFormat from "../../../../components/common/InputNumberFormat";
 
 const ProductCreate = () => {
   document.title = "Thêm sản phẩm - Văn Quyết Mobile";
 
+  const priceInputRef = useRef(null);
+  const discountInputRef = useRef(null);
   const dispatch = useDispatch();
   const [preview, setPreview] = useState("");
+  const [parentsCategory, setParentsCategory] = useState(0);
+  const categories = useSelector((state) => state.categories.categories);
+  const subCategories = useSelector(
+    (state) => state.subCategories.subCategories,
+  );
   const loading = useSelector((state) => state.product.isLoading);
   const form = useForm({
     mode: "onTouched",
     defaultValues: {
       name: "",
+      price: "",
+      discount: "",
+      height: "",
+      width: "",
+      length: "",
+      weight: "",
+      category: "",
+      subCategoriesID: "",
+      description: "",
       image: "",
     },
-    resolver: yupResolver(subCategoriesSchema),
+    resolver: yupResolver(productSchema),
   });
 
   const handleSubmit = async (value) => {
-    // const data = { ...value, image: value.image[0], categoriesID: category.id };
-    // const formData = new FormData();
-    // for (let key in data) {
-    //   formData.append(key, data[key]);
-    // }
-    // try {
-    //   const res = await dispatch(fetchCreateSubCategories(formData)).unwrap();
-    //   toast.success(res.message);
-    //   form.reset();
-    //   setPreview("");
-    // } catch (error) {
-    //   toast.error(error);
-    // }
+    delete value.category;
+    value.price = parseInt(value.price.replace(/,/g, ""));
+    value.discount = parseInt(value.discount.replace(/,/g, ""));
+    const data = { ...value, image: value.image[0] };
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    try {
+      const res = await dispatch(fetchCreateProduct(formData)).unwrap();
+      toast.success(res.message);
+      form.reset();
+      setPreview("");
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   const handleChangeImage = (e) => {
@@ -64,17 +85,42 @@ const ProductCreate = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         await dispatch(fetchGetCategoriesBySlug(slug)).unwrap();
-  //       } catch (error) {
-  //         toast.error(error);
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(
+          fetchGetAllCategories({
+            pageSize: 100,
+            pageNumber: 1,
+          }),
+        ).unwrap();
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  //     fetchData();
-  //   }, [dispatch, slug]);
+  useEffect(() => {
+    if (parentsCategory != 0) {
+      const fetchData = async () => {
+        try {
+          await dispatch(
+            fetchGetAllSubCategories({
+              pagination: {
+                pageSize: 100,
+                pageNumber: 1,
+              },
+              categoriesID: parentsCategory,
+            }),
+          ).unwrap();
+        } catch (error) {
+          toast.error(error);
+        }
+      };
+      fetchData();
+    }
+  }, [parentsCategory]);
 
   return (
     <div className="px-4 pb-4 xl:px-0">
@@ -107,6 +153,137 @@ const ProductCreate = () => {
           name={"name"}
           form={form}
         />
+        <div className="flex w-full flex-col justify-between gap-x-3 md:flex-row">
+          <InputNumberFormat
+            label={"Giá sản phẩm"}
+            name={"price"}
+            form={form}
+            ref={priceInputRef}
+          />
+          <InputNumberFormat
+            label={"Giảm giá"}
+            name={"discount"}
+            form={form}
+            ref={discountInputRef}
+          />
+        </div>
+
+        <div className="flex w-full flex-col justify-between gap-x-3 md:flex-row">
+          <InputField
+            label={"Chiều cao"}
+            type={"number"}
+            name={"height"}
+            form={form}
+          />
+          <InputField
+            label={"Chiều rộng"}
+            type={"number"}
+            name={"width"}
+            form={form}
+          />
+          <InputField
+            label={"Chiều dài"}
+            type={"number"}
+            name={"length"}
+            form={form}
+          />
+          <InputField
+            label={"Khối lượng"}
+            type={"number"}
+            name={"weight"}
+            form={form}
+          />
+        </div>
+
+        <div className="flex w-full flex-col justify-between gap-x-3 md:flex-row">
+          <div className="form-group pb-4 md:w-6/12">
+            <label htmlFor="category" className="py-2 dark:text-gray-300">
+              Danh mục
+            </label>
+            <select
+              id="category"
+              name="category"
+              {...form.register("category", {
+                onChange: (e) => setParentsCategory(e.target.value),
+              })}
+              className={`mt-1 block w-full appearance-none rounded-md border px-3 py-2 text-gray-900 placeholder-gray-500 duration-300 ease-in-out hover:border-main-dark focus:z-10 focus:border-main-dark focus:outline-none focus:ring-main-dark dark:border-gray-600 dark:bg-black dark:text-gray-300 sm:text-sm ${
+                form.formState.errors["category"]
+                  ? "border-red-500 dark:border-red-500"
+                  : ""
+              }`}
+            >
+              <option value="" hidden>
+                Chọn danh mục
+              </option>
+              {categories?.data?.map((item, index) => (
+                <option key={index} className="w-full" value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <div className="error-message ml-1 mt-1 text-sm text-red-500">
+              {form.formState.errors["category"]
+                ? form.formState.errors["category"]?.message
+                : ""}
+            </div>
+          </div>
+
+          <div className="form-group pb-4 md:w-6/12">
+            <label
+              htmlFor="subCategoriesID"
+              className="py-2 dark:text-gray-300"
+            >
+              Danh mục con
+            </label>
+            <select
+              id="subCategoriesID"
+              name="subCategoriesID"
+              {...form.register("subCategoriesID")}
+              className={`mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 duration-300 ease-in-out hover:border-main-dark focus:z-10 focus:border-main-dark focus:outline-none focus:ring-main-dark dark:border-gray-600 dark:bg-black dark:text-gray-300 sm:text-sm ${
+                form.formState.errors["subCategoriesID"]
+                  ? "border-red-500 dark:border-red-500"
+                  : ""
+              }`}
+            >
+              <option value="" hidden>
+                Chọn danh mục
+              </option>
+              {subCategories?.data?.map((item, index) => (
+                <option key={index} className="w-full" value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            <div className="error-message ml-1 mt-1 text-sm text-red-500">
+              {form.formState.errors["subCategoriesID"]
+                ? form.formState.errors["subCategoriesID"]?.message
+                : ""}
+            </div>
+          </div>
+        </div>
+
+        <div className="form-group mb-5">
+          <label htmlFor="description" className="py-2 dark:text-gray-300">
+            Mô tả
+          </label>
+          <textarea
+            placeholder="Nhập mô tả"
+            id="description"
+            name="description"
+            rows="3"
+            {...form.register("description")}
+            className={`${
+              form.formState.errors["description"]
+                ? "border-red-500 dark:border-red-500"
+                : ""
+            } relative mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 duration-300 ease-in-out hover:border-main-dark focus:z-10 focus:border-main-dark focus:outline-none focus:ring-main-dark dark:border-gray-600 dark:bg-black dark:text-gray-300 sm:text-sm`}
+          ></textarea>
+          <div className="error-message ml-1 mt-1 text-sm text-red-500">
+            {form.formState.errors["description"]
+              ? form.formState.errors["description"]?.message
+              : ""}
+          </div>
+        </div>
 
         <div className="form-group pb-4">
           <label
@@ -174,7 +351,7 @@ const ProductCreate = () => {
                 "https://res.cloudinary.com/assignmentjs/image/upload/c_thumb,w_200,g_face/v1648723660/img/noimage_mzjwxl.png"
               }
               alt="Preview Image"
-              className="h-40 w-40 rounded-sm object-cover"
+              className="absolute inset-0 h-auto max-h-full w-auto max-w-full rounded-sm object-cover"
             />
           </div>
         </div>

@@ -1,10 +1,17 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const InputField = ({ label, type, name, form, disabled, autoComplete }) => {
+const InputField = ({
+  label,
+  type = "text",
+  name,
+  form,
+  disabled,
+  autoComplete,
+}) => {
   const { formState } = form;
   return (
-    <div className="form-group pb-4">
+    <div className="form-group w-full pb-4">
       <label htmlFor={name} className="py-2 dark:text-gray-300">
         {label}
       </label>
