@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createProduct, getAllProduct } from "../../services/product";
+import {
+  createProduct,
+  getAllProduct,
+  getUpdateProductByID,
+  updateProduct,
+} from "../../services/product";
 
 const initialState = {
   products: {},
@@ -12,6 +17,30 @@ export const fetchCreateProduct = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await createProduct(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchGetUpdateProductByID = createAsyncThunk(
+  "product/get-update-product-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getUpdateProductByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchUpdateProduct = createAsyncThunk(
+  "product/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateProduct(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -39,6 +68,9 @@ const productSlice = createSlice({
     builder
       .addCase(fetchGetAllProduct.fulfilled, (state, { payload }) => {
         state.products = payload;
+      })
+      .addCase(fetchGetUpdateProductByID.fulfilled, (state, { payload }) => {
+        state.product = payload?.data;
       })
       .addMatcher(
         (action) =>

@@ -16,3 +16,15 @@ export const cathError = (error) => {
 export const sliceName = (string, length) => {
   return string.slice(0, length) + "...";
 };
+
+export const isFileExtension = (file) => {
+  return [
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "image/gif",
+    "image/bmp",
+    "image/webp",
+    "image/svg+xml",
+  ].includes(file);
+};

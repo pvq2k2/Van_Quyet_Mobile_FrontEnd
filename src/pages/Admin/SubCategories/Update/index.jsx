@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,45 +12,11 @@ import {
   fetchGetSubCategoriesByID,
   fetchUpdateSubCategories,
 } from "../../../../redux/slice/subCategoriesSlice";
+import { updatedSubCategoriesSchema } from "../../../../helpers/yupSchema";
+import { isFileExtension } from "../../../../utils";
 
 const SubCategoriesUpdate = () => {
   document.title = "Cập nhật danh mục con - Văn Quyết Mobile";
-  const subCategoriesSchema = yup
-    .object({
-      name: yup.string().required("Vui lòng nhập tên danh mục!").trim(),
-      image: yup.mixed().when("fileClicked", {
-        is: true,
-        then: () =>
-          yup
-            .mixed()
-            .test(
-              "file",
-              "Vui lòng chọn hình ảnh !",
-              (value) => value instanceof FileList && value.length > 0,
-            )
-            .test(
-              "fileType",
-              "File này không phải là file hình ảnh!",
-              (value) =>
-                value &&
-                value[0] &&
-                [
-                  "image/jpeg",
-                  "image/png",
-                  "image/jpg",
-                  "image/gif",
-                  "image/bmp",
-                  "image/webp",
-                  "image/svg+xml",
-                ].includes(value[0].type),
-            )
-            .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
-              return value && value[0] && value[0].size <= 2000000;
-            }),
-      }),
-      fileClicked: yup.boolean(),
-    })
-    .required();
 
   const { slug, id } = useParams();
   const navigate = useNavigate();
@@ -67,7 +32,7 @@ const SubCategoriesUpdate = () => {
       image: "",
       fileClicked: false,
     },
-    resolver: yupResolver(subCategoriesSchema),
+    resolver: yupResolver(updatedSubCategoriesSchema),
   });
 
   const handleSubmit = async (value) => {
@@ -99,15 +64,8 @@ const SubCategoriesUpdate = () => {
 
   const handleChangeImage = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      let isImage = [
-        "image/jpeg",
-        "image/png",
-        "image/jpg",
-        "image/gif",
-        "image/bmp",
-        "image/webp",
-        "image/svg+xml",
-      ].includes(e.target.files[0].type);
+      form.setValue("fileClicked", true);
+      let isImage = isFileExtension(e.target.files[0].type);
 
       if (isImage) {
         setPreview(URL.createObjectURL(e.target.files[0]));
@@ -120,13 +78,26 @@ const SubCategoriesUpdate = () => {
     }
   };
 
+  const handleSelectImage = (e) => {
+    if (!e.target.value) {
+      setPreview(subCategory.image);
+      form.setValue("fileClicked", false);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         await dispatch(fetchGetCategoriesBySlug(slug)).unwrap();
         const res = await dispatch(fetchGetSubCategoriesByID(id)).unwrap();
-        form.reset(res.data);
-        setPreview(res.data.image);
+        const data = {
+          ...res.data,
+          fileClicked: form.formState.defaultValues.fileClicked
+            ? form.formState.defaultValues.fileClicked
+            : false,
+        };
+        form.reset(data);
+        setPreview(data.image);
       } catch (error) {
         toast.error(error);
       }
@@ -181,7 +152,6 @@ const SubCategoriesUpdate = () => {
           </label>
           <label
             htmlFor="image"
-            onClick={() => form.setValue("fileClicked", true)}
             className={`${
               form.formState.errors["image"]
                 ? "border-red-500"
@@ -211,6 +181,7 @@ const SubCategoriesUpdate = () => {
                 id="image"
                 {...form.register("image", {
                   onChange: (e) => handleChangeImage(e),
+                  onBlur: (e) => handleSelectImage(e),
                 })}
                 draggable
                 className={`${

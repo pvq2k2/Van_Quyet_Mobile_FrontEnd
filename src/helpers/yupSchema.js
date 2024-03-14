@@ -189,6 +189,90 @@ export const productSchema = yup
       }),
   })
   .required();
+
+export const updatedProductSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng nhập tên sản phẩm !").trim(),
+    price: yup.string().required("Vui lòng nhập giá gốc !").trim(),
+    discount: yup
+      .string()
+      .required("Vui lòng nhập giảm giá !")
+      .trim()
+      .test("is-higher", "Giảm giá phải nhỏ hơn giá gốc", function (value) {
+        const { price } = this.parent;
+        const parsedPrice = parseInt(price.replace(/,/g, ""));
+        const parsedDiscount = parseInt(value.replace(/,/g, ""));
+        return parsedDiscount < parsedPrice;
+      }),
+    height: yup
+      .number()
+      .typeError("Chiều cao phải là một số !")
+      .positive("Chiều cao phải là một số dương !")
+      .max(150, "Chiều cao không được quá 150cm !")
+      .min(1, "Chiều cao không được nhỏ hơn 1 !")
+      .required("Vui lòng nhập chiều cao !"),
+    width: yup
+      .number()
+      .typeError("Chiều rộng phải là một số !")
+      .positive("Chiều rộng phải là một số dương !")
+      .max(150, "Chiều rộng không được quá 150cm !")
+      .min(1, "Chiều rộng không được nhỏ hơn 1 !")
+      .required("Vui lòng nhập chiều rộng !"),
+    length: yup
+      .number()
+      .typeError("Chiều dài phải là một số !")
+      .positive("Chiều dài phải là một số dương !")
+      .max(150, "Chiều dài không được quá 150cm !")
+      .min(1, "Chiều dài không được nhỏ hơn 1 !")
+      .required("Vui lòng nhập chiều dài !"),
+    weight: yup
+      .number()
+      .typeError("Khối lượng phải là một số !")
+      .positive("Khối lượng phải là một số dương !")
+      .max(30000, "Khối lượng không được quá 30000 gram !")
+      .min(1, "Khối lượng không được nhỏ hơn 1 !")
+      .required("Vui lòng nhập khối lượng !"),
+    category: yup.string().required("Vui lòng chọn danh mục !").trim(),
+    subCategoriesID: yup
+      .string()
+      .required("Vui lòng chọn danh mục con !")
+      .trim(),
+    description: yup.string().required("Vui lòng nhập mô tả !").trim(),
+
+    image: yup.mixed().when("fileClicked", {
+      is: true,
+      then: () =>
+        yup
+          .mixed()
+          .test(
+            "file",
+            "Vui lòng chọn hình ảnh !",
+            (value) => value instanceof FileList && value.length > 0,
+          )
+          .test(
+            "fileType",
+            "File này không phải là file hình ảnh!",
+            (value) =>
+              value &&
+              value[0] &&
+              [
+                "image/jpeg",
+                "image/png",
+                "image/jpg",
+                "image/gif",
+                "image/bmp",
+                "image/webp",
+                "image/svg+xml",
+              ].includes(value[0].type),
+          )
+          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+            return value && value[0] && value[0].size <= 2000000;
+          }),
+    }),
+    fileClicked: yup.boolean(),
+  })
+  .required();
+
 export const categoriesSchema = yup
   .object({
     name: yup.string().required("Vui lòng tên danh mục !").trim(),
@@ -232,6 +316,43 @@ export const subCategoriesSchema = yup
       .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
         return value && value[0] && value[0].size <= 2000000;
       }),
+  })
+  .required();
+
+export const updatedSubCategoriesSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng nhập tên danh mục!").trim(),
+    image: yup.mixed().when("fileClicked", {
+      is: true,
+      then: () =>
+        yup
+          .mixed()
+          .test(
+            "file",
+            "Vui lòng chọn hình ảnh !",
+            (value) => value instanceof FileList && value.length > 0,
+          )
+          .test(
+            "fileType",
+            "File này không phải là file hình ảnh!",
+            (value) =>
+              value &&
+              value[0] &&
+              [
+                "image/jpeg",
+                "image/png",
+                "image/jpg",
+                "image/gif",
+                "image/bmp",
+                "image/webp",
+                "image/svg+xml",
+              ].includes(value[0].type),
+          )
+          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+            return value && value[0] && value[0].size <= 2000000;
+          }),
+    }),
+    fileClicked: yup.boolean(),
   })
   .required();
 
