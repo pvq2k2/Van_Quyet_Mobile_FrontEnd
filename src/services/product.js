@@ -13,6 +13,35 @@ export const createProduct = async (productData) => {
     throw cathError(error);
   }
 };
+
+export const getUpdateProductByID = async (productID) => {
+  try {
+    const res = await instance.get(
+      `/product/get-update-product-by-id/${productID}`,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
+export const updateProduct = async (productData) => {
+  try {
+    const res = await instance.put(
+      `/product/update-product/${productData.id}`,
+      productData.formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
 export const getAllProduct = async (
   pagination = {
     pageSize: 10,

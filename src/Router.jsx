@@ -23,7 +23,11 @@ import {
   ResetPassword,
   VerifyAccount,
 } from "./pages/Site";
-import { ProductCreate, ProductList } from "./pages/Admin/Product";
+import {
+  ProductCreate,
+  ProductList,
+  ProductUpdate,
+} from "./pages/Admin/Product";
 import { ColorCreate, ColorList, ColorUpdate } from "./pages/Admin/Color";
 import { SizeCreate, SizeList, SizeUpdate } from "./pages/Admin/Size";
 
@@ -56,6 +60,7 @@ const Router = () => {
           <Route path="products">
             <Route index element={<ProductList />} />
             <Route path="create" element={<ProductCreate />} />
+            <Route path="update/:id" element={<ProductUpdate />} />
             <Route path="categories">
               <Route index element={<CategoriesList />} />
               <Route path="create" element={<CategoriesCreate />} />
