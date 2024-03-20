@@ -25,6 +25,15 @@ export const getUpdateProductByID = async (productID) => {
   }
 };
 
+export const getProductByID = async (productID) => {
+  try {
+    const res = await instance.get(`/product/get-product-by-id/${productID}`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
 export const updateProduct = async (productData) => {
   try {
     const res = await instance.put(

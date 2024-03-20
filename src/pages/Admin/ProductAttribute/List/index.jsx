@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   IoAddCircleOutline,
-  IoHomeOutline,
-  IoInformationOutline,
   IoPencilOutline,
   IoServerOutline,
 } from "react-icons/io5";
@@ -11,15 +9,17 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
-import { fetchGetAllProduct } from "../../../../redux/slice/productSlice";
 import { sliceName } from "../../../../utils";
-import CustomNumberFormat from "../../../../components/common/CustomNumberFormat";
+import { fetchGetAllProductAttribute } from "../../../../redux/slice/productAttributeSlice";
 
-const ProductList = () => {
-  document.title = "Danh sách sản phẩm - Văn Quyết Mobile";
+const ProductAttributeList = ({ productID }) => {
+  document.title =
+    "Chi tiết sản phẩm - Danh sách thuộc tính sản phẩm - Văn Quyết Mobile";
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
-  const isLoading = useSelector((state) => state.product.isLoading);
+  const productAttributes = useSelector(
+    (state) => state.productAttribute.productAttributes,
+  );
+  const isLoading = useSelector((state) => state.productAttribute.isLoading);
   const [pagination, setPagination] = useState({
     pageSize: 10,
     pageNumber: 1,
@@ -37,7 +37,12 @@ const ProductList = () => {
     });
   };
   useEffect(() => {
-    dispatch(fetchGetAllProduct(filters))
+    dispatch(
+      fetchGetAllProductAttribute({
+        pagination: { ...filters },
+        productID: productID,
+      }),
+    )
       .unwrap()
       .then((res) => {
         setPagination(res.pagination);
@@ -48,22 +53,14 @@ const ProductList = () => {
     <div className="px-4 pb-4 xl:px-0">
       <section className="my-5 ml-2 md:flex md:items-end md:justify-between lg:my-8">
         <div className="breadcumrb">
-          <ol className="mr-12 flex flex-wrap items-center rounded-lg bg-transparent pt-1 sm:mr-16">
-            <li>
-              <IoHomeOutline className="text-sm leading-normal dark:text-gray-400" />
-            </li>
-            <li className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400">
-              Sản phẩm
-            </li>
-          </ol>
           <h3 className="mb-3 text-2xl font-bold capitalize leading-10 md:mb-0">
-            Danh sách Sản phẩm
+            Danh sách thuộc tính sản phẩm
           </h3>
         </div>
-        <Link to="create">
+        <Link to="create-product-attribute">
           <button className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-blue-500 px-5 py-2 text-base tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 sm:w-auto">
             <IoAddCircleOutline className="text-2xl" />
-            <span>Thêm Sản phẩm</span>
+            <span>Thêm thuộc tính</span>
           </button>
         </Link>
       </section>
@@ -79,16 +76,16 @@ const ProductList = () => {
                         ID
                       </th>
                       <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
-                        Tên sản phẩm
+                        Màu
+                      </th>
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
+                        Kích cỡ
+                      </th>
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
+                        Số lượng
                       </th>
                       <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Giá
-                      </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
-                        Ảnh
-                      </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
-                        Trạng thái
                       </th>
                       <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 md:text-center rtl:text-right">
                         Hành động
@@ -105,49 +102,29 @@ const ProductList = () => {
                           </div>
                         </td>
                       </tr>
-                    ) : products && products?.data?.length > 0 ? (
-                      products?.data?.map((product) => (
-                        <tr key={product.id}>
+                    ) : productAttributes &&
+                      productAttributes?.data?.length > 0 ? (
+                      productAttributes?.data?.map((productAttribute) => (
+                        <tr key={productAttribute.id}>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                            <span>{product.id}</span>
+                            <span>{productAttribute.id}</span>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {sliceName(product.name, 15)}
+                            {sliceName(productAttribute.colorName, 15)}
                           </td>
-                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                            <CustomNumberFormat number={product.price} />
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
+                            {productAttribute.sizeName}
                           </td>
-                          <td className="flex items-center justify-center whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
-                            <div className="flex w-40 items-center justify-center">
-                              <img
-                                src={product.image}
-                                alt="image"
-                                className="px-10 dark:rounded-lg dark:bg-gray-300"
-                              />
-                            </div>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
+                            {productAttribute.quantity}
                           </td>
-                          <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                            <span
-                              className={`${
-                                product.status == 2
-                                  ? "bg-green-500"
-                                  : "bg-red-500"
-                              } rounded-3xl px-4 py-2 text-white`}
-                            >
-                              {product.status == 2 ? "Hiện" : "Ẩn"}
-                            </span>
+                          <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
+                            {productAttribute.price}
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-sm">
                             <div className="flex items-center gap-x-6 md:justify-center">
                               <Link
-                                to={`${product.id}`}
-                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-indigo-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600 sm:w-auto"
-                              >
-                                <IoInformationOutline className="text-xl" />
-                                <span>Chi tiết</span>
-                              </Link>
-                              <Link
-                                to={`update/${product.id}`}
+                                to={`update-product-attribute/${productAttribute.id}`}
                                 className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
                               >
                                 <IoPencilOutline className="text-xl" />
@@ -179,4 +156,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductAttributeList;

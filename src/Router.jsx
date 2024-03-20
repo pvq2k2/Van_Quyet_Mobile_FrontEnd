@@ -25,6 +25,7 @@ import {
 } from "./pages/Site";
 import {
   ProductCreate,
+  ProductDetail,
   ProductList,
   ProductUpdate,
 } from "./pages/Admin/Product";
@@ -61,6 +62,11 @@ const Router = () => {
             <Route index element={<ProductList />} />
             <Route path="create" element={<ProductCreate />} />
             <Route path="update/:id" element={<ProductUpdate />} />
+            <Route path=":productId">
+              <Route index element={<ProductDetail />} />
+              {/* <Route path="create" element={<SubCategoriesCreate />} />
+              <Route path="update/:id" element={<SubCategoriesUpdate />} /> */}
+            </Route>
             <Route path="categories">
               <Route index element={<CategoriesList />} />
               <Route path="create" element={<CategoriesCreate />} />
