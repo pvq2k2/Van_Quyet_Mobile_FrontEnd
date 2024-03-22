@@ -50,8 +50,8 @@ const ProductAttributeList = ({ productID }) => {
       .catch((error) => toast.error(error));
   }, [dispatch, filters]);
   return (
-    <div className="px-4 pb-4 xl:px-0">
-      <section className="my-5 ml-2 md:flex md:items-end md:justify-between lg:my-8">
+    <>
+      <section className="mb-5 mt-4 md:flex md:items-end md:justify-between lg:mb-8">
         <div className="breadcumrb">
           <h3 className="mb-3 text-2xl font-bold capitalize leading-10 md:mb-0">
             Danh sách thuộc tính sản phẩm
@@ -152,7 +152,7 @@ const ProductAttributeList = ({ productID }) => {
         </div>
         <Pagination pagination={pagination} onPageChange={handlePageChange} />
       </section>
-    </div>
+    </>
   );
 };
 

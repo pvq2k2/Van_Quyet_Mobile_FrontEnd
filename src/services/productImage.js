@@ -18,3 +18,20 @@ export const getAllProductImage = async (
     throw cathError(error);
   }
 };
+
+export const createProductImage = async (productImageData) => {
+  try {
+    let res = await instance.post(
+      `/product-image/create-product-image`,
+      productImageData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
