@@ -40,7 +40,7 @@ const ProductDetail = () => {
 
   return (
     <div className="px-4 pb-4 xl:px-0">
-      <section className="my-5 ml-2 md:flex md:items-end md:justify-between lg:my-8">
+      <section className="ml-2 mt-5 md:flex md:items-end md:justify-between lg:mt-8">
         <div className="breadcumrb">
           <ol className="mr-12 flex flex-wrap items-center rounded-lg bg-transparent pt-1 sm:mr-16">
             <li>
@@ -84,7 +84,7 @@ const Tabs = ({ tabsContent, onChange }) => {
   };
   return (
     <>
-      <div className="flex items-center justify-center gap-x-1">
+      <div className="flex items-center justify-center gap-x-1 pt-4">
         {tabsContent.map((tabItem, index) => (
           <div
             onClick={() => handleOnClick(index)}
