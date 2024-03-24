@@ -35,3 +35,31 @@ export const createProductImage = async (productImageData) => {
     throw cathError(error);
   }
 };
+
+export const getUpdateProductImageByID = async (productImageID) => {
+  try {
+    const res = await instance.get(
+      `/product-image/get-update-product-image-by-id/${productImageID}`,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
+export const updateProductImage = async (productImageData) => {
+  try {
+    const res = await instance.put(
+      `/product-image/update-product-image/${productImageData.id}`,
+      productImageData.formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};

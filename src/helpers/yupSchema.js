@@ -379,7 +379,7 @@ export const sizeSchema = yup
 
 export const productImageSchema = yup
   .object({
-    title: yup.string().required("Vui lòng tên ảnh !").trim(),
+    title: yup.string().required("Vui lòng nhập tên ảnh !").trim(),
     colorID: yup.string().required("Vui lòng chọn màu !").trim(),
     image: yup
       .mixed()
@@ -410,5 +410,43 @@ export const productImageSchema = yup
       .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
         return value && value[0] && value[0].size <= 2000000;
       }),
+  })
+  .required();
+
+export const updatedProductImageSchema = yup
+  .object({
+    title: yup.string().required("Vui lòng nhập tên ảnh!").trim(),
+    colorID: yup.string().required("Vui lòng chọn màu !").trim(),
+    image: yup.mixed().when("fileClicked", {
+      is: true,
+      then: () =>
+        yup
+          .mixed()
+          .test(
+            "file",
+            "Vui lòng chọn hình ảnh !",
+            (value) => value instanceof FileList && value.length > 0,
+          )
+          .test(
+            "fileType",
+            "File này không phải là file hình ảnh!",
+            (value) =>
+              value &&
+              value[0] &&
+              [
+                "image/jpeg",
+                "image/png",
+                "image/jpg",
+                "image/gif",
+                "image/bmp",
+                "image/webp",
+                "image/svg+xml",
+              ].includes(value[0].type),
+          )
+          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+            return value && value[0] && value[0].size <= 2000000;
+          }),
+    }),
+    fileClicked: yup.boolean(),
   })
   .required();

@@ -31,7 +31,10 @@ import {
 } from "./pages/Admin/Product";
 import { ColorCreate, ColorList, ColorUpdate } from "./pages/Admin/Color";
 import { SizeCreate, SizeList, SizeUpdate } from "./pages/Admin/Size";
-import { ProductImageCreate } from "./pages/Admin/ProductImage";
+import {
+  ProductImageCreate,
+  ProductImageUpdate,
+} from "./pages/Admin/ProductImage";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -69,8 +72,10 @@ const Router = () => {
                 path="create-product-image"
                 element={<ProductImageCreate />}
               />
-              {/* <Route path="create" element={<SubCategoriesCreate />} />
-              <Route path="update/:id" element={<SubCategoriesUpdate />} /> */}
+              <Route
+                path="update-product-image/:productImageId"
+                element={<ProductImageUpdate />}
+              />
             </Route>
             <Route path="categories">
               <Route index element={<CategoriesList />} />
