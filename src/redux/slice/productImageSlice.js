@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createProductImage,
   getAllProductImage,
+  getUpdateProductImageByID,
+  updateProductImage,
 } from "../../services/productImage";
 
 const initialState = {
@@ -37,29 +39,29 @@ export const fetchCreateProductImage = createAsyncThunk(
   },
 );
 
-// export const fetchUpdateProductImage = createAsyncThunk(
-//   "product-image/update",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await updateProductImage(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchGetUpdateProductImageByID = createAsyncThunk(
+  "product-image/get-update-product-image-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getUpdateProductImageByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
-// export const fetchGetProductImageByID = createAsyncThunk(
-//   "product-image/get-product-image-by-id",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await getProductImageByID(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchUpdateProductImage = createAsyncThunk(
+  "product-image/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateProductImage(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 const productImageSlice = createSlice({
   name: "product-image",
@@ -70,9 +72,12 @@ const productImageSlice = createSlice({
       .addCase(fetchGetAllProductImage.fulfilled, (state, { payload }) => {
         state.productImages = payload;
       })
-      //   .addCase(fetchGetProductImageByID.fulfilled, (state, { payload }) => {
-      //     state.subCategory = payload?.data;
-      //   })
+      .addCase(
+        fetchGetUpdateProductImageByID.fulfilled,
+        (state, { payload }) => {
+          state.productImage = payload?.data;
+        },
+      )
       .addMatcher(
         (action) =>
           action.type.startsWith("product-image/") &&
