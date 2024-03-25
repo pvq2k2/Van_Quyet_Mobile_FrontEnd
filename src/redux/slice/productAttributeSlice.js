@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllProductAttribute } from "../../services/productAttribute";
+import {
+  createProductAttribute,
+  getAllProductAttribute,
+} from "../../services/productAttribute";
 
 const initialState = {
   productAttributes: {},
@@ -22,17 +25,17 @@ export const fetchGetAllProductAttribute = createAsyncThunk(
   },
 );
 
-// export const fetchCreateProductImage = createAsyncThunk(
-//   "product-image/create",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await createProductImage(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchCreateProductAttribute = createAsyncThunk(
+  "product-attribute/create",
+  async (data, thunkAPI) => {
+    try {
+      const response = await createProductAttribute(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 // export const fetchUpdateProductImage = createAsyncThunk(
 //   "product-image/update",

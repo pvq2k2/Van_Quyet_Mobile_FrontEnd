@@ -450,3 +450,12 @@ export const updatedProductImageSchema = yup
     fileClicked: yup.boolean(),
   })
   .required();
+
+export const productAttributeSchema = yup
+  .object({
+    quantity: yup.string().required("Vui lòng nhập số lượng !").trim(),
+    price: yup.string().required("Vui lòng nhập giá !").trim(),
+    colorID: yup.string().required("Vui lòng chọn màu !").trim(),
+    sizeID: yup.string().required("Vui lòng chọn kích cỡ !").trim(),
+  })
+  .required();

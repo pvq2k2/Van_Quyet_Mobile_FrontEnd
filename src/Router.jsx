@@ -35,6 +35,7 @@ import {
   ProductImageCreate,
   ProductImageUpdate,
 } from "./pages/Admin/ProductImage";
+import { ProductAttributeCreate } from "./pages/Admin/ProductAttribute";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -75,6 +76,10 @@ const Router = () => {
               <Route
                 path="update-product-image/:productImageId"
                 element={<ProductImageUpdate />}
+              />
+              <Route
+                path="create-product-attribute"
+                element={<ProductAttributeCreate />}
               />
             </Route>
             <Route path="categories">

@@ -18,3 +18,15 @@ export const getAllProductAttribute = async (
     throw cathError(error);
   }
 };
+
+export const createProductAttribute = async (productAttributeData) => {
+  try {
+    const res = await instance.post(
+      "/product-attribute/create-product-attribute",
+      productAttributeData,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
