@@ -3,6 +3,7 @@ import {
   IoAddCircleOutline,
   IoPencilOutline,
   IoServerOutline,
+  IoTrashOutline,
 } from "react-icons/io5";
 import Pagination from "../../../../components/common/Pagination";
 import { Link } from "react-router-dom";
@@ -10,7 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import { sliceName } from "../../../../utils";
-import { fetchGetAllProductImage } from "../../../../redux/slice/productImageSlice";
+import {
+  fetchGetAllProductImage,
+  fetchRemoveProductImage,
+} from "../../../../redux/slice/productImageSlice";
+import { sweetConfirm, sweetModal } from "../../../../helpers/modalSweetAlert";
 
 const ProductImageList = ({ productID }) => {
   document.title =
@@ -35,6 +40,24 @@ const ProductImageList = ({ productID }) => {
       ...filters,
       pageNumber: newPage,
     });
+  };
+  const handleRemove = async (productImageID) => {
+    await dispatch(fetchRemoveProductImage(productImageID))
+      .unwrap()
+      .then((res) => sweetModal("Thành công !", res.message, "success"))
+      .catch((error) => sweetModal("Lỗi !", error, "error"));
+
+    await dispatch(
+      fetchGetAllProductImage({
+        pagination: { ...filters },
+        productID: productID,
+      }),
+    )
+      .unwrap()
+      .then((res) => {
+        setPagination(res.pagination);
+      })
+      .catch((error) => toast.error(error));
   };
   useEffect(() => {
     dispatch(
@@ -137,6 +160,15 @@ const ProductImageList = ({ productID }) => {
                                 <IoPencilOutline className="text-xl" />
                                 <span>Sửa</span>
                               </Link>
+                              <button
+                                onClick={() =>
+                                  sweetConfirm(productImage.id, handleRemove)
+                                }
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-red-500 px-5 py-2 text-sm tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 sm:w-auto"
+                              >
+                                <IoTrashOutline className="text-xl" />
+                                <span>Xóa</span>
+                              </button>
                             </div>
                           </td>
                         </tr>

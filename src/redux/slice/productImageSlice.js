@@ -3,6 +3,7 @@ import {
   createProductImage,
   getAllProductImage,
   getUpdateProductImageByID,
+  removeProductImage,
   updateProductImage,
 } from "../../services/productImage";
 
@@ -56,6 +57,18 @@ export const fetchUpdateProductImage = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await updateProductImage(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchRemoveProductImage = createAsyncThunk(
+  "product-image/remove",
+  async (data, thunkAPI) => {
+    try {
+      const response = await removeProductImage(data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

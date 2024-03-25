@@ -63,3 +63,14 @@ export const updateProductImage = async (productImageData) => {
     throw cathError(error);
   }
 };
+
+export const removeProductImage = async (productImageID) => {
+  try {
+    const res = await instance.delete(
+      `/product-image/remove-product-image/${productImageID}`,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
