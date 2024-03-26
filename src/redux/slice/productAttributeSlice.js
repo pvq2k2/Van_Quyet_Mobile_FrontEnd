@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createProductAttribute,
   getAllProductAttribute,
+  getUpdateProductAttributeByID,
+  removeProductAttribute,
+  updateProductAttribute,
 } from "../../services/productAttribute";
 
 const initialState = {
@@ -37,29 +40,41 @@ export const fetchCreateProductAttribute = createAsyncThunk(
   },
 );
 
-// export const fetchUpdateProductImage = createAsyncThunk(
-//   "product-image/update",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await updateProductImage(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchGetUpdateProductAttributeByID = createAsyncThunk(
+  "product-attribute/get-update-product-attribute-by-id",
+  async (data, thunkAPI) => {
+    try {
+      const response = await getUpdateProductAttributeByID(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
-// export const fetchGetProductImageByID = createAsyncThunk(
-//   "product-image/get-product-image-by-id",
-//   async (data, thunkAPI) => {
-//     try {
-//       const response = await getProductImageByID(data);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+export const fetchUpdateProductAttribute = createAsyncThunk(
+  "product-attribute/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateProductAttribute(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const fetchRemoveProductAttribute = createAsyncThunk(
+  "product-attribute/remove",
+  async (data, thunkAPI) => {
+    try {
+      const response = await removeProductAttribute(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
 
 const productAttributeSlice = createSlice({
   name: "product-attribute",
@@ -70,9 +85,12 @@ const productAttributeSlice = createSlice({
       .addCase(fetchGetAllProductAttribute.fulfilled, (state, { payload }) => {
         state.productAttributes = payload;
       })
-      //   .addCase(fetchGetProductImageByID.fulfilled, (state, { payload }) => {
-      //     state.subCategory = payload?.data;
-      //   })
+      .addCase(
+        fetchGetUpdateProductAttributeByID.fulfilled,
+        (state, { payload }) => {
+          state.productAttribute = payload?.data;
+        },
+      )
       .addMatcher(
         (action) =>
           action.type.startsWith("product-attribute/") &&
