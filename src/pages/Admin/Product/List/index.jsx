@@ -115,7 +115,10 @@ const ProductList = () => {
                             {sliceName(product.name, 15)}
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-gray-700 dark:text-gray-200">
-                            <CustomNumberFormat number={product.price} />
+                            <CustomNumberFormat
+                              number={product.price}
+                              type={"₫"}
+                            />
                           </td>
                           <td className="flex items-center justify-center whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
                             <div className="flex w-40 items-center justify-center">
