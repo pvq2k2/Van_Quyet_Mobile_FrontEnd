@@ -3,6 +3,7 @@ import {
   IoAddCircleOutline,
   IoPencilOutline,
   IoServerOutline,
+  IoTrashOutline,
 } from "react-icons/io5";
 import Pagination from "../../../../components/common/Pagination";
 import { Link } from "react-router-dom";
@@ -10,7 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
 import { sliceName } from "../../../../utils";
-import { fetchGetAllProductAttribute } from "../../../../redux/slice/productAttributeSlice";
+import {
+  fetchGetAllProductAttribute,
+  fetchRemoveProductAttribute,
+} from "../../../../redux/slice/productAttributeSlice";
+import { sweetConfirm, sweetModal } from "../../../../helpers/modalSweetAlert";
+import CustomNumberFormat from "../../../../components/common/CustomNumberFormat";
 
 const ProductAttributeList = ({ productID }) => {
   document.title =
@@ -35,6 +41,24 @@ const ProductAttributeList = ({ productID }) => {
       ...filters,
       pageNumber: newPage,
     });
+  };
+  const handleRemove = async (productAttributeID) => {
+    await dispatch(fetchRemoveProductAttribute(productAttributeID))
+      .unwrap()
+      .then((res) => sweetModal("Thành công !", res.message, "success"))
+      .catch((error) => sweetModal("Lỗi !", error, "error"));
+
+    await dispatch(
+      fetchGetAllProductAttribute({
+        pagination: { ...filters },
+        productID: productID,
+      }),
+    )
+      .unwrap()
+      .then((res) => {
+        setPagination(res.pagination);
+      })
+      .catch((error) => toast.error(error));
   };
   useEffect(() => {
     dispatch(
@@ -110,16 +134,33 @@ const ProductAttributeList = ({ productID }) => {
                             <span>{productAttribute.id}</span>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {sliceName(productAttribute.colorName, 15)}
+                            <div className="flex items-center gap-x-3 md:justify-center">
+                              <div
+                                className={`my-auto h-3 w-3 rounded-full border border-black dark:border-white`}
+                                style={{
+                                  backgroundColor: productAttribute.colorValue,
+                                }}
+                              ></div>
+                              <span>{productAttribute.colorName}</span>
+                            </div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {productAttribute.sizeName}
+                            <div
+                              className={`mx-auto w-fit rounded-full border border-black px-3 py-1 text-center dark:border-white`}
+                            >
+                              <span>{productAttribute.sizeName}</span>
+                            </div>
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {productAttribute.quantity}
+                            <CustomNumberFormat
+                              number={productAttribute.quantity}
+                            />
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
-                            {productAttribute.price}
+                            <CustomNumberFormat
+                              number={productAttribute.price}
+                              type={"₫"}
+                            />
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-sm">
                             <div className="flex items-center gap-x-6 md:justify-center">
@@ -130,6 +171,18 @@ const ProductAttributeList = ({ productID }) => {
                                 <IoPencilOutline className="text-xl" />
                                 <span>Sửa</span>
                               </Link>
+                              <button
+                                onClick={() =>
+                                  sweetConfirm(
+                                    productAttribute.id,
+                                    handleRemove,
+                                  )
+                                }
+                                className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-red-500 px-5 py-2 text-sm tracking-wide text-white shadow-xl transition-colors duration-200 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 sm:w-auto"
+                              >
+                                <IoTrashOutline className="text-xl" />
+                                <span>Xóa</span>
+                              </button>
                             </div>
                           </td>
                         </tr>

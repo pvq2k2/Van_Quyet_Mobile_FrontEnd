@@ -1,6 +1,6 @@
 import React from "react";
 import { NumericFormat } from "react-number-format";
-const CustomNumberFormat = ({ number, className = "", type = "₫" }) => {
+const CustomNumberFormat = ({ number, className = "", type }) => {
   return (
     <>
       <NumericFormat
