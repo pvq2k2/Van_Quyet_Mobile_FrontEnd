@@ -11,6 +11,7 @@ import {
   IoLibraryOutline,
   IoPersonOutline,
   IoPhonePortraitOutline,
+  IoShieldOutline,
 } from "react-icons/io5";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
@@ -68,7 +69,16 @@ const AdminSitebar = ({ toggleMenu, isMenu }) => {
       to: "/admin/users",
       icon: IoPersonOutline,
       label: "Người dùng",
-      isSubMenu: false,
+      isSubMenu: true,
+      subMenuData: [
+        {
+          to: "/admin/users/decentralization",
+          icon: IoShieldOutline,
+          label: "Quyền",
+          isSubMenu: false,
+          activeParents: "/admin/users",
+        },
+      ],
     },
     {
       to: "/admin/carts",

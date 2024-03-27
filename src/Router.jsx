@@ -39,6 +39,7 @@ import {
   ProductAttributeCreate,
   ProductAttributeUpdate,
 } from "./pages/Admin/ProductAttribute";
+import { DecentralizationList } from "./pages/Admin/Decentralization";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -108,6 +109,17 @@ const Router = () => {
               <Route index element={<SizeList />} />
               <Route path="create" element={<SizeCreate />} />
               <Route path="update/:id" element={<SizeUpdate />} />
+            </Route>
+          </Route>
+
+          <Route path="users">
+            <Route index element={<h1>User</h1>} />
+            {/* <Route path="create" element={<SizeCreate />} />
+              <Route path="update/:id" element={<SizeUpdate />} /> */}
+            <Route path="decentralization">
+              <Route index element={<DecentralizationList />} />
+              {/* <Route path="create" element={<SizeCreate />} />
+              <Route path="update/:id" element={<SizeUpdate />} /> */}
             </Route>
           </Route>
         </Route>
