@@ -1,9 +1,9 @@
-import React from "react";
 import {
   IoListOutline,
   IoNotificationsOutline,
   IoSearchOutline,
 } from "react-icons/io5";
+import PropTypes from "prop-types";
 import { ToggleTheme } from "../../../common";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,4 +120,7 @@ const AdminHeader = ({ toggleMenu }) => {
   );
 };
 
+AdminHeader.propTypes = {
+  toggleMenu: PropTypes.func,
+};
 export default AdminHeader;

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
@@ -99,7 +99,7 @@ const ProductCreate = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (parentsCategory != 0) {
@@ -120,7 +120,7 @@ const ProductCreate = () => {
       };
       fetchData();
     }
-  }, [parentsCategory]);
+  }, [dispatch, parentsCategory]);
 
   return (
     <div className="px-4 pb-4 xl:px-0">

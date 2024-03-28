@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef } from "react";
 import { IoSunnyOutline, IoMoonOutline, IoTvOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMode } from "../../redux/slice/darkModeSlice";
@@ -18,11 +19,11 @@ const ToggleTheme = () => {
       dispatch(toggleMode(prefersDark ? "dark" : "light"));
       dispatch(toggleMode("system"));
     };
-
-    prefersDarkMode.current.addEventListener("change", updateDarkMode);
+    const mediaQuery = prefersDarkMode.current;
+    mediaQuery.addEventListener("change", updateDarkMode);
 
     return () => {
-      prefersDarkMode.current.removeEventListener("change", updateDarkMode);
+      mediaQuery.removeEventListener("change", updateDarkMode);
     };
   }, [dispatch]);
 

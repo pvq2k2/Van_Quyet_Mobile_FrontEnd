@@ -91,10 +91,7 @@ const subCategoriesSlice = createSlice({
         (state) => {
           state.isLoading = false;
         },
-      )
-      .addDefaultCase((state, action) => {
-        // console.log(`action type: ${action.type}`, current(state))
-      });
+      );
   },
 });
 export default subCategoriesSlice.reducer;

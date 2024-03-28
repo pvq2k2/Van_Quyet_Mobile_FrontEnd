@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IoAddCircleOutline,
   IoHomeOutline,
@@ -73,16 +73,16 @@ const CategoriesList = () => {
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         ID
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Tên danh mục
                       </th>
-                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400">
+                      <th className="px-4 py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 rtl:text-right">
                         Icon
                       </th>
-                      <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400 md:text-center">
+                      <th className="px-4 py-3.5 text-left text-sm font-normal text-gray-500 dark:text-gray-400 md:text-center rtl:text-right">
                         Hành động
                       </th>
                     </tr>

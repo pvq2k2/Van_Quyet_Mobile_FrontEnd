@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
@@ -11,6 +11,7 @@ import { productImageSchema } from "../../../../helpers/yupSchema";
 import { fetchGetAllColor } from "../../../../redux/slice/colorSlice";
 import { fetchGetProductByID } from "../../../../redux/slice/productSlice";
 import { fetchCreateProductImage } from "../../../../redux/slice/productImageSlice";
+import { isFileExtension } from "../../../../utils";
 
 const ProductImageCreate = () => {
   document.title = "Thêm ảnh sản phẩm - Văn Quyết Mobile";
@@ -53,15 +54,7 @@ const ProductImageCreate = () => {
 
   const handleChangeImage = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      let isImage = [
-        "image/jpeg",
-        "image/png",
-        "image/jpg",
-        "image/gif",
-        "image/bmp",
-        "image/webp",
-        "image/svg+xml",
-      ].includes(e.target.files[0].type);
+      let isImage = isFileExtension(e.target.files[0].type);
 
       if (isImage) {
         setPreview(URL.createObjectURL(e.target.files[0]));

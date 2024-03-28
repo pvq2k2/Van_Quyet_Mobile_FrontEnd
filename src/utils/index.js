@@ -4,7 +4,10 @@ export const cathError = (error) => {
   else if (response?.data?.errors) {
     const getError = response?.data?.errors;
     for (var key in getError) {
-      if (getError.hasOwnProperty(key) && Array.isArray(getError[key])) {
+      if (
+        Object.prototype.hasOwnProperty.call(getError, key) &&
+        Array.isArray(getError[key])
+      ) {
         var errorMessage = getError[key][0];
         return errorMessage;
       }

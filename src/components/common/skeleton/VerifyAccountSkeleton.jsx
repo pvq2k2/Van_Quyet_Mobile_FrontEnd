@@ -1,5 +1,3 @@
-import React from "react";
-
 const VerifyAccountSkeleton = () => {
   return (
     <div className="relative w-full overflow-hidden rounded-lg">

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
@@ -10,6 +10,7 @@ import InputField from "../../../../components/common/InputField";
 import { subCategoriesSchema } from "../../../../helpers/yupSchema";
 import { fetchGetCategoriesBySlug } from "../../../../redux/slice/categoriesSlice";
 import { fetchCreateSubCategories } from "../../../../redux/slice/subCategoriesSlice";
+import { isFileExtension } from "../../../../utils";
 
 const SubCategoriesCreate = () => {
   document.title = "Thêm danh mục con - Văn Quyết Mobile";
@@ -46,15 +47,7 @@ const SubCategoriesCreate = () => {
 
   const handleChangeImage = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      let isImage = [
-        "image/jpeg",
-        "image/png",
-        "image/jpg",
-        "image/gif",
-        "image/bmp",
-        "image/webp",
-        "image/svg+xml",
-      ].includes(e.target.files[0].type);
+      let isImage = isFileExtension(e.target.files[0].type);
 
       if (isImage) {
         setPreview(URL.createObjectURL(e.target.files[0]));

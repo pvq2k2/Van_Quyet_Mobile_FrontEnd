@@ -16,13 +16,13 @@ function App() {
       const prefersDark = event.matches;
       setToastTheme(prefersDark ? "dark" : "light");
     };
-
-    prefersDarkMode.current.addEventListener("change", updateDarkMode);
+    const mediaQuery = prefersDarkMode.current;
+    mediaQuery.addEventListener("change", updateDarkMode);
 
     return () => {
-      prefersDarkMode.current.removeEventListener("change", updateDarkMode);
+      mediaQuery.removeEventListener("change", updateDarkMode);
     };
-  }, [theme == "system"]);
+  }, []);
 
   useEffect(() => {
     if (theme === "system") {

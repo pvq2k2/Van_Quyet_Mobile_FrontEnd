@@ -118,10 +118,7 @@ const authSlice = createSlice({
         (state) => {
           state.isLoading = false;
         },
-      )
-      .addDefaultCase((state, action) => {
-        // console.log(`action type: ${action.type}`, current(state))
-      });
+      );
   },
 });
 export const { logout } = authSlice.actions;

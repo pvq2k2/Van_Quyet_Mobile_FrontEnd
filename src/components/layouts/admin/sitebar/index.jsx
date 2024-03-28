@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import {
   IoCartOutline,
   IoChatbubbleOutline,
@@ -198,6 +198,10 @@ const AdminSitebar = ({ toggleMenu, isMenu }) => {
   );
 };
 
+AdminSitebar.propTypes = {
+  toggleMenu: PropTypes.func,
+  isMenu: PropTypes.bool,
+};
 export default AdminSitebar;
 
 function NavItem({
@@ -273,3 +277,13 @@ function NavItem({
     </>
   );
 }
+
+NavItem.propTypes = {
+  to: PropTypes.string,
+  icon: PropTypes.func,
+  label: PropTypes.string,
+  handleClick: PropTypes.func,
+  isSubMenu: PropTypes.bool,
+  subMenuData: PropTypes.array,
+  activeParents: PropTypes.string,
+};

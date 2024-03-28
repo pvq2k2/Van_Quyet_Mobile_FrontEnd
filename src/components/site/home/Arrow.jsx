@@ -1,5 +1,5 @@
-import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import PropTypes from "prop-types";
 const Arrow = ({ onClick, direction }) => {
   return (
     <>
@@ -24,6 +24,11 @@ const Arrow = ({ onClick, direction }) => {
       </div>
     </>
   );
+};
+
+Arrow.propTypes = {
+  onClick: PropTypes.func,
+  direction: PropTypes.string,
 };
 
 export default Arrow;

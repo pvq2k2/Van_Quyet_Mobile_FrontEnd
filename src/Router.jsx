@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate, Route, Routes } from "react-router";
 import { useLocation, useNavigate } from "react-router-dom";
 import PrivateRouterAdmin from "./components/common/PrivateRouterAdmin";
@@ -39,7 +38,10 @@ import {
   ProductAttributeCreate,
   ProductAttributeUpdate,
 } from "./pages/Admin/ProductAttribute";
-import { DecentralizationList } from "./pages/Admin/Decentralization";
+import {
+  DecentralizationCreate,
+  DecentralizationList,
+} from "./pages/Admin/Decentralization";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -118,8 +120,8 @@ const Router = () => {
               <Route path="update/:id" element={<SizeUpdate />} /> */}
             <Route path="decentralization">
               <Route index element={<DecentralizationList />} />
-              {/* <Route path="create" element={<SizeCreate />} />
-              <Route path="update/:id" element={<SizeUpdate />} /> */}
+              <Route path="create" element={<DecentralizationCreate />} />
+              {/* <Route path="update/:id" element={<SizeUpdate />} /> */}
             </Route>
           </Route>
         </Route>
