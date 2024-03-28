@@ -1,47 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputField from "../../../../components/common/InputField";
-import { sizeSchema } from "../../../../helpers/yupSchema";
-import {
-  fetchGetSizeByID,
-  fetchUpdateSize,
-} from "../../../../redux/slice/sizeSlice";
+import { decentralizationSchema } from "../../../../helpers/yupSchema";
+import { fetchCreateDecentralization } from "../../../../redux/slice/decentralizationSlice";
 
-const SizeUpdate = () => {
-  document.title = "Cập nhật kích cỡ - Văn Quyết Mobile";
+const DecentralizationCreate = () => {
+  document.title = "Thêm quyền - Văn Quyết Mobile";
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.size.isLoading);
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const loading = useSelector((state) => state.decentralization.isLoading);
   const form = useForm({
     mode: "onTouched",
     defaultValues: {
       name: "",
-      value: "",
     },
-    resolver: yupResolver(sizeSchema),
+    resolver: yupResolver(decentralizationSchema),
   });
-  useEffect(() => {
-    (() => {
-      dispatch(fetchGetSizeByID(id))
-        .unwrap()
-        .then((res) => form.reset(res.data))
-        .catch((error) => toast.error(error));
-    })();
-  }, []);
 
   const handleSubmit = async (value) => {
     try {
-      const res = await dispatch(fetchUpdateSize(value)).unwrap();
+      const res = await dispatch(fetchCreateDecentralization(value)).unwrap();
       toast.success(res.message);
-      navigate("/admin/products/sizes");
+      form.reset();
     } catch (error) {
       toast.error(error);
     }
@@ -55,14 +39,14 @@ const SizeUpdate = () => {
               <IoHomeOutline className="text-sm leading-normal dark:text-gray-400" />
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 transition duration-150 ease-out before:float-left before:pr-2 before:text-gray-600 before:content-['/'] hover:text-blue-500 hover:underline hover:ease-in dark:text-gray-400 dark:before:text-gray-400 dark:hover:text-blue-500">
-              <Link to="/admin/products/sizes">Kích cỡ</Link>
+              <Link to="/admin/users/decentralization">Quyền</Link>
             </li>
             <li className="pl-2 text-sm capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400">
-              Cập nhật kích cỡ
+              Thêm mới quyền
             </li>
           </ol>
           <h3 className="mb-3 text-2xl font-bold capitalize leading-10 md:mb-0">
-            Cập nhật kích cỡ
+            Thêm mới quyền
           </h3>
         </div>
       </section>
@@ -72,16 +56,9 @@ const SizeUpdate = () => {
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <InputField
-          label={"Tên kích cỡ"}
+          label={"Tên quyền"}
           type={"text"}
           name={"name"}
-          form={form}
-        />
-
-        <InputField
-          label={"Kích cỡ"}
-          type={"text"}
-          name={"value"}
           form={form}
         />
 
@@ -95,10 +72,10 @@ const SizeUpdate = () => {
             ) : (
               ""
             )}
-            {loading ? "Xin chờ !" : "Cập nhật"}
+            {loading ? "Xin chờ !" : "Thêm mới"}
           </button>
           <Link
-            to="/admin/products/sizes"
+            to="/admin/users/decentralization"
             className="rounded-md border px-5 py-2 text-base leading-6 text-gray-900 shadow-xl transition duration-150 ease-out hover:border-indigo-500 hover:ease-in dark:text-white dark:hover:text-blue-500"
           >
             Trở lại
@@ -109,4 +86,4 @@ const SizeUpdate = () => {
   );
 };
 
-export default SizeUpdate;
+export default DecentralizationCreate;

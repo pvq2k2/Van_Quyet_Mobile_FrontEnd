@@ -1,4 +1,3 @@
-import React from "react";
 import Slider from "../../../components/site/home/Slider";
 import ProductList from "../../../components/common/ProductList";
 

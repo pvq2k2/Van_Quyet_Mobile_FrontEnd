@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import Slick from "react-slick";
 import Arrow from "./Arrow";
 import { Link } from "react-router-dom";
@@ -89,3 +91,7 @@ export default function Slider({ list }) {
     </>
   );
 }
+
+Slider.propTypes = {
+  list: PropTypes.array,
+};

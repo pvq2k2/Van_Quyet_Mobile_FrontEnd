@@ -1,6 +1,7 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Controller } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
+import PropTypes from "prop-types";
 
 const InputNumberFormat = forwardRef(
   ({ label, name, form, disabled, autoComplete }, ref) => {
@@ -41,4 +42,12 @@ const InputNumberFormat = forwardRef(
   },
 );
 
+InputNumberFormat.displayName = "InputNumberFormat";
+InputNumberFormat.propTypes = {
+  label: PropTypes.string,
+  name: PropTypes.string,
+  form: PropTypes.object,
+  disabled: PropTypes.bool,
+  autoComplete: PropTypes.string,
+};
 export default InputNumberFormat;

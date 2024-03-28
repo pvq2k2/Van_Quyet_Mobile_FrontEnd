@@ -1,5 +1,5 @@
-import React from "react";
 import { NumericFormat } from "react-number-format";
+import PropTypes from "prop-types";
 const CustomNumberFormat = ({ number, className = "", type }) => {
   return (
     <>
@@ -15,4 +15,9 @@ const CustomNumberFormat = ({ number, className = "", type }) => {
   );
 };
 
+CustomNumberFormat.propTypes = {
+  number: PropTypes.number,
+  className: PropTypes.string,
+  type: PropTypes.string,
+};
 export default CustomNumberFormat;

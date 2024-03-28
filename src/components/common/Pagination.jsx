@@ -1,25 +1,31 @@
-import React, { useEffect, useMemo, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useEffect, useState } from "react";
 import {
   IoReturnDownBackOutline,
   IoReturnDownForwardOutline,
 } from "react-icons/io5";
+import PropTypes from "prop-types";
 
 const Pagination = (props) => {
   const { pagination, onPageChange } = props;
-  const handlePageChange = (newPage) => {
-    if (pagination.pageNumber != newPage) {
-      if (onPageChange) {
-        onPageChange(newPage);
+  const handlePageChange = useCallback(
+    (newPage) => {
+      if (pagination.pageNumber !== newPage) {
+        if (onPageChange) {
+          onPageChange(newPage);
+        }
       }
-    }
-  };
-  const numberOfPages = () => {
+    },
+    [pagination.pageNumber, onPageChange],
+  );
+
+  const numberOfPages = useCallback(() => {
     const numberOfPage = [];
     for (let i = 1; i <= pagination.totalPage; i++) {
       numberOfPage.push(i);
     }
     return numberOfPage;
-  };
+  }, [pagination.totalPage]);
 
   // Array of buttons what we see on the page
   const [arrOfCurrButtons, setArrOfCurrButtons] = useState([]);
@@ -64,7 +70,7 @@ const Pagination = (props) => {
       const sliced = numberOfPages.slice(numberOfPages.length - 4); // slice(10-4)
       tempNumberOfPages = [1, dotsLeft, ...sliced];
     } else if (pagination.pageNumber === dotsInitial) {
-      // [1, 2, 3, 4, "...", 10].length = 6 - 3  = 3
+      //[1, 2, 3, 4, "...", 10].length = 6 - 3  = 3
       // arrOfCurrButtons[3] = 4 + 1 = 5
       // or
       // [1, 2, 3, 4, 5, "...", 10].length = 7 - 3 = 4
@@ -116,4 +122,8 @@ const Pagination = (props) => {
   );
 };
 
+Pagination.propTypes = {
+  pagination: PropTypes.object,
+  onPageChange: PropTypes.func,
+};
 export default Pagination;

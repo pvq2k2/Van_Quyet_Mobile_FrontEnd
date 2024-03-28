@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { IoHomeOutline } from "react-icons/io5";
@@ -45,7 +46,7 @@ const SubCategoriesUpdate = () => {
       delete formValue.image;
       delete formValue.slug;
     }
-    if (formValue.fileClicked) delete formValue.fileClicked;
+    delete formValue.fileClicked;
     if (formValue.id) delete formValue.id;
     const formData = new FormData();
     for (let key in formValue) {
@@ -104,7 +105,7 @@ const SubCategoriesUpdate = () => {
     };
 
     fetchData();
-  }, [dispatch, slug]);
+  }, []);
 
   return (
     <div className="px-4 pb-4 xl:px-0">

@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const InputRadioField = ({
   defaultChecked,
@@ -29,6 +29,16 @@ const InputRadioField = ({
       </label>
     </div>
   );
+};
+
+InputRadioField.propTypes = {
+  defaultChecked: PropTypes.bool,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  disabled: PropTypes.bool,
+  defaultValue: PropTypes.string,
+  form: PropTypes.object,
 };
 
 export default InputRadioField;

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   IoAddCircleOutline,
   IoPencilOutline,
@@ -194,5 +196,7 @@ const ProductImageList = ({ productID }) => {
     </>
   );
 };
-
+ProductImageList.propTypes = {
+  productID: PropTypes.string,
+};
 export default ProductImageList;

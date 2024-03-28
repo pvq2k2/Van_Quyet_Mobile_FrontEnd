@@ -459,3 +459,9 @@ export const productAttributeSchema = yup
     sizeID: yup.string().required("Vui lòng chọn kích cỡ !").trim(),
   })
   .required();
+
+export const decentralizationSchema = yup
+  .object({
+    name: yup.string().required("Vui lòng nhập tên quyền !").trim(),
+  })
+  .required();

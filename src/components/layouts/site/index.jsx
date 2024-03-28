@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import SiteHeader from "./header";
 import SiteFooter from "./footer";

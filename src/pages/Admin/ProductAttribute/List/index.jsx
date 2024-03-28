@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import {
   IoAddCircleOutline,
   IoPencilOutline,
@@ -10,7 +12,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ImSpinner3 } from "react-icons/im";
-import { sliceName } from "../../../../utils";
 import {
   fetchGetAllProductAttribute,
   fetchRemoveProductAttribute,
@@ -209,4 +210,7 @@ const ProductAttributeList = ({ productID }) => {
   );
 };
 
+ProductAttributeList.propTypes = {
+  productID: PropTypes.string,
+};
 export default ProductAttributeList;

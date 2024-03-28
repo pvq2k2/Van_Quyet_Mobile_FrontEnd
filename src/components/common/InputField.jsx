@@ -1,5 +1,5 @@
-import React from "react";
 import { Controller } from "react-hook-form";
+import PropTypes from "prop-types";
 
 const InputField = ({
   label,
@@ -39,4 +39,12 @@ const InputField = ({
   );
 };
 
+InputField.propTypes = {
+  label: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  form: PropTypes.object,
+  disabled: PropTypes.bool,
+  autoComplete: PropTypes.string,
+};
 export default InputField;

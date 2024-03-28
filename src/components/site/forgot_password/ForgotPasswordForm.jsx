@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner3 } from "react-icons/im";
 import { AiOutlineClose, AiOutlineMail } from "react-icons/ai";

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { IoHomeOutline } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +13,6 @@ const ProductDetail = () => {
   document.title = "Chi tiết sản phẩm - Văn Quyết Mobile";
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product.product);
-  const isLoading = useSelector((state) => state.product.isLoading);
   const { productId } = useParams();
   const tabs = [
     { label: "Ảnh", content: <ProductImageList productID={productId} /> },
@@ -20,9 +21,6 @@ const ProductDetail = () => {
       content: <ProductAttributeList productID={productId} />,
     },
   ];
-  const handleChangeTab = (currentTabIndex) => {
-    // console.log(currentTabIndex);
-  };
   const handleRemoveLocalTab = () => {
     if (localStorage.getItem("tb_act_a")) localStorage.removeItem("tb_act_a");
   };
@@ -57,7 +55,7 @@ const ProductDetail = () => {
           </ol>
         </div>
       </section>
-      <Tabs tabsContent={tabs} onChange={handleChangeTab} />
+      <Tabs tabsContent={tabs} />
     </div>
   );
 };
@@ -104,4 +102,9 @@ const Tabs = ({ tabsContent, onChange }) => {
       </div>
     </>
   );
+};
+
+Tabs.propTypes = {
+  tabsContent: PropTypes.array,
+  onChange: PropTypes.func,
 };

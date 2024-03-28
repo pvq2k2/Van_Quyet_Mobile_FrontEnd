@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import ProductItem from "./ProductItem";
 
 const ProductList = ({ title, list }) => {
@@ -16,6 +16,11 @@ const ProductList = ({ title, list }) => {
       </div>
     </section>
   );
+};
+
+ProductList.propTypes = {
+  title: PropTypes.string,
+  list: PropTypes.array,
 };
 
 export default ProductList;
