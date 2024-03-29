@@ -13,7 +13,7 @@ const initialState = {
 };
 
 export const fetchCreateDecentralization = createAsyncThunk(
-  "Decentralization/create",
+  "decentralization/create",
   async (data, thunkAPI) => {
     try {
       const response = await createDecentralization(data);
@@ -25,7 +25,7 @@ export const fetchCreateDecentralization = createAsyncThunk(
 );
 
 export const fetchUpdateDecentralization = createAsyncThunk(
-  "Decentralization/update",
+  "decentralization/update",
   async (data, thunkAPI) => {
     try {
       const response = await updateDecentralization(data);
