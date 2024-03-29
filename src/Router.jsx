@@ -41,6 +41,7 @@ import {
 import {
   DecentralizationCreate,
   DecentralizationList,
+  DecentralizationUpdate,
 } from "./pages/Admin/Decentralization";
 
 const Router = () => {
@@ -121,7 +122,7 @@ const Router = () => {
             <Route path="decentralization">
               <Route index element={<DecentralizationList />} />
               <Route path="create" element={<DecentralizationCreate />} />
-              {/* <Route path="update/:id" element={<SizeUpdate />} /> */}
+              <Route path="update/:id" element={<DecentralizationUpdate />} />
             </Route>
           </Route>
         </Route>
