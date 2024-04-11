@@ -43,6 +43,7 @@ import {
   DecentralizationList,
   DecentralizationUpdate,
 } from "./pages/Admin/Decentralization";
+import { UserList } from "./pages/Admin/User";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -116,7 +117,7 @@ const Router = () => {
           </Route>
 
           <Route path="users">
-            <Route index element={<h1>User</h1>} />
+            <Route index element={<UserList />} />
             {/* <Route path="create" element={<SizeCreate />} />
               <Route path="update/:id" element={<SizeUpdate />} /> */}
             <Route path="decentralization">
