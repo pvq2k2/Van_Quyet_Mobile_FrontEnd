@@ -22,7 +22,7 @@ const UserList = () => {
   document.title = "Danh sách người dùng - Văn Quyết Mobile";
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users);
-  const isLoading = useSelector((state) => state.size.isLoading);
+  const isLoading = useSelector((state) => state.user.isLoading);
   const [pagination, setPagination] = useState({
     pageSize: 10,
     pageNumber: 1,

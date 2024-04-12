@@ -15,10 +15,10 @@ export const registerSchema = yup
     email: yup
       .string()
       .required("Vui lòng nhập email !")
-      .email("Vui lòng nhập đúng định dạng email")
+      .email("Vui lòng nhập đúng định dạng email !")
       .matches(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Vui lòng nhập đúng định dạng email",
+        "Vui lòng nhập đúng định dạng email !",
       )
       .trim(),
     numberPhone: yup
@@ -26,7 +26,7 @@ export const registerSchema = yup
       .required("Vui lòng nhập số điện thoại !")
       .matches(
         /^(?:\+84|0)(?:3[2-9]|5[689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$/,
-        "Vui lòng nhập đúng định dạng số điện thoại",
+        "Vui lòng nhập đúng định dạng số điện thoại !",
       )
       .trim(),
 
@@ -41,7 +41,7 @@ export const registerSchema = yup
 
     rePassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Mật khẩu không khớp")
+      .oneOf([yup.ref("password"), null], "Mật khẩu không khớp !")
       .matches(
         /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
         "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",
@@ -55,10 +55,10 @@ export const loginSchema = yup
     email: yup
       .string()
       .required("Vui lòng nhập email !")
-      .email("Vui lòng nhập đúng định dạng email")
+      .email("Vui lòng nhập đúng định dạng email !")
       .matches(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Vui lòng nhập đúng định dạng email",
+        "Vui lòng nhập đúng định dạng email !",
       )
       .trim(),
     password: yup
@@ -77,10 +77,10 @@ export const forgotPasswordSchema = yup
     email: yup
       .string()
       .required("Vui lòng nhập email !")
-      .email("Vui lòng nhập đúng định dạng email")
+      .email("Vui lòng nhập đúng định dạng email !")
       .matches(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Vui lòng nhập đúng định dạng email",
+        "Vui lòng nhập đúng định dạng email !",
       )
       .trim(),
   })
@@ -99,7 +99,7 @@ export const resetPasswordSchema = yup
 
     rePassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Mật khẩu không khớp")
+      .oneOf([yup.ref("password"), null], "Mật khẩu không khớp !")
       .matches(
         /^(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/,
         "Mật khẩu phải có chữ hoa, chữ thường, chữ số và kí tự đặc biệt !",
@@ -117,7 +117,7 @@ export const productSchema = yup
       .string()
       .required("Vui lòng nhập giảm giá !")
       .trim()
-      .test("is-higher", "Giảm giá phải nhỏ hơn giá gốc", function (value) {
+      .test("is-higher", "Giảm giá phải nhỏ hơn giá gốc !", function (value) {
         const { price } = this.parent;
         const parsedPrice = parseInt(price.replace(/,/g, ""));
         const parsedDiscount = parseInt(value.replace(/,/g, ""));
@@ -198,7 +198,7 @@ export const updatedProductSchema = yup
       .string()
       .required("Vui lòng nhập giảm giá !")
       .trim()
-      .test("is-higher", "Giảm giá phải nhỏ hơn giá gốc", function (value) {
+      .test("is-higher", "Giảm giá phải nhỏ hơn giá gốc !", function (value) {
         const { price } = this.parent;
         const parsedPrice = parseInt(price.replace(/,/g, ""));
         const parsedDiscount = parseInt(value.replace(/,/g, ""));
@@ -251,7 +251,7 @@ export const updatedProductSchema = yup
           )
           .test(
             "fileType",
-            "File này không phải là file hình ảnh!",
+            "File này không phải là file hình ảnh !",
             (value) =>
               value &&
               value[0] &&
@@ -265,7 +265,7 @@ export const updatedProductSchema = yup
                 "image/svg+xml",
               ].includes(value[0].type),
           )
-          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+          .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
             return value && value[0] && value[0].size <= 2000000;
           }),
     }),
@@ -321,7 +321,7 @@ export const subCategoriesSchema = yup
 
 export const updatedSubCategoriesSchema = yup
   .object({
-    name: yup.string().required("Vui lòng nhập tên danh mục!").trim(),
+    name: yup.string().required("Vui lòng nhập tên danh mục !").trim(),
     image: yup.mixed().when("fileClicked", {
       is: true,
       then: () =>
@@ -334,7 +334,7 @@ export const updatedSubCategoriesSchema = yup
           )
           .test(
             "fileType",
-            "File này không phải là file hình ảnh!",
+            "File này không phải là file hình ảnh !",
             (value) =>
               value &&
               value[0] &&
@@ -348,7 +348,7 @@ export const updatedSubCategoriesSchema = yup
                 "image/svg+xml",
               ].includes(value[0].type),
           )
-          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+          .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
             return value && value[0] && value[0].size <= 2000000;
           }),
     }),
@@ -415,7 +415,7 @@ export const productImageSchema = yup
 
 export const updatedProductImageSchema = yup
   .object({
-    title: yup.string().required("Vui lòng nhập tên ảnh!").trim(),
+    title: yup.string().required("Vui lòng nhập tên ảnh !").trim(),
     colorID: yup.string().required("Vui lòng chọn màu !").trim(),
     image: yup.mixed().when("fileClicked", {
       is: true,
@@ -429,7 +429,7 @@ export const updatedProductImageSchema = yup
           )
           .test(
             "fileType",
-            "File này không phải là file hình ảnh!",
+            "File này không phải là file hình ảnh !",
             (value) =>
               value &&
               value[0] &&
@@ -443,7 +443,7 @@ export const updatedProductImageSchema = yup
                 "image/svg+xml",
               ].includes(value[0].type),
           )
-          .test("fileSize", "Kích thước ảnh quá lớn!", (value) => {
+          .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
             return value && value[0] && value[0].size <= 2000000;
           }),
     }),
@@ -463,5 +463,43 @@ export const productAttributeSchema = yup
 export const decentralizationSchema = yup
   .object({
     name: yup.string().required("Vui lòng nhập tên quyền !").trim(),
+  })
+  .required();
+
+export const updateUserSchema = yup
+  .object({
+    fullName: yup.string().required("Vui lòng nhập họ và tên !").trim(),
+    email: yup
+      .string()
+      .required("Vui lòng nhập email !")
+      .email("Vui lòng nhập đúng định dạng email !")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Vui lòng nhập đúng định dạng email !",
+      )
+      .trim(),
+    numberPhone: yup
+      .string()
+      .required("Vui lòng nhập số điện thoại !")
+      .matches(
+        /^(?:\+84|0)(?:3[2-9]|5[689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$/,
+        "Vui lòng nhập đúng định dạng số điện thoại !",
+      )
+      .trim(),
+    gender: yup.string().required("Vui lòng chọn giới tính !").trim(),
+    status: yup.string().required("Vui lòng chọn trạng thái !").trim(),
+    provinceID: yup
+      .string()
+      .required("Vui lòng chọn tỉnh / thành phố !")
+      .trim(),
+    districtID: yup
+      .string()
+      .required("Vui lòng chọn quận / huyện / thị xã !")
+      .trim(),
+    wardID: yup.string().required("Vui lòng chọn xã / thị trấn !").trim(),
+    detailAddress: yup
+      .string()
+      .required("Vui lòng nhập địa chỉ chi tiết !")
+      .trim(),
   })
   .required();
