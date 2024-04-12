@@ -28,7 +28,7 @@ export const updateUser = async (userData) => {
   try {
     const res = await instance.put(
       `/user/update-user/${userData.id}`,
-      userData.formData,
+      userData,
     );
     return res && res.data;
   } catch (error) {
