@@ -503,3 +503,79 @@ export const updateUserSchema = yup
       .trim(),
   })
   .required();
+
+export const createSlidesSchema = yup
+  .object({
+    title: yup.string().required("Vui lòng nhập tiêu đề !").trim(),
+    subTitle: yup.string().required("Vui lòng nhập tiêu đề phụ !").trim(),
+    productID: yup.string().required("Vui lòng nhập sản phẩm ID !").trim(),
+    image: yup
+      .mixed()
+      .test(
+        "file",
+        "Vui lòng chọn hình ảnh !",
+        (value) => value instanceof FileList && value.length > 0,
+      )
+      .test(
+        "fileType",
+        "File này không phải file có định dạng ảnh !",
+        (value) => {
+          return (
+            value &&
+            value[0] &&
+            [
+              "image/jpeg",
+              "image/png",
+              "image/jpg",
+              "image/gif",
+              "image/bmp",
+              "image/webp",
+              "image/svg+xml",
+            ].includes(value[0].type)
+          );
+        },
+      )
+      .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
+        return value && value[0] && value[0].size <= 2000000;
+      }),
+  })
+  .required();
+
+export const updatedSlidesSchema = yup
+  .object({
+    title: yup.string().required("Vui lòng nhập tiêu đề !").trim(),
+    subTitle: yup.string().required("Vui lòng nhập tiêu đề phụ !").trim(),
+    productID: yup.string().required("Vui lòng nhập sản phẩm ID !").trim(),
+    image: yup.mixed().when("fileClicked", {
+      is: true,
+      then: () =>
+        yup
+          .mixed()
+          .test(
+            "file",
+            "Vui lòng chọn hình ảnh !",
+            (value) => value instanceof FileList && value.length > 0,
+          )
+          .test(
+            "fileType",
+            "File này không phải là file hình ảnh !",
+            (value) =>
+              value &&
+              value[0] &&
+              [
+                "image/jpeg",
+                "image/png",
+                "image/jpg",
+                "image/gif",
+                "image/bmp",
+                "image/webp",
+                "image/svg+xml",
+              ].includes(value[0].type),
+          )
+          .test("fileSize", "Kích thước ảnh quá lớn !", (value) => {
+            return value && value[0] && value[0].size <= 2000000;
+          }),
+    }),
+    fileClicked: yup.boolean(),
+  })
+  .required();
