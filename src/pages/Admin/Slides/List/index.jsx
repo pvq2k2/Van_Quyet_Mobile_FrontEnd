@@ -139,14 +139,12 @@ const SlidesList = () => {
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
                             {sliceName(slides.title, 15)}
                           </td>
-                          <td className="flex items-center justify-center whitespace-nowrap px-4 py-4 text-center text-3xl font-medium text-gray-700 dark:text-gray-200">
-                            <div className="flex w-40 items-center justify-center">
-                              <img
-                                src={slides.image}
-                                alt="image"
-                                className="px-10 dark:rounded-lg dark:bg-gray-300"
-                              />
-                            </div>
+                          <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200">
+                            <img
+                              src={slides.image}
+                              alt="image"
+                              className="mx-auto w-60 rounded-xl"
+                            />
                           </td>
                           <td className="whitespace-nowrap px-4 py-4 text-center text-base text-gray-500 dark:text-gray-300">
                             {sliceName(slides.subTitle, 15)}
