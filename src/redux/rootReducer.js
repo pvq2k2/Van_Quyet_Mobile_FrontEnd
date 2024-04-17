@@ -11,6 +11,7 @@ import productImageSlice from "./slice/productImageSlice";
 import productAttributeSlice from "./slice/productAttributeSlice";
 import decentralizationSlice from "./slice/decentralizationSlice";
 import userSlice from "./slice/userSlice";
+import slidesSlice from "./slice/slidesSlice";
 
 const rootReducer = combineReducers({
   darkMode: darkModeSlice,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   size: sizeSlice,
   decentralization: decentralizationSlice,
   user: userSlice,
+  slides: slidesSlice,
 });
 
 export default rootReducer;

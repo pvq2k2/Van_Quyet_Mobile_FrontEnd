@@ -44,6 +44,7 @@ import {
   DecentralizationUpdate,
 } from "./pages/Admin/Decentralization";
 import { UserList, UserUpdate } from "./pages/Admin/User";
+import { SlidesList } from "./pages/Admin/Slides";
 
 const Router = () => {
   history.navigate = useNavigate();
@@ -70,7 +71,9 @@ const Router = () => {
         >
           <Route index element={<Navigate to="/admin/dashboard" />} />
           <Route path="dashboard" element={<h1>dashboard</h1>} />
-
+          <Route path="slides">
+            <Route index element={<SlidesList />} />
+          </Route>
           <Route path="products">
             <Route index element={<ProductList />} />
             <Route path="create" element={<ProductCreate />} />
