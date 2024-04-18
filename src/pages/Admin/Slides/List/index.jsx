@@ -163,7 +163,7 @@ const SlidesList = () => {
                           <td className="whitespace-nowrap px-4 py-4 text-sm">
                             <div className="flex items-center gap-x-6 md:justify-center">
                               <Link
-                                to={`update-product-image/${slides.id}`}
+                                to={`update/${slides.id}`}
                                 className="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-yellow-500 px-5 py-2 text-sm tracking-wide  text-white shadow-xl transition-colors duration-200 hover:bg-yellow-600 dark:bg-yellow-500 dark:hover:bg-yellow-600 sm:w-auto"
                               >
                                 <IoPencilOutline className="text-xl" />

@@ -30,9 +30,7 @@ export const createSlides = async (slidesData) => {
 
 export const getSlidesByID = async (slidesID) => {
   try {
-    const res = await instance.get(
-      `/slides/get-update-slides-by-id/${slidesID}`,
-    );
+    const res = await instance.get(`/slides/get-slides-by-id/${slidesID}`);
     return res && res.data;
   } catch (error) {
     throw cathError(error);
