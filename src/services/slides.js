@@ -15,6 +15,15 @@ export const getAllSlides = async (
   }
 };
 
+export const getActiveSlides = async () => {
+  try {
+    let res = await instance.get(`/slides/get-active-slides`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
 export const createSlides = async (slidesData) => {
   try {
     let res = await instance.post(`/slides/create-slides`, slidesData, {
