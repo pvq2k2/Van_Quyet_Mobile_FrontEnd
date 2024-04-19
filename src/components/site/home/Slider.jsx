@@ -66,15 +66,19 @@ export default function Slider({ list }) {
         {...sliderSettings}
         className="group relative my-3 select-none md:my-7"
       >
-        {list.map(({ id, img }) => (
-          <Link to="#" key={id} className="slider-item">
-            <img className="w-full rounded-md object-fill" src={img} />
+        {list.map(({ productSlug, image }) => (
+          <Link
+            to={`product/${productSlug}`}
+            key={productSlug}
+            className="slider-item"
+          >
+            <img className="w-full rounded-md object-fill" src={image} />
           </Link>
         ))}
       </Slick>
       <Slick {...thumbnailSettings}>
-        {list.map(({ id, title, subTitle }, index) => (
-          <div key={id} className="slider-item h-16">
+        {list.map(({ productSlug, title, subTitle }, index) => (
+          <div key={productSlug} className="slider-item h-16">
             <div
               className={`flex flex-col items-center justify-center overflow-hidden rounded-md px-3 shadow-xl transition-all duration-200 ease-in-out ${
                 index == activeSlide

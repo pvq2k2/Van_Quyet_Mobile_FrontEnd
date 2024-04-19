@@ -50,6 +50,15 @@ export const getCategoriesByID = async (categoriesID) => {
   }
 };
 
+export const getCategoriesToView = async () => {
+  try {
+    const res = await instance.get(`/categories/get-categories-to-view`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
 export const getCategoriesBySlug = async (slug) => {
   try {
     const res = await instance.get(

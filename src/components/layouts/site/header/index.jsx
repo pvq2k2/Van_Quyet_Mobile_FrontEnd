@@ -17,10 +17,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../../redux/slice/authSlice";
 import { history } from "../../../../helpers/history";
+import { toast } from "react-toastify";
+import { getCategoriesToView } from "../../../../services/categories";
 
 const SiteHeader = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isUserVisible, setUserVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
@@ -69,6 +72,17 @@ const SiteHeader = () => {
     dispatch(logout());
     history.navigate("/login");
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categories = await getCategoriesToView();
+        setCategories(categories);
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <>
       {/* md, lg, xl */}
@@ -160,13 +174,12 @@ const SiteHeader = () => {
               <div
                 id="boxList"
                 className={`invisible absolute top-14 z-20 w-60 rounded-lg bg-[hsla(0,0%,100%,0.8)] bg-white p-3 shadow-xl backdrop-blur-[30px] backdrop-saturate-[200%] duration-200 ease-linear before:absolute  before:-top-2
-                                    before:z-10 before:h-5 before:w-5 before:rotate-45
-                                    before:rounded before:bg-white group-hover:visible dark:bg-gray-900 dark:before:bg-gray-900 md:left-[-80px] xl:left-[-100px] ${
-                                      Object.getOwnPropertyNames(user).length >
-                                      0
-                                        ? "md:before:left-[90px] xl:before:left-[111px]"
-                                        : "md:before:left-[85px] xl:before:left-[105px]"
-                                    }`}
+                          before:z-10 before:h-5 before:w-5 before:rotate-45
+                          before:rounded before:bg-white group-hover:visible dark:bg-gray-900 dark:before:bg-gray-900 md:left-[-80px] xl:left-[-100px] ${
+                            Object.getOwnPropertyNames(user).length > 0
+                              ? "md:before:left-[90px] xl:before:left-[111px]"
+                              : "md:before:left-[85px] xl:before:left-[105px]"
+                          }`}
               >
                 <div className="user_box">
                   <ul>
@@ -244,103 +257,47 @@ const SiteHeader = () => {
       <nav className="z-50 hidden md:block md:px-5 xl:px-0">
         <div className="relative mx-auto max-w-screen-xl rounded-md bg-main-dark">
           <ul className="flex items-center justify-center pb-[3px] md:gap-x-7 lg:gap-x-16">
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['R'] group-hover:text-main"
-              >
-                Điện thoại
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-              <div className="sub-nav top-100 invisible absolute left-0 right-0 z-50 group-hover:visible">
-                <div className="sub mt-5 flex gap-x-20 rounded-md bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
-                  <div className="col">
-                    <h4>
-                      <Link to="#" className="font-bold">
-                        Hãng sản xuất
-                      </Link>
-                    </h4>
-                    <ul className="display-column pt-2">
-                      <li>
-                        <Link to="#" className="text-sm">
-                          Apple
-                        </Link>
-                      </li>
-                    </ul>
+            {categories?.map((category) => (
+              <li key={category.id} className="group block py-2">
+                <Link to={category.slug} className={`relative`}>
+                  <div className="flex flex-col items-center text-xs uppercase text-white transition duration-200 ease-in-out group-hover:text-main">
+                    <span className="font-['FontIcon'] text-2xl">
+                      {category.icon}
+                    </span>
+                    <span>{category.name}</span>
                   </div>
-                </div>
-              </div>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['O'] group-hover:text-main"
-              >
-                Laptop
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['8'] group-hover:text-main"
-              >
-                Màn hình
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['`'] group-hover:text-main"
-              >
-                Smart TV
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['L'] group-hover:text-main"
-              >
-                Âm thanh
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['M'] group-hover:text-main"
-              >
-                Smart Home
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['T'] group-hover:text-main"
-              >
-                Phụ kiện
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
-
-            <li className="group block py-2">
-              <Link
-                to="#"
-                className="relative flex flex-col-reverse items-center text-xs uppercase text-white transition duration-200 ease-in-out after:font-['FontIcon'] after:text-2xl after:content-['Q'] group-hover:text-main"
-              >
-                Tin tức
-                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-              </Link>
-            </li>
+                  <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
+                </Link>
+                {category?.listSubCategories.length > 0 ? (
+                  <div className="sub-nav top-100 invisible absolute left-0 right-0 z-50 group-hover:visible">
+                    <div className="sub mt-5 flex gap-x-20 rounded-md bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
+                      <div className="col">
+                        <h4 className="transition duration-300 ease-in-out hover:text-main">
+                          <Link to={category.slug} className="font-bold">
+                            Hãng sản xuất
+                          </Link>
+                        </h4>
+                        <ul className="display-column pt-2">
+                          {category.listSubCategories.map((subCategory) => (
+                            <li
+                              key={subCategory.id}
+                              className="transition duration-300 ease-in-out hover:text-main"
+                            >
+                              <Link
+                                to={`${category.slug}/${subCategory.slug}`}
+                                className="text-sm"
+                              >
+                                {subCategory.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
@@ -373,54 +330,52 @@ const SiteHeader = () => {
           onClick={toggleMenu}
         ></div>
         <ul className="scrollbar relative h-full w-[320px] overflow-auto rounded-r-lg border-b-2 border-r-2 border-gray-200 bg-white dark:border-gray-900 dark:bg-gray-900">
-          <li className="group block p-5">
-            <Link
-              to="#"
-              target="_self"
-              className="relative flex items-center justify-start pl-3 font-bold transition duration-200 ease-in-out before:pr-5 before:font-['FontIcon'] before:text-2xl before:content-['R'] group-hover:text-main dark:text-white"
-            >
-              Điện thoại
-              <IoChevronDownSharp className="arrow-icon ml-auto text-xl" />
-              <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-            </Link>
-            <div className="sub-nav transition-max-h max-h-0 overflow-hidden duration-200 group-hover:max-h-fit">
-              <div className="sub mt-5 flex flex-col gap-x-20 rounded-md border bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
-                <div className="col">
-                  <h4 className="w-full rounded-md bg-gray-100 p-1 text-center duration-200 ease-in-out hover:text-main dark:bg-gray-700">
-                    <Link to="#" className="font-bold">
-                      Hãng sản xuất
-                    </Link>
-                  </h4>
-                  <ul className="display-column flex flex-col gap-y-3 pt-3">
-                    <li>
-                      <Link
-                        to="#"
-                        className="text-sm transition duration-200 ease-in-out hover:text-main"
-                      >
-                        Apple
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="#"
-                        className="text-sm transition duration-200 ease-in-out hover:text-main"
-                      >
-                        Apple
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="#"
-                        className="text-sm transition duration-200 ease-in-out hover:text-main"
-                      >
-                        Apple
-                      </Link>
-                    </li>
-                  </ul>
+          {categories?.map((category) => (
+            <li key={category.id} className="group block p-5">
+              <Link to={category.slug} target="_self" className="relative pl-3">
+                <div className="flex w-full items-center justify-start">
+                  <span className="pr-2 font-['FontIcon'] text-2xl font-bold transition duration-200 ease-in-out group-hover:text-main dark:text-white">
+                    {category.icon}
+                  </span>
+                  <div
+                    className={`flex w-full items-center pl-3 font-bold transition duration-200 ease-in-out group-hover:text-main dark:text-white`}
+                  >
+                    {category.name}
+                    {category?.listSubCategories.length > 0 ? (
+                      <IoChevronDownSharp className="arrow-icon ml-auto text-xl" />
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            </div>
-          </li>
+                <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
+              </Link>
+
+              {category?.listSubCategories.length > 0 ? (
+                <div className="sub-nav transition-max-h max-h-0 overflow-hidden duration-200 group-hover:max-h-fit">
+                  <div className="sub mt-5 flex flex-col gap-x-20 rounded-md border bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
+                    <div className="col">
+                      <h4 className="w-full rounded-md bg-gray-100 p-1 text-center duration-200 ease-in-out hover:text-main dark:bg-gray-700">
+                        <Link to={category.slug} className="font-bold">
+                          Hãng sản xuất
+                        </Link>
+                      </h4>
+                      <ul className="display-column flex flex-col gap-y-3 pt-3">
+                        {category?.listSubCategories.map((subCategory) => (
+                          <li key={subCategory.id}>
+                            <Link
+                              to={`${category.slug}/${subCategory.slug}`}
+                              className="text-sm transition duration-200 ease-in-out hover:text-main"
+                            >
+                              {subCategory.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </li>
+          ))}
         </ul>
       </nav>
 
