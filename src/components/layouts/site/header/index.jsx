@@ -43,6 +43,12 @@ const SiteHeader = () => {
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
   };
+
+  const toggleHome = () => {
+    setSearchVisible(false);
+    setMenuVisible(false);
+    setUserVisible(false);
+  };
   const headerPC = useRef();
 
   useEffect(() => {
@@ -254,53 +260,59 @@ const SiteHeader = () => {
         </div>
       </div>
 
-      <nav className="z-50 hidden md:block md:px-5 xl:px-0">
-        <div className="relative mx-auto max-w-screen-xl rounded-md bg-main-dark">
-          <ul className="flex items-center justify-center pb-[3px] md:gap-x-7 lg:gap-x-16">
-            {categories?.map((category) => (
-              <li key={category.id} className="group block py-2">
-                <Link to={category.slug} className={`relative`}>
-                  <div className="flex flex-col items-center text-xs uppercase text-white transition duration-200 ease-in-out group-hover:text-main">
-                    <span className="font-['FontIcon'] text-2xl">
-                      {category.icon}
-                    </span>
-                    <span>{category.name}</span>
-                  </div>
-                  <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
-                </Link>
-                {category?.listSubCategories.length > 0 ? (
-                  <div className="sub-nav top-100 invisible absolute left-0 right-0 z-50 group-hover:visible">
-                    <div className="sub mt-5 flex gap-x-20 rounded-md bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
-                      <div className="col">
-                        <h4 className="transition duration-300 ease-in-out hover:text-main">
-                          <Link to={category.slug} className="font-bold">
-                            Hãng sản xuất
-                          </Link>
-                        </h4>
-                        <ul className="display-column pt-2">
-                          {category.listSubCategories.map((subCategory) => (
-                            <li
-                              key={subCategory.id}
-                              className="transition duration-300 ease-in-out hover:text-main"
-                            >
-                              <Link
-                                to={`${category.slug}/${subCategory.slug}`}
-                                className="text-sm"
+      {categories && categories.length > 0 ? (
+        <nav className="z-50 hidden md:block md:px-5 xl:px-0">
+          <div className="relative mx-auto max-w-screen-xl rounded-md bg-main-dark">
+            <ul className="flex items-center justify-center pb-[3px] md:gap-x-7 lg:gap-x-16">
+              {categories?.map((category) => (
+                <li key={category.id} className="group block py-2">
+                  <Link to={category.slug} className={`relative`}>
+                    <div className="flex flex-col items-center text-xs uppercase text-white transition duration-200 ease-in-out group-hover:text-main">
+                      <span className="font-['FontIcon'] text-2xl">
+                        {category.icon}
+                      </span>
+                      <span>{category.name}</span>
+                    </div>
+                    <div className="absolute -bottom-1 left-0 h-[2px] w-full scale-x-0 bg-main transition duration-300 ease-in-out group-hover:scale-x-100"></div>
+                  </Link>
+                  {category?.listSubCategories.length > 0 ? (
+                    <div className="sub-nav top-100 invisible absolute left-0 right-0 z-50 group-hover:visible">
+                      <div className="sub mt-5 flex gap-x-20 rounded-md bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
+                        <div className="col">
+                          <h4 className="transition duration-300 ease-in-out hover:text-main">
+                            <Link to={category.slug} className="font-bold">
+                              Hãng sản xuất
+                            </Link>
+                          </h4>
+                          <ul className="display-column pt-2">
+                            {category.listSubCategories.map((subCategory) => (
+                              <li
+                                key={subCategory.id}
+                                className="transition duration-300 ease-in-out hover:text-main"
                               >
-                                {subCategory.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
+                                <Link
+                                  to={`${category.slug}/${subCategory.slug}`}
+                                  className="text-sm"
+                                >
+                                  {subCategory.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      ) : (
+        <nav className="z-50 hidden md:block md:px-5 xl:px-0">
+          <div className="relative mx-auto h-[67px] max-w-screen-xl animate-pulse rounded-md bg-gray-400 dark:bg-gray-800"></div>
+        </nav>
+      )}
 
       {/* sm */}
       <div className="top fixed left-0 right-0 z-30 flex items-center justify-around border-b-2 border-gray-200 bg-[hsla(0,0%,100%,0.8)] py-2 shadow-md backdrop-blur-[30px] backdrop-saturate-[200%] dark:border-gray-900 dark:bg-[hsla(220.91,39.29%,10.98%,0.8)] md:hidden">
@@ -332,7 +344,12 @@ const SiteHeader = () => {
         <ul className="scrollbar relative h-full w-[320px] overflow-auto rounded-r-lg border-b-2 border-r-2 border-gray-200 bg-white dark:border-gray-900 dark:bg-gray-900">
           {categories?.map((category) => (
             <li key={category.id} className="group block p-5">
-              <Link to={category.slug} target="_self" className="relative pl-3">
+              <Link
+                to={category.slug}
+                target="_self"
+                className="relative pl-3"
+                onClick={() => toggleMenu()}
+              >
                 <div className="flex w-full items-center justify-start">
                   <span className="pr-2 font-['FontIcon'] text-2xl font-bold transition duration-200 ease-in-out group-hover:text-main dark:text-white">
                     {category.icon}
@@ -354,7 +371,11 @@ const SiteHeader = () => {
                   <div className="sub mt-5 flex flex-col gap-x-20 rounded-md border bg-white p-5 shadow-md dark:bg-gray-900 dark:text-white">
                     <div className="col">
                       <h4 className="w-full rounded-md bg-gray-100 p-1 text-center duration-200 ease-in-out hover:text-main dark:bg-gray-700">
-                        <Link to={category.slug} className="font-bold">
+                        <Link
+                          to={category.slug}
+                          className="font-bold"
+                          onClick={() => toggleMenu()}
+                        >
                           Hãng sản xuất
                         </Link>
                       </h4>
@@ -363,6 +384,7 @@ const SiteHeader = () => {
                           <li key={subCategory.id}>
                             <Link
                               to={`${category.slug}/${subCategory.slug}`}
+                              onClick={() => toggleMenu()}
                               className="text-sm transition duration-200 ease-in-out hover:text-main"
                             >
                               {subCategory.name}
@@ -507,7 +529,10 @@ const SiteHeader = () => {
       <div className="fixed bottom-0 left-0 right-0 z-50 rounded-xl bg-white shadow-md dark:bg-gray-900 md:hidden">
         <nav className="max-w-screen-xl">
           <ul className="menu flex items-center justify-center gap-x-6 py-3 sm:gap-x-24">
-            <li className="group relative select-none rounded-xl p-2 transition-all duration-300 ease-linear hover:bg-blue-100">
+            <li
+              onClick={toggleHome}
+              className="group relative select-none rounded-xl p-2 transition-all duration-300 ease-linear hover:bg-blue-100"
+            >
               <Link to="/" className="flex flex-col items-center">
                 <IoHomeOutline className="text-3xl group-hover:text-main dark:text-white" />
                 <span className="pt-1 text-xs group-hover:text-main dark:text-white">

@@ -5,6 +5,10 @@ import CustomNumberFormat from "./CustomNumberFormat";
 const ProductItem = ({ product }) => {
   return (
     <>
+      {!product && (
+        <div className="animate-pulse rounded-xl bg-gray-400 object-fill p-5 shadow-xl dark:bg-gray-800"></div>
+      )}
+
       <Link
         to="#"
         className="group rounded-xl bg-white p-5 shadow-xl dark:bg-gray-900"
