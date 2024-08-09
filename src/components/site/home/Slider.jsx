@@ -62,6 +62,14 @@ export default function Slider({ list }) {
 
   return (
     <>
+      {list.length < 1 && (
+        <>
+          <div className="my-3 select-none md:my-7">
+            <div className="h-[400px] w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+          </div>
+          <div className="slider-item h-16 w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+        </>
+      )}
       <Slick
         {...sliderSettings}
         className="group relative my-3 select-none md:my-7"

@@ -73,3 +73,15 @@ export const getAllProduct = async (
     throw cathError(error);
   }
 };
+
+export const getAllProductByCategory = async (filter) => {
+  try {
+    let res = await instance.post(
+      `/product/get-all-product-by-category`,
+      filter,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};

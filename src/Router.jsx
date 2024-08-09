@@ -14,10 +14,11 @@ import {
   SubCategoriesUpdate,
 } from "./pages/Admin/SubCategories";
 import {
+  DetailCategory,
   ForgotPassword,
   Home,
   Login,
-  NotFound,
+  NotFoundPage,
   Register,
   ResetPassword,
   VerifyAccount,
@@ -55,6 +56,11 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<Home />} />
+          <Route path=":categorySlug" element={<DetailCategory />} />
+          <Route
+            path=":categorySlug/:subCategorySlug"
+            element={<DetailCategory />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -131,7 +137,7 @@ const Router = () => {
             </Route>
           </Route>
         </Route>
-        <Route path="/*" element={<NotFound />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

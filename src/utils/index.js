@@ -31,3 +31,17 @@ export const isFileExtension = (file) => {
     "image/svg+xml",
   ].includes(file);
 };
+
+export const convertOptionFiller = (name, label, defaultOption, data) => {
+  return {
+    name: name,
+    label: label,
+    defaultOption: defaultOption,
+    listOption: data.map((item) => {
+      return {
+        label: item.name,
+        value: item.id,
+      };
+    }),
+  };
+};
