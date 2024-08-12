@@ -15,6 +15,7 @@ import {
 } from "./pages/Admin/SubCategories";
 import {
   DetailCategory,
+  DetailProduct,
   ForgotPassword,
   Home,
   Login,
@@ -46,99 +47,102 @@ import {
 } from "./pages/Admin/Decentralization";
 import { UserList, UserUpdate } from "./pages/Admin/User";
 import { SlidesCreate, SlidesList, SlidesUpdate } from "./pages/Admin/Slides";
-
+import ScrollIntoView from "./hook/useScrollIntoView";
 const Router = () => {
   history.navigate = useNavigate();
   history.location = useLocation();
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SiteLayout />}>
-          <Route index element={<Home />} />
-          <Route path=":categorySlug" element={<DetailCategory />} />
-          <Route
-            path=":categorySlug/:subCategorySlug"
-            element={<DetailCategory />}
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/verify-account/:token" element={<VerifyAccount />} />
-        </Route>
-        <Route
-          path="/admin"
-          element={
-            <PrivateRouterAdmin>
-              <AdminLayout />
-            </PrivateRouterAdmin>
-          }
-        >
-          <Route index element={<Navigate to="/admin/dashboard" />} />
-          <Route path="dashboard" element={<h1>dashboard</h1>} />
-          <Route path="slides">
-            <Route index element={<SlidesList />} />
-            <Route path="create" element={<SlidesCreate />} />
-            <Route path="update/:id" element={<SlidesUpdate />} />
+      <ScrollIntoView>
+        <Routes>
+          <Route path="/" element={<SiteLayout />}>
+            <Route index element={<Home />} />
+            <Route path=":categorySlug" element={<DetailCategory />} />
+            <Route
+              path=":categorySlug/:subCategorySlug"
+              element={<DetailCategory />}
+            />
+            <Route path="/product/:productSlug" element={<DetailProduct />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/verify-account/:token" element={<VerifyAccount />} />
           </Route>
-          <Route path="products">
-            <Route index element={<ProductList />} />
-            <Route path="create" element={<ProductCreate />} />
-            <Route path="update/:id" element={<ProductUpdate />} />
-            <Route path=":productId">
-              <Route index element={<ProductDetail />} />
-              <Route
-                path="create-product-image"
-                element={<ProductImageCreate />}
-              />
-              <Route
-                path="update-product-image/:productImageId"
-                element={<ProductImageUpdate />}
-              />
-              <Route
-                path="create-product-attribute"
-                element={<ProductAttributeCreate />}
-              />
-              <Route
-                path="update-product-attribute/:productAttributeId"
-                element={<ProductAttributeUpdate />}
-              />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRouterAdmin>
+                <AdminLayout />
+              </PrivateRouterAdmin>
+            }
+          >
+            <Route index element={<Navigate to="/admin/dashboard" />} />
+            <Route path="dashboard" element={<h1>dashboard</h1>} />
+            <Route path="slides">
+              <Route index element={<SlidesList />} />
+              <Route path="create" element={<SlidesCreate />} />
+              <Route path="update/:id" element={<SlidesUpdate />} />
             </Route>
-            <Route path="categories">
-              <Route index element={<CategoriesList />} />
-              <Route path="create" element={<CategoriesCreate />} />
-              <Route path="update/:id" element={<CategoriesUpdate />} />
-              <Route path=":slug">
-                <Route index element={<CategoriesDetail />} />
-                <Route path="create" element={<SubCategoriesCreate />} />
-                <Route path="update/:id" element={<SubCategoriesUpdate />} />
+            <Route path="products">
+              <Route index element={<ProductList />} />
+              <Route path="create" element={<ProductCreate />} />
+              <Route path="update/:id" element={<ProductUpdate />} />
+              <Route path=":productId">
+                <Route index element={<ProductDetail />} />
+                <Route
+                  path="create-product-image"
+                  element={<ProductImageCreate />}
+                />
+                <Route
+                  path="update-product-image/:productImageId"
+                  element={<ProductImageUpdate />}
+                />
+                <Route
+                  path="create-product-attribute"
+                  element={<ProductAttributeCreate />}
+                />
+                <Route
+                  path="update-product-attribute/:productAttributeId"
+                  element={<ProductAttributeUpdate />}
+                />
+              </Route>
+              <Route path="categories">
+                <Route index element={<CategoriesList />} />
+                <Route path="create" element={<CategoriesCreate />} />
+                <Route path="update/:id" element={<CategoriesUpdate />} />
+                <Route path=":slug">
+                  <Route index element={<CategoriesDetail />} />
+                  <Route path="create" element={<SubCategoriesCreate />} />
+                  <Route path="update/:id" element={<SubCategoriesUpdate />} />
+                </Route>
+              </Route>
+              <Route path="colors">
+                <Route index element={<ColorList />} />
+                <Route path="create" element={<ColorCreate />} />
+                <Route path="update/:id" element={<ColorUpdate />} />
+              </Route>
+              <Route path="sizes">
+                <Route index element={<SizeList />} />
+                <Route path="create" element={<SizeCreate />} />
+                <Route path="update/:id" element={<SizeUpdate />} />
               </Route>
             </Route>
-            <Route path="colors">
-              <Route index element={<ColorList />} />
-              <Route path="create" element={<ColorCreate />} />
-              <Route path="update/:id" element={<ColorUpdate />} />
-            </Route>
-            <Route path="sizes">
-              <Route index element={<SizeList />} />
-              <Route path="create" element={<SizeCreate />} />
-              <Route path="update/:id" element={<SizeUpdate />} />
-            </Route>
-          </Route>
 
-          <Route path="users">
-            <Route index element={<UserList />} />
-            <Route path="update/:id" element={<UserUpdate />} />
-            <Route path="decentralization">
-              <Route index element={<DecentralizationList />} />
-              <Route path="create" element={<DecentralizationCreate />} />
-              <Route path="update/:id" element={<DecentralizationUpdate />} />
+            <Route path="users">
+              <Route index element={<UserList />} />
+              <Route path="update/:id" element={<UserUpdate />} />
+              <Route path="decentralization">
+                <Route index element={<DecentralizationList />} />
+                <Route path="create" element={<DecentralizationCreate />} />
+                <Route path="update/:id" element={<DecentralizationUpdate />} />
+              </Route>
             </Route>
           </Route>
-        </Route>
-        <Route path="/*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </ScrollIntoView>
     </>
   );
 };
