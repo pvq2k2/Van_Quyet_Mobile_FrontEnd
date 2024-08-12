@@ -3,8 +3,13 @@ import { IoHomeOutline } from "react-icons/io5";
 import SliderCategory from "../../../components/site/detail_category/SliderCategory";
 import ProductList from "../../../components/common/ProductList";
 import Pagination from "../../../components/common/Pagination";
-import { useCallback, useEffect, useMemo, useState } from "react";
-// import { useDispatch } from "react-redux";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { getCategoriesBySlug } from "../../../services/categories";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,17 +23,18 @@ import { convertOptionFiller } from "../../../utils";
 import { getAllProductByCategory } from "../../../services/product";
 import NotFound from "../../../components/common/NotFound";
 import NoItem from "../../../components/common/NoItem";
+import _ from "lodash";
 
 const DetailCategory = () => {
-  // const dispatch = useDispatch();
   const { categorySlug } = useParams();
   const navigate = useNavigate();
-  const [category, setCategory] = useState(null);
-  const [allSubCategories, setAllSubCategories] = useState(null);
+  const [category, setCategory] = useState({});
+  const [allSubCategories, setAllSubCategories] = useState([]);
   const [subCategory, setSubCategory] = useState({ id: 0 });
-  const [products, setProducts] = useState(null);
+  document.title = `${category.name ? `${category.name} -` : ""}  ${subCategory.name ? `${subCategory.name} -` : ""} Văn Quyết Mobile`;
+  const [products, setProducts] = useState([]);
+  const [isEmpty, setIsEmpty] = useState("no");
   const [activeSlide, setActiveSlide] = useState(null);
-  // const [loading, setLoading] = useState(true);
   const [optionFilter, setOptionFiller] = useState([
     OPTION_FILTERS_PRICE_PRODUCT,
   ]);
@@ -74,6 +80,11 @@ const DetailCategory = () => {
           { pageSize: 100, pageNumber: 1 },
           data.id,
         );
+        if (_.isEmpty(subCategories.data)) {
+          setIsEmpty("category");
+          setAllSubCategories([]);
+          return;
+        }
         setAllSubCategories(subCategories.data);
 
         const storages = await getAllSize({ pageSize: 100, pageNumber: 1 });
@@ -100,20 +111,22 @@ const DetailCategory = () => {
           };
         });
       } catch (error) {
-        // setLoading(false);
+        setIsEmpty("category");
         toast.error(error);
       }
     })();
   }, [categorySlug]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       try {
-        // setLoading(true);
         const products = await getAllProductByCategory(filters);
+        if (_.isEmpty(products.data)) {
+          setIsEmpty("product");
+        }
         setPagination(products.pagination);
         setProducts(products.data);
-        // setLoading(false);
       } catch (error) {
+        setIsEmpty("product");
         toast.error(error);
       }
     })();
@@ -132,7 +145,7 @@ const DetailCategory = () => {
   }, []);
   return (
     <>
-      {allSubCategories && allSubCategories?.length > 0 ? (
+      {!_.isEmpty(allSubCategories) && (
         <div className="pb-4 xl:px-0">
           <section className="my-5 md:flex md:items-end md:justify-between lg:my-3">
             <div className="breadcumrb">
@@ -156,13 +169,20 @@ const DetailCategory = () => {
             </div>
           </section>
           <section className="mx-auto w-full">
-            <SliderCategory
-              list={allSubCategories}
-              activeSlide={activeSlide}
-              setActiveSlide={setActiveSlide}
-              setSubCategory={setSubCategory}
-              setFilter={setFilter}
-            />
+            {allSubCategories.length > 0 ? (
+              <SliderCategory
+                list={allSubCategories}
+                activeSlide={activeSlide}
+                setActiveSlide={setActiveSlide}
+                setSubCategory={setSubCategory}
+                setFilter={setFilter}
+              />
+            ) : (
+              <div className="my-3 select-none md:my-7">
+                <div className="max-h-[70px] w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+              </div>
+            )}
+
             <div className="mx-auto rounded-xl bg-white px-10 py-5 shadow-xl dark:bg-gray-900">
               <form className="flex flex-col items-center gap-5 md:flex-row md:flex-wrap">
                 <h1 className="font-bold">Lọc danh sách:</h1>
@@ -198,7 +218,10 @@ const DetailCategory = () => {
               </form>
             </div>
           </section>
-          {products && products.length > 0 ? (
+
+          {_.isEmpty(products) ? (
+            isEmpty === "product" && <NoItem />
+          ) : (
             <div className="mx-auto w-full">
               <ProductList
                 title={subCategory.name ? subCategory.name : category.name}
@@ -209,13 +232,10 @@ const DetailCategory = () => {
                 onPageChange={handlePageChange}
               />
             </div>
-          ) : (
-            <NoItem />
           )}
         </div>
-      ) : (
-        <NotFound />
       )}
+      {_.isEmpty(allSubCategories) && isEmpty === "category" && <NotFound />}
     </>
   );
 };

@@ -2,6 +2,7 @@ import { ToastContainer } from "react-toastify";
 import Router from "./Router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import ScrollToTop from "./components/common/ScrollButton";
 
 function App() {
   const [toasTheme, setToastTheme] = useState("light");
@@ -52,6 +53,7 @@ function App() {
         theme={toasTheme}
       />
       <Router />
+      <ScrollToTop />
     </>
   );
 }

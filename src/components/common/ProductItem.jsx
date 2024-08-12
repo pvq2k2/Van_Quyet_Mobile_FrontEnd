@@ -5,12 +5,8 @@ import CustomNumberFormat from "./CustomNumberFormat";
 const ProductItem = ({ product }) => {
   return (
     <>
-      {!product && (
-        <div className="animate-pulse rounded-xl bg-gray-400 object-fill p-5 shadow-xl dark:bg-gray-800"></div>
-      )}
-
       <Link
-        to="#"
+        to={`/product/${product?.slug}`}
         className="group rounded-xl bg-white p-5 shadow-xl dark:bg-gray-900"
       >
         <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg transition-all duration-200 ease-linear group-hover:bg-gray-200 dark:group-hover:bg-gray-700">
