@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Slick from "react-slick";
 import ArrowProduct from "./ArrowProduct";
@@ -13,6 +13,8 @@ import {
   Zoom,
 } from "yet-another-react-lightbox/plugins";
 export default function SliderProduct({ images }) {
+  const arrLenth = useMemo(() => images.length || 1, [images]);
+
   const [index, setIndex] = useState(-1);
   let slider1, slider2;
   const [nav1, setNav1] = useState(null);
@@ -28,8 +30,8 @@ export default function SliderProduct({ images }) {
     arrows: true,
     infinite: true,
     speed: 500,
-    // autoplay: true,
-    autoplaySpeed: 2000,
+    autoplay: true,
+    autoplaySpeed: 4000,
     slidesToShow: 1,
     slidesToScroll: 1,
     asNavFor: nav2,
@@ -42,7 +44,7 @@ export default function SliderProduct({ images }) {
   const thumbnailSettings = {
     asNavFor: nav1,
     ref: (slider) => (slider2 = slider),
-    slidesToShow: 4,
+    slidesToShow: arrLenth < 4 ? arrLenth : 4,
     swipeToSlide: true,
     focusOnSelect: true,
     arrows: false,
@@ -50,19 +52,19 @@ export default function SliderProduct({ images }) {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: arrLenth < 4 ? arrLenth : 4,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: arrLenth < 4 ? arrLenth : 4,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: arrLenth < 3 ? arrLenth : 3,
         },
       },
     ],
@@ -70,19 +72,27 @@ export default function SliderProduct({ images }) {
 
   return (
     <>
-      {images.length < 1 && (
+      {/* {images.length < 1 && (
         <>
           <div className="select-none">
-            <div className="h-[400px] w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+            <div className="h-40 w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800 md:h-96"></div>
           </div>
-          <div className="slider-item mt-3 h-32 w-full animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+          <div className="flex items-center justify-center gap-5">
+            <div className="slider-item mt-3 h-16 w-1/5 animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+            <div className="slider-item mt-3 h-16 w-1/5 animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+            <div className="slider-item mt-3 h-16 w-1/5 animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+            <div className="slider-item mt-3 h-16 w-1/5 animate-pulse rounded-md bg-gray-400 object-fill dark:bg-gray-800"></div>
+          </div>
         </>
-      )}
+      )} */}
       <Slick {...sliderSettings} className="group relative select-none">
         {images.map((item, i) => (
-          <div key={item.title} className="slider-item">
+          <div
+            key={item.title}
+            className="h-40 cursor-pointer overflow-hidden rounded-xl bg-white shadow-xl dark:bg-gray-800 md:h-96"
+          >
             <img
-              className="w-full rounded-md object-fill"
+              className="mx-auto h-full"
               src={item.src}
               onClick={() => setIndex(i)}
             />
@@ -93,7 +103,7 @@ export default function SliderProduct({ images }) {
         {images.map((item, i) => (
           <div key={item.title} className="slider-item px-3">
             <div
-              className={`cursor-pointer rounded-md border shadow-xl transition-all duration-200 ease-in-out ${
+              className={`h-16 cursor-pointer rounded-md border bg-white shadow-xl transition-all duration-200 ease-in-out dark:bg-gray-800 ${
                 i == activeSlide
                   ? "border-main"
                   : "border-white dark:border-black"
@@ -102,7 +112,7 @@ export default function SliderProduct({ images }) {
               <img
                 src={item.src}
                 alt={`image-${i}`}
-                className="rounded-md object-cover"
+                className="mx-auto h-full rounded-md object-cover"
               />
             </div>
           </div>
@@ -112,7 +122,7 @@ export default function SliderProduct({ images }) {
         plugins={[Slideshow, Thumbnails, Zoom, Captions]}
         open={index >= 0}
         index={index}
-        zoom={{ maxZoomPixelRatio: 10 }}
+        zoom={{ maxZoomPixelRatio: 3 }}
         close={() => setIndex(-1)}
         styles={{ root: { "--yarl__color_backdrop": "rgba(0, 0, 0, .8)" } }}
         slides={images}

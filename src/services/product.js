@@ -34,9 +34,29 @@ export const getFeaturedProduct = async () => {
   }
 };
 
+export const getRelatedProduct = async (productID) => {
+  try {
+    const res = await instance.get(
+      `/product/get-related-products/${productID}`,
+    );
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
 export const getProductByID = async (productID) => {
   try {
     const res = await instance.get(`/product/get-product-by-id/${productID}`);
+    return res && res.data;
+  } catch (error) {
+    throw cathError(error);
+  }
+};
+
+export const getProductBySlug = async (slug) => {
+  try {
+    const res = await instance.get(`/product/get-product-by-slug/${slug}`);
     return res && res.data;
   } catch (error) {
     throw cathError(error);

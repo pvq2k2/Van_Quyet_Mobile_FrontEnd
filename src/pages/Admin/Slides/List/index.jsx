@@ -25,13 +25,13 @@ const SlidesList = () => {
   const slides = useSelector((state) => state.slides.slides);
   const isLoading = useSelector((state) => state.slides.isLoading);
   const [pagination, setPagination] = useState({
-    pageSize: 10,
+    pageSize: 3,
     pageNumber: 1,
     totalPage: 1,
     totalCount: 10,
   });
   const [filters, setFilter] = useState({
-    pageSize: 10,
+    pageSize: 3,
     pageNumber: 1,
   });
   const handlePageChange = (newPage) => {

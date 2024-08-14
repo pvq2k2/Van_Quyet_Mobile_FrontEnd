@@ -8,6 +8,11 @@
     font-weight: 400;
     src: url(/src/assets/fonts/font-icon.woff) format("woff");
   }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @layer utilities {

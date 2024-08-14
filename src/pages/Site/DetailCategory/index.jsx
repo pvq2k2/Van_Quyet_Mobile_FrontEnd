@@ -3,6 +3,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import SliderCategory from "../../../components/site/detail_category/SliderCategory";
 import ProductList from "../../../components/common/ProductList";
 import Pagination from "../../../components/common/Pagination";
+import Image from "../../../assets/images/Oh-no-amico.svg";
 import {
   useCallback,
   useEffect,
@@ -155,7 +156,7 @@ const DetailCategory = () => {
                   <Link to="/">Trang chủ</Link>
                 </li>
                 <li
-                  className={`pl-2 text-base capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400 ${subCategory.name && "cursor-pointer"}`}
+                  className={`pl-2 text-base capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/'] dark:text-gray-400 dark:before:text-gray-400 ${subCategory.name && "cursor-pointer hover:text-main hover:underline dark:hover:text-main"}`}
                   onClick={() => handleClickBreadcumrb()}
                 >
                   {category.name}
@@ -220,7 +221,13 @@ const DetailCategory = () => {
           </section>
 
           {_.isEmpty(products) ? (
-            isEmpty === "product" && <NoItem />
+            isEmpty === "product" && (
+              <NoItem
+                image={Image}
+                title={"Không có sản phẩm nào !"}
+                subTitle={"Rất tiếc, không có sản phẩm bạn yêu cầu."}
+              />
+            )
           ) : (
             <div className="mx-auto w-full">
               <ProductList
