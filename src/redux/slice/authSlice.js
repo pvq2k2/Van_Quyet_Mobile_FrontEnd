@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   user: {},
+  isLogin: false,
   isLoading: false,
 };
 
@@ -98,6 +99,7 @@ const authSlice = createSlice({
       .addCase(fetchLogin.fulfilled, (state, { payload }) => {
         const userData = payload?.data;
         state.user = userData;
+        state.isLogin = true;
       })
       .addCase(fetchReNewToken.fulfilled, (state, { payload }) => {
         const userData = payload?.data;
